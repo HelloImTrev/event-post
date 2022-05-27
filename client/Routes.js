@@ -9,7 +9,7 @@ import { me } from "./store";
 
 // child components
 import Home from "./components/pages/Home";
-import { Login, Signup } from "./components/pages/Login_Signup";
+import { LoginSignup } from "./components/pages/Login_Signup";
 import Myevents from "./components/pages/Myevents";
 
 // MUI
@@ -34,8 +34,7 @@ class Routes extends Component {
           <Switch>
             <Route path="/" exact component={Home} />
             <Route path="/home" component={Home} />
-            <Route path="/login" component={Login} />
-            <Route path="/signup" component={Signup} />
+            <Route path="/login" component={LoginSignup} />
             <Redirect to="/home" />
           </Switch>
         )}
