@@ -9,7 +9,8 @@ import { me } from "./store";
 
 // child components
 import Home from "./components/pages/Home";
-import { Login, Signup } from "./components/AuthForm";
+import { Login, Signup } from "./components/pages/Login_Signup";
+import Myevents from "./components/pages/Myevents";
 
 // MUI
 import { Box } from "@mui/material";
@@ -21,13 +22,13 @@ class Routes extends Component {
 
   render() {
     const { isLoggedIn } = this.props;
-
+    console.log("Route page", this.props);
     return (
       <Box sx={{ marginTop: "72px" }}>
         {isLoggedIn ? (
           <Switch>
             <Route path="/home" component={Home} />
-            <Redirect to="/home" />
+            <Route path="/myevents" component={Myevents} />
           </Switch>
         ) : (
           <Switch>

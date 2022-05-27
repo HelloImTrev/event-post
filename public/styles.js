@@ -5,17 +5,32 @@ export const theme = createTheme({
     logo: {
       fontSize: "40px",
       fontFamily: "Carter One",
-      color: "black",
+      color: "#aa55ff",
+    },
+    logoWhite: {
+      fontSize: "40px",
+      fontFamily: "Carter One",
+      color: "#ffffff",
     },
     marker: {
       fontSize: "15px",
       fontFamily: "Permanent Marker",
       color: "black",
     },
-    menuitem: {
+    markerPurple: {
+      fontSize: "15px",
+      fontFamily: "Permanent Marker",
+      color: "#aa55ff",
+    },
+    markerWhite: {
+      fontSize: "15px",
+      fontFamily: "Permanent Marker",
+      color: "#ffffff",
+    },
+    roboto: {
+      fontFamily: "'Roboto', sans-serif",
       fontSize: "15px",
       color: "black",
-      fontWeight: "500",
     },
   },
   palette: {
@@ -23,6 +38,18 @@ export const theme = createTheme({
       light: "#484848",
       main: "#000000",
       dark: "#212121",
+      contrastText: "#ffffff",
+    },
+    grey: {
+      light: "#ffffff",
+      main: "#e0e0e0",
+      dark: "#cfcfcf",
+      contrastText: "#000000",
+    },
+    purple: {
+      light: "#ca9cf7",
+      main: "#aa55ff",
+      dark: "#600bb3",
       contrastText: "#ffffff",
     },
   },

@@ -3,6 +3,8 @@ const express = require("express");
 const morgan = require("morgan");
 const app = express();
 module.exports = app;
+const favicon = require("serve-favicon");
+require("dotenv").config();
 
 // logging middleware
 app.use(morgan("dev"));
@@ -19,6 +21,7 @@ app.get("/", (req, res) => res.sendFile(path.join(__dirname, "..", "public/index
 
 // static file-serving middleware
 app.use(express.static(path.join(__dirname, "..", "public")));
+app.use(favicon(path.join(__dirname, "..", "public", "favicon.ico")));
 
 // any remaining requests with an extension (.js, .css, etc.) send 404
 app.use((req, res, next) => {
