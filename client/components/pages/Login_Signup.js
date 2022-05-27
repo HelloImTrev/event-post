@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 // redux
 import { connect } from "react-redux";
@@ -11,18 +11,21 @@ import { TextField, Button, Alert, Typography, Box } from "@mui/material";
 import { FacebookLoginButton, GoogleLoginButton } from "react-social-login-buttons";
 
 const AuthForm = (props) => {
-  const { name, displayName, handleSubmit, error } = props;
-
+  const { name, displayName, handleSubmit, error, signupError } = props;
+  const [signupInput, setSignupInput] = useState({ username: "", password: "" });
+  const handleCreateAccountInputFields = (e) => {
+    setSignupInput({ ...signupInput, [e.target.name]: e.target.value });
+  };
   return (
     <Box sx={{ margin: "0 auto", width: "80%", textAlign: "center", paddingTop: "3vw" }}>
-      <Typography variant="marker" sx={{ fontSize: "5vw" }}>
+      <Typography variant="marker" sx={{ fontSize: "4vw" }}>
         Sign In
       </Typography>
       <br />
       <Typography variant="roboto" sx={{ fontSize: "1.5vw" }}>
         Enter your username and password to get started.
       </Typography>
-      <form onSubmit={handleSubmit} name={name}>
+      <form onSubmit={handleSubmit} name="login">
         <TextField id="outlined-basic" label="Username" variant="outlined" name="username" type="text" style={{ width: "50%" }} />
         <br />
         <TextField
@@ -34,8 +37,8 @@ const AuthForm = (props) => {
           style={{ width: "50%" }}
         />
         <br />
-        <Button type="submit" color="black" variant="contained" sx={{ width: "50%" }}>
-          {displayName}
+        <Button type="submit" color="grey" variant="contained" sx={{ width: "50%" }}>
+          LOG IN
         </Button>
         <br />
         <Button
@@ -46,42 +49,87 @@ const AuthForm = (props) => {
         >
           Sign in as a Demo User
         </Button>
-        <div style={{ width: "50%", height: " 20px", borderBottom: "1px solid grey", textAlign: "center", margin: "3vw auto" }}>
+        <Box sx={{ width: "50%", margin: "1vw auto" }}>
+          {error && error.response && <Alert severity="error">{error.response.data}</Alert>}
+        </Box>
+      </form>
+
+      <Box
+        sx={{
+          display: "flex",
+          textAlign: "center",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "1px",
+          width: "50%",
+          backgroundColor: "#5e5e5e",
+          margin: "3vw auto",
+        }}
+      >
+        <Box sx={{ zIndex: "1", width: "50%", position: "absolute" }}>
           <Typography
             style={{
               fontSize: "1.5vw",
-              padding: "0 10px",
-              // paddingTop: "6px",
+              padding: "0 5px",
               backgroundColor: "white",
-              width: "30%",
+              width: "25%",
               margin: "0 auto",
             }}
           >
             Not a user?
           </Typography>
-        </div>
-        {/* <hr style={{ width: "50%", margin: "3vw auto" }} /> */}
-        {/* <GoogleLoginButton onClick={() => alert("Hello")} className="ggbttn" align="center" style={{ width: "70%" }}>
-          CONTINUE WITH GOOGLE
-        </GoogleLoginButton> */}
-        {error && error.response && <Alert severity="error">{error.response.data}</Alert>}
+        </Box>
+      </Box>
+      <Typography variant="marker" sx={{ fontSize: "4vw" }}>
+        Create an account
+      </Typography>
+      <form onSubmit={handleSubmit} name="signup">
+        <TextField
+          id="outlined-basic"
+          label="Username"
+          variant="outlined"
+          name="username"
+          type="text"
+          style={{ width: "50%" }}
+          value={signupInput.username}
+          onChange={handleCreateAccountInputFields}
+        />
+        <br />
+        <TextField
+          id="outlined-password-input"
+          label="Password"
+          variant="outlined"
+          name="password"
+          type="password"
+          style={{ width: "50%" }}
+          value={signupInput.password}
+          onChange={handleCreateAccountInputFields}
+        />
+        <br />
+        <Button
+          onClick={() => {
+            handleSubmit({ target: { ...signupInput, name: "signup" } });
+          }}
+          color="grey"
+          variant="contained"
+          sx={{ width: "50%" }}
+        >
+          CREATE AN ACCOUNT
+        </Button>
+        <Box sx={{ width: "50%", margin: "1vw auto" }}>
+          {signupError && signupError.response && <Alert severity="error">{signupError.response.data}</Alert>}
+        </Box>
       </form>
     </Box>
   );
 };
 
-/**
- * CONTAINER
- *   Note that we have two different sets of 'mapStateToProps' functions -
- *   one for Login, and one for Signup. However, they share the same 'mapDispatchToProps'
- *   function, and share the same Component. This is a good example of how we
- *   can stay DRY with interfaces that are very similar to each other!
- */
 const mapLogin = (state) => {
   return {
     name: "login",
     displayName: "Login",
-    error: state.auth.error,
+    error: state.auth.error && state.auth.error.response.data.includes("Incorrect") ? state.auth.error : null,
   };
 };
 
@@ -89,7 +137,7 @@ const mapSignup = (state) => {
   return {
     name: "signup",
     displayName: "Sign Up",
-    error: state.auth.error,
+    signupError: state.auth.error,
   };
 };
 
@@ -103,7 +151,7 @@ const mapDispatch = (dispatch) => {
         const password = evt.target.password.value;
         dispatch(authenticate(username, password, formName));
       } else {
-        console.log("my made up event", evt.target.username);
+        console.log("log", evt.target);
         const formName = evt.target.name;
         const username = evt.target.username;
         const password = evt.target.password;
@@ -115,3 +163,9 @@ const mapDispatch = (dispatch) => {
 
 export const Login = connect(mapLogin, mapDispatch)(AuthForm);
 export const Signup = connect(mapSignup, mapDispatch)(AuthForm);
+
+{
+  /* <GoogleLoginButton onClick={() => alert("Hello")} className="ggbttn" align="center" style={{ width: "70%" }}>
+          CONTINUE WITH GOOGLE
+        </GoogleLoginButton> */
+}

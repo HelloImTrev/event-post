@@ -65,16 +65,16 @@ const Navbar = ({ isLoggedIn, handleLogout }) => {
     <div>
       {isLoggedIn ? (
         <div>
-          <AppBar position="fixed" sx={{ bgcolor: "white" }}>
+          <AppBar position="fixed" sx={{ bgcolor: "#aa55ff" }}>
             <Toolbar sx={{ borderBottom: "solid 1px grey" }}>
               <MenuItem component={Link} to={"/home"} sx={{ "&:hover": { bgcolor: "transparent" } }}>
-                <Typography variant="logo">EVENT POST</Typography>
+                <Typography variant="logoWhite">EVENT POST</Typography>
               </MenuItem>
               <MenuItem component={Link} to={"/explore"} sx={{ "&:hover": { bgcolor: "transparent" }, marginLeft: "auto" }}>
-                <Typography variant="marker">EXPLORE</Typography>
+                <Typography variant="markerWhite">EXPLORE</Typography>
               </MenuItem>
               <MenuItem component={Link} to={"/postevents"} sx={{ "&:hover": { bgcolor: "transparent" } }}>
-                <Typography variant="marker">POST EVENT</Typography>
+                <Typography variant="markerWhite">POST EVENT</Typography>
               </MenuItem>
               <MenuItem
                 ref={anchorRef}
@@ -84,7 +84,7 @@ const Navbar = ({ isLoggedIn, handleLogout }) => {
                 onClick={handleToggle}
                 sx={{ "&:hover": { bgcolor: "transparent" } }}
               >
-                <Typography variant="marker">Hello, {user.username}</Typography>
+                <Typography variant="markerWhite">Hello, {user.username}</Typography>
               </MenuItem>
               <Popper open={open} anchorEl={anchorRef.current} role={undefined} placement="bottom-start" transition disablePortal>
                 {({ TransitionProps, placement }) => (
@@ -124,19 +124,19 @@ const Navbar = ({ isLoggedIn, handleLogout }) => {
         </div>
       ) : (
         <div>
-          <AppBar position="fixed" sx={{ bgcolor: "white" }}>
+          <AppBar position="fixed" sx={{ bgcolor: "#aa55ff" }}>
             <Toolbar sx={{ borderBottom: "solid 1px grey" }}>
               <MenuItem component={Link} to={"/home"} sx={{ "&:hover": { bgcolor: "transparent" } }}>
-                <Typography variant="logo">EVENT POST</Typography>
+                <Typography variant="logoWhite">EVENT POST</Typography>
               </MenuItem>
               <MenuItem component={Link} to={"/explore"} sx={{ "&:hover": { bgcolor: "transparent" }, marginLeft: "auto" }}>
-                <Typography variant="marker">EXPLORE</Typography>
+                <Typography variant="markerWhite">EXPLORE</Typography>
               </MenuItem>
               <MenuItem component={Link} to={"/postevents"} sx={{ "&:hover": { bgcolor: "transparent" } }}>
-                <Typography variant="marker">POST EVENT</Typography>
+                <Typography variant="markerWhite">POST EVENT</Typography>
               </MenuItem>
               <MenuItem component={Link} to={"/login"} sx={{ "&:hover": { bgcolor: "transparent" } }}>
-                <Typography variant="marker">Log In/Sign up</Typography>
+                <Typography variant="markerWhite">Log In/Sign up</Typography>
               </MenuItem>
             </Toolbar>
           </AppBar>

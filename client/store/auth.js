@@ -31,6 +31,7 @@ export const me = () => async (dispatch) => {
 
 export const authenticate = (username, password, method) => async (dispatch) => {
   try {
+    console.log("redux auth", username, password, method);
     const res = await axios.post(`/auth/${method}`, { username, password });
     window.localStorage.setItem(TOKEN, res.data.token);
     dispatch(me());
