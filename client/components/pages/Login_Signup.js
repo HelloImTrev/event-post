@@ -127,17 +127,8 @@ const AuthForm = (props) => {
 
 const mapLogin = (state) => {
   return {
-    name: "login",
-    displayName: "Login",
     error: state.auth.error && state.auth.error.response.data.includes("Incorrect") ? state.auth.error : null,
-  };
-};
-
-const mapSignup = (state) => {
-  return {
-    name: "signup",
-    displayName: "Sign Up",
-    signupError: state.auth.error,
+    signupError: state.auth.error && state.auth.error.response.data.includes("already exists") ? state.auth.error : null,
   };
 };
 
@@ -161,8 +152,7 @@ const mapDispatch = (dispatch) => {
   };
 };
 
-export const Login = connect(mapLogin, mapDispatch)(AuthForm);
-export const Signup = connect(mapSignup, mapDispatch)(AuthForm);
+export const LoginSignup = connect(mapLogin, mapDispatch)(AuthForm);
 
 {
   /* <GoogleLoginButton onClick={() => alert("Hello")} className="ggbttn" align="center" style={{ width: "70%" }}>
