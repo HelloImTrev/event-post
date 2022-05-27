@@ -73,7 +73,7 @@ const Navbar = ({ isLoggedIn, handleLogout }) => {
               <MenuItem component={Link} to={"/explore"} sx={{ "&:hover": { bgcolor: "transparent" }, marginLeft: "auto" }}>
                 <Typography variant="marker">EXPLORE</Typography>
               </MenuItem>
-              <MenuItem component={Link} to={"/post"} sx={{ "&:hover": { bgcolor: "transparent" } }}>
+              <MenuItem component={Link} to={"/postevents"} sx={{ "&:hover": { bgcolor: "transparent" } }}>
                 <Typography variant="marker">POST EVENT</Typography>
               </MenuItem>
               <MenuItem
@@ -82,8 +82,6 @@ const Navbar = ({ isLoggedIn, handleLogout }) => {
                 aria-expanded={open ? "true" : undefined}
                 aria-haspopup="true"
                 onClick={handleToggle}
-                // component={Link}
-                // to={"/myevents"}
                 sx={{ "&:hover": { bgcolor: "transparent" } }}
               >
                 <Typography variant="marker">Hello, {user.username}</Typography>
@@ -134,7 +132,7 @@ const Navbar = ({ isLoggedIn, handleLogout }) => {
               <MenuItem component={Link} to={"/explore"} sx={{ "&:hover": { bgcolor: "transparent" }, marginLeft: "auto" }}>
                 <Typography variant="marker">EXPLORE</Typography>
               </MenuItem>
-              <MenuItem component={Link} to={"/post"} sx={{ "&:hover": { bgcolor: "transparent" } }}>
+              <MenuItem component={Link} to={"/postevents"} sx={{ "&:hover": { bgcolor: "transparent" } }}>
                 <Typography variant="marker">POST EVENT</Typography>
               </MenuItem>
               <MenuItem component={Link} to={"/login"} sx={{ "&:hover": { bgcolor: "transparent" } }}>

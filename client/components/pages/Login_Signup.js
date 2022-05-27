@@ -37,6 +37,15 @@ const AuthForm = (props) => {
         <Button type="submit" color="black" variant="contained" sx={{ width: "50%" }}>
           {displayName}
         </Button>
+        <br />
+        <Button
+          onClick={() => handleSubmit({ target: { name: "login", username: "murphy", password: "123" } })}
+          color="purple"
+          variant="contained"
+          sx={{ width: "50%", marginTop: "1vw" }}
+        >
+          Sign in as a Demo User
+        </Button>
         <div style={{ width: "50%", height: " 20px", borderBottom: "1px solid grey", textAlign: "center", margin: "3vw auto" }}>
           <Typography
             style={{
@@ -87,11 +96,19 @@ const mapSignup = (state) => {
 const mapDispatch = (dispatch) => {
   return {
     handleSubmit(evt) {
-      evt.preventDefault();
-      const formName = evt.target.name;
-      const username = evt.target.username.value;
-      const password = evt.target.password.value;
-      dispatch(authenticate(username, password, formName));
+      if (evt.preventDefault) {
+        evt.preventDefault();
+        const formName = evt.target.name;
+        const username = evt.target.username.value;
+        const password = evt.target.password.value;
+        dispatch(authenticate(username, password, formName));
+      } else {
+        console.log("my made up event", evt.target.username);
+        const formName = evt.target.name;
+        const username = evt.target.username;
+        const password = evt.target.password;
+        dispatch(authenticate(username, password, formName));
+      }
     },
   };
 };
