@@ -4,6 +4,7 @@ const morgan = require("morgan");
 const app = express();
 module.exports = app;
 const favicon = require("serve-favicon");
+require("dotenv").config();
 
 // logging middleware
 app.use(morgan("dev"));
