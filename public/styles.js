@@ -3,8 +3,13 @@ import { createTheme } from "@mui/material/styles";
 export const theme = createTheme({
   typography: {
     logo: {
-      fontSize: "30px",
-      fontFamily: "Radio Canada, sans- serif",
+      fontSize: "40px",
+      fontFamily: "Carter One",
+      color: "black",
+    },
+    marker: {
+      fontSize: "15px",
+      fontFamily: "Permanent Marker",
       color: "black",
     },
     menuitem: {

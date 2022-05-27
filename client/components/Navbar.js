@@ -3,53 +3,49 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { logout } from "../store";
 
-import { AppBar, Toolbar, MenuItem, IconButton, Typography, Popover, Grid } from "@mui/material";
+import { AppBar, Toolbar, MenuItem, Typography, useMediaQuery } from "@mui/material";
 
-const Navbar = ({ handleClick, isLoggedIn }) => (
+const Navbar = ({ isLoggedIn }) => (
   <div>
-    <h1>FS-App-Template</h1>
-    <nav>
-      {isLoggedIn ? (
-        <div>
-          <AppBar position="fixed" sx={{ bgcolor: "white" }}>
-            <Toolbar sx={{ borderBottom: "solid 1px grey" }}>
-              <MenuItem component={Link} to={"/home"} sx={{ "&:hover": { bgcolor: "transparent" } }}>
-                <Typography variant="logo">EVENT POST</Typography>
-              </MenuItem>
-              <MenuItem component={Link} to={"/explore"} sx={{ "&:hover": { bgcolor: "transparent" }, marginLeft: "auto" }}>
-                <Typography variant="menuitem">EXPLORE</Typography>
-              </MenuItem>
-              <MenuItem component={Link} to={"/post"} sx={{ "&:hover": { bgcolor: "transparent" } }}>
-                <Typography variant="menuitem">POST EVENT</Typography>
-              </MenuItem>
-              <MenuItem component={Link} to={"/user"} sx={{ "&:hover": { bgcolor: "transparent" } }}>
-                <Typography variant="menuitem">My Events</Typography>
-              </MenuItem>
-            </Toolbar>
-          </AppBar>
-        </div>
-      ) : (
-        <div>
-          <AppBar position="fixed" sx={{ bgcolor: "white" }}>
-            <Toolbar sx={{ borderBottom: "solid 1px grey" }}>
-              <MenuItem component={Link} to={"/home"} sx={{ "&:hover": { bgcolor: "transparent" } }}>
-                <Typography variant="logo">EVENT POST</Typography>
-              </MenuItem>
-              <MenuItem component={Link} to={"/explore"} sx={{ "&:hover": { bgcolor: "transparent" } }}>
-                <Typography variant="menuitem">EXPLORE</Typography>
-              </MenuItem>
-              <MenuItem component={Link} to={"/post"} sx={{ "&:hover": { bgcolor: "transparent" } }}>
-                <Typography variant="menuitem">POST EVENT</Typography>
-              </MenuItem>
-              <MenuItem component={Link} to={"/login"} sx={{ "&:hover": { bgcolor: "transparent" } }}>
-                <Typography variant="menuitem">Log In/Sign up</Typography>
-              </MenuItem>
-            </Toolbar>
-          </AppBar>
-        </div>
-      )}
-    </nav>
-    <hr />
+    {isLoggedIn ? (
+      <div>
+        <AppBar position="fixed" sx={{ bgcolor: "white" }}>
+          <Toolbar sx={{ borderBottom: "solid 1px grey" }}>
+            <MenuItem component={Link} to={"/home"} sx={{ "&:hover": { bgcolor: "transparent" } }}>
+              <Typography variant="logo">EVENT POST</Typography>
+            </MenuItem>
+            <MenuItem component={Link} to={"/explore"} sx={{ "&:hover": { bgcolor: "transparent" }, marginLeft: "auto" }}>
+              <Typography variant="marker">EXPLORE</Typography>
+            </MenuItem>
+            <MenuItem component={Link} to={"/post"} sx={{ "&:hover": { bgcolor: "transparent" } }}>
+              <Typography variant="marker">POST EVENT</Typography>
+            </MenuItem>
+            <MenuItem component={Link} to={"/user"} sx={{ "&:hover": { bgcolor: "transparent" } }}>
+              <Typography variant="marker">My Events</Typography>
+            </MenuItem>
+          </Toolbar>
+        </AppBar>
+      </div>
+    ) : (
+      <div>
+        <AppBar position="fixed" sx={{ bgcolor: "white" }}>
+          <Toolbar sx={{ borderBottom: "solid 1px grey" }}>
+            <MenuItem component={Link} to={"/home"} sx={{ "&:hover": { bgcolor: "transparent" } }}>
+              <Typography variant="logo">EVENT POST</Typography>
+            </MenuItem>
+            <MenuItem component={Link} to={"/explore"} sx={{ "&:hover": { bgcolor: "transparent" }, marginLeft: "auto" }}>
+              <Typography variant="marker">EXPLORE</Typography>
+            </MenuItem>
+            <MenuItem component={Link} to={"/post"} sx={{ "&:hover": { bgcolor: "transparent" } }}>
+              <Typography variant="marker">POST EVENT</Typography>
+            </MenuItem>
+            <MenuItem component={Link} to={"/login"} sx={{ "&:hover": { bgcolor: "transparent" } }}>
+              <Typography variant="marker">Log In/Sign up</Typography>
+            </MenuItem>
+          </Toolbar>
+        </AppBar>
+      </div>
+    )}
   </div>
 );
 
