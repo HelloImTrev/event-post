@@ -12,10 +12,10 @@ export const theme = createTheme({
       fontFamily: "Permanent Marker",
       color: "black",
     },
-    menuitem: {
+    roboto: {
+      fontFamily: "'Roboto', sans-serif",
       fontSize: "15px",
       color: "black",
-      fontWeight: "500",
     },
   },
   palette: {

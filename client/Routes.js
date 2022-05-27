@@ -9,7 +9,7 @@ import { me } from "./store";
 
 // child components
 import Home from "./components/pages/Home";
-import { Login, Signup } from "./components/AuthForm";
+import { Login, Signup } from "./components/pages/Login_Signup";
 
 // MUI
 import { Box } from "@mui/material";
