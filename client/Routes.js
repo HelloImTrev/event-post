@@ -1,13 +1,19 @@
-import React, { Component, Fragment } from "react";
-import { connect } from "react-redux";
+import React, { Component } from "react";
+
+// router
 import { withRouter, Route, Switch, Redirect } from "react-router-dom";
-import { Login, Signup } from "./components/AuthForm";
-import Home from "./components/pages/Home";
+
+// redux
+import { connect } from "react-redux";
 import { me } from "./store";
 
-/**
- * COMPONENT
- */
+// child components
+import Home from "./components/pages/Home";
+import { Login, Signup } from "./components/AuthForm";
+
+// MUI
+import { Box } from "@mui/material";
+
 class Routes extends Component {
   componentDidMount() {
     this.props.loadInitialData();
@@ -17,7 +23,7 @@ class Routes extends Component {
     const { isLoggedIn } = this.props;
 
     return (
-      <div>
+      <Box sx={{ marginTop: "72px" }}>
         {isLoggedIn ? (
           <Switch>
             <Route path="/home" component={Home} />
@@ -32,7 +38,7 @@ class Routes extends Component {
             <Redirect to="/home" />
           </Switch>
         )}
-      </div>
+      </Box>
     );
   }
 }
