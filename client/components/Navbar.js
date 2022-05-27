@@ -82,8 +82,8 @@ const Navbar = ({ isLoggedIn, handleLogout }) => {
                 aria-expanded={open ? "true" : undefined}
                 aria-haspopup="true"
                 onClick={handleToggle}
-                component={Link}
-                to={"/user"}
+                // component={Link}
+                // to={"/myevents"}
                 sx={{ "&:hover": { bgcolor: "transparent" } }}
               >
                 <Typography variant="marker">Hello, {user.username}</Typography>
@@ -104,7 +104,9 @@ const Navbar = ({ isLoggedIn, handleLogout }) => {
                           aria-labelledby="composition-button"
                           onKeyDown={handleListKeyDown}
                         >
-                          <MenuItem onClick={handleClose}>My events</MenuItem>
+                          <MenuItem onClick={handleClose} component={Link} to={"/myevents"}>
+                            My events
+                          </MenuItem>
                           <MenuItem
                             onClick={(e) => {
                               handleClose(e);
