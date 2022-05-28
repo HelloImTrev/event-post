@@ -126,7 +126,8 @@ const Navbar = ({ isLoggedIn, handleLogout }) => {
         <div>
           <AppBar position="fixed" sx={{ bgcolor: "#aa55ff" }}>
             <Toolbar sx={{ borderBottom: "solid 1px grey" }}>
-              <MenuItem component={Link} to={"/home"} sx={{ "&:hover": { bgcolor: "transparent" } }}>
+              <MenuItem component={Link} to={"/home"} sx={{ "&:hover": { bgcolor: "transparent" }, padding: "0" }}>
+                <img src="/images/logo_.png" style={{ height: "63px", margin: "3px 5px", padding: "3px 0" }} />
                 <Typography variant="logoWhite">EVENT POST</Typography>
               </MenuItem>
               <MenuItem component={Link} to={"/explore"} sx={{ "&:hover": { bgcolor: "transparent" }, marginLeft: "auto" }}>

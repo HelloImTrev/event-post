@@ -58,7 +58,7 @@ export const Home = (props) => {
             }}
           />
           <br />
-          <Button color="purple" variant="contained" sx={{ width: "15%", marginTop: "1vw" }}>
+          <Button color="purple" variant="contained" sx={{ width: "10%", marginTop: "1vw", borderRadius: "3rem" }}>
             Go
           </Button>
         </Box>

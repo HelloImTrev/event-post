@@ -23,7 +23,7 @@ export const theme = createTheme({
       color: "#aa55ff",
     },
     markerWhite: {
-      fontSize: "15px",
+      fontSize: "20px",
       fontFamily: "Permanent Marker",
       color: "#ffffff",
     },
