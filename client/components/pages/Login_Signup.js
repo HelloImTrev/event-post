@@ -26,7 +26,15 @@ const AuthForm = (props) => {
         Enter your username and password to get started.
       </Typography>
       <form onSubmit={handleSubmit} name="login">
-        <TextField id="outlined-basic" label="Username" variant="outlined" name="username" type="text" style={{ width: "50%" }} />
+        <TextField
+          id="outlined-basic"
+          label="Username"
+          variant="outlined"
+          name="username"
+          type="text"
+          color="purple"
+          style={{ width: "50%" }}
+        />
         <br />
         <TextField
           id="outlined-password-input"
@@ -34,6 +42,7 @@ const AuthForm = (props) => {
           variant="outlined"
           name="password"
           type="password"
+          color="purple"
           style={{ width: "50%" }}
         />
         <br />
@@ -91,6 +100,7 @@ const AuthForm = (props) => {
           variant="outlined"
           name="username"
           type="text"
+          color="purple"
           style={{ width: "50%" }}
           value={signupInput.username}
           onChange={handleCreateAccountInputFields}
@@ -102,6 +112,7 @@ const AuthForm = (props) => {
           variant="outlined"
           name="password"
           type="password"
+          color="purple"
           style={{ width: "50%" }}
           value={signupInput.password}
           onChange={handleCreateAccountInputFields}

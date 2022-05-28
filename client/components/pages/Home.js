@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 
 //MUI
 import { Box, Typography, Grid, TextField, Button } from "@mui/material";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
 
 export const Home = (props) => {
   const { username } = props;
@@ -16,13 +17,33 @@ export const Home = (props) => {
           flexDirection: "column",
           justifyContent: "center",
           alignItems: "center",
-          height: "28vw",
           width: "100%",
+          height: {
+            xxs: "300px",
+            xs: "400px",
+            sm: "500px",
+          },
         }}
       >
         <img src={"/images/main.jpg"} style={{ zIndex: "-1", width: "100%", height: "100%", display: "block" }} />
         <Box sx={{ zIndex: "1", width: "100%", position: "absolute" }}>
-          <Typography variant="marker" sx={{ marginBottom: "1rem", alignSelf: "flext-start", fontSize: "5vw" }}>
+          <Typography
+            variant="marker"
+            sx={{
+              marginBottom: "1rem",
+              alignSelf: "flext-start",
+              fontSize: {
+                xxs: "35px",
+                xs: "50px",
+                sm: "70px",
+              },
+              display: "block",
+              marginBottom: {
+                xxs: "0",
+                xs: "0",
+              },
+            }}
+          >
             Join the Hype!
           </Typography>
           <br />
@@ -34,7 +55,10 @@ export const Home = (props) => {
             type="search"
             color="purple"
             sx={{
-              width: "50%",
+              width: {
+                xxs: "80%",
+                xs: "50%",
+              },
               input: {
                 background: "white",
               },
@@ -43,14 +67,21 @@ export const Home = (props) => {
           <br style={{ marginTop: "1vw" }} />
           <TextField
             id="filled-basic"
-            label="Location"
+            label={
+              <Box>
+                <LocationOnIcon /> Location
+              </Box>
+            }
             variant="filled"
             name="location"
             type="location"
             color="purple"
             sx={{
               marginTop: "1vw",
-              width: "50%",
+              width: {
+                xxs: "80%",
+                xs: "50%",
+              },
               borderRadius: "1rem 1rem 0 0 ",
               input: {
                 background: "white",
@@ -58,7 +89,18 @@ export const Home = (props) => {
             }}
           />
           <br />
-          <Button color="purple" variant="contained" sx={{ width: "15%", marginTop: "1vw" }}>
+          <Button
+            color="purple"
+            variant="contained"
+            sx={{
+              width: "10%",
+              marginTop: {
+                xxs: "3vw",
+                xs: "1vw",
+              },
+              borderRadius: "3rem",
+            }}
+          >
             Go
           </Button>
         </Box>
@@ -67,9 +109,6 @@ export const Home = (props) => {
   );
 };
 
-/**
- * CONTAINER
- */
 const mapState = (state) => {
   return {
     username: state.auth.username,

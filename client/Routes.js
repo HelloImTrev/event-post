@@ -24,7 +24,7 @@ class Routes extends Component {
     const { isLoggedIn } = this.props;
     console.log("Route page", this.props);
     return (
-      <Box sx={{ marginTop: "72px" }}>
+      <Box sx={{ marginTop: "69px" }}>
         {isLoggedIn ? (
           <Switch>
             <Route path="/home" component={Home} />

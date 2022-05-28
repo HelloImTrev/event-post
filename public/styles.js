@@ -1,6 +1,16 @@
 import { createTheme } from "@mui/material/styles";
 
 export const theme = createTheme({
+  breakpoints: {
+    keys: ["xxs", "xs", "sm", "md", "lg"],
+    values: {
+      xxs: 0,
+      xs: 350,
+      sm: 600,
+      md: 900,
+      lg: 1200,
+    },
+  },
   typography: {
     logo: {
       fontSize: "40px",
@@ -23,7 +33,7 @@ export const theme = createTheme({
       color: "#aa55ff",
     },
     markerWhite: {
-      fontSize: "15px",
+      fontSize: "20px",
       fontFamily: "Permanent Marker",
       color: "#ffffff",
     },
