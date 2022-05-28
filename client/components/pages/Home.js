@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 
 //MUI
-import { Box, Typography, Grid, TextField, Button } from "@mui/material";
+import { Box, Typography, TextField, Button } from "@mui/material";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 
 export const Home = (props) => {
