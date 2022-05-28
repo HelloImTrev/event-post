@@ -58,7 +58,7 @@ export const Home = (props) => {
               width: {
                 xxs: "235px",
                 xs: "80%",
-                sm: "50%",
+                sm: "450px",
               },
               input: {
                 background: "white",
@@ -82,7 +82,7 @@ export const Home = (props) => {
               width: {
                 xxs: "235px",
                 xs: "80%",
-                sm: "50%",
+                sm: "450px",
               },
               borderRadius: "1rem 1rem 0 0 ",
               input: {
@@ -95,13 +95,14 @@ export const Home = (props) => {
             color="purple"
             variant="contained"
             sx={{
-              width: "10%",
+              width: "150px",
               marginTop: {
                 xxs: "3vw",
                 xs: "3vw",
                 sm: "1vw",
               },
               borderRadius: "3rem",
+              fontSize: "20px",
             }}
           >
             Go
