@@ -56,8 +56,9 @@ export const Home = (props) => {
             color="purple"
             sx={{
               width: {
-                xxs: "80%",
-                xs: "50%",
+                xxs: "235px",
+                xs: "80%",
+                sm: "50%",
               },
               input: {
                 background: "white",
@@ -79,8 +80,9 @@ export const Home = (props) => {
             sx={{
               marginTop: "1vw",
               width: {
-                xxs: "80%",
-                xs: "50%",
+                xxs: "235px",
+                xs: "80%",
+                sm: "50%",
               },
               borderRadius: "1rem 1rem 0 0 ",
               input: {
