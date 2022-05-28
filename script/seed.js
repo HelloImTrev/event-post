@@ -4,7 +4,7 @@ const {
   db,
   models: { User, Event },
 } = require("../server/db");
-const events = require("./seedData");
+const sportEvents = require("./sportEvents");
 /**
  * seed - this function clears the database, updates tables to
  *      match the models, and populates the database.
@@ -19,23 +19,26 @@ async function seed() {
     User.create({ username: "murphy", password: "123" }),
   ]);
 
-  await Event.create({
-    name: events.name,
-    startDate: events.dates.start.localDate,
-    startTime: events.dates.start.localTime,
-    category: events.classifications[0].segment.name,
-    images: events.images,
-    description: "",
-    venueName: events._embedded.venues[0].name,
-    venueLocale: events._embedded.venues[0].locale,
-    venuePostCode: events._embedded.venues[0].postalCode * 1,
-    venueCity: events._embedded.venues[0].city.name,
-    venueState: events._embedded.venues[0].state.name,
-    venueCountry: events._embedded.venues[0].country.name,
-    venueAddress: events._embedded.venues[0].address.line1,
-    venueLongitude: events._embedded.venues[0].location.longitude,
-    venueLatitude: events._embedded.venues[0].location.latitude,
-  });
+  for(const eventItem of sportEvents) {
+    await Event.create({
+      name: eventItem.name,
+      startDate: eventItem.dates.start.localDate,
+      startTime: eventItem.dates.start.localTime,
+      category: eventItem.classifications[0].segment.name,
+      images: eventItem.images,
+      description: "",
+      venueName: eventItem._embedded.venues[0].name,
+      venueLocale: eventItem._embedded.venues[0].locale,
+      venuePostCode: eventItem._embedded.venues[0].postalCode * 1,
+      venueCity: eventItem._embedded.venues[0].city.name,
+      venueState: eventItem._embedded.venues[0].state.name,
+      venueCountry: eventItem._embedded.venues[0].country.name,
+      venueAddress: eventItem._embedded.venues[0].address.line1,
+      venueLongitude: eventItem._embedded.venues[0].location.longitude,
+      venueLatitude: eventItem._embedded.venues[0].location.latitude,
+    });
+  }
+
 
   console.log(`seeded ${users.length} users`);
   console.log(`seeded successfully`);
