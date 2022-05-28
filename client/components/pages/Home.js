@@ -98,7 +98,8 @@ export const Home = (props) => {
               width: "10%",
               marginTop: {
                 xxs: "3vw",
-                xs: "1vw",
+                xs: "3vw",
+                sm: "1vw",
               },
               borderRadius: "3rem",
             }}
