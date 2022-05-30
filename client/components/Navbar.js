@@ -81,22 +81,10 @@ const Navbar = ({ isLoggedIn, handleLogout }) => {
     <div>
       {isLoggedIn ? (
         <div>
-          <AppBar position="fixed" sx={{ bgcolor: "#aa55ff" }}>
-            <Toolbar sx={{ borderBottom: "solid 1px grey" }}>
+          <AppBar position="fixed" sx={{ bgcolor: "#2a1b3d" }}>
+            <Toolbar sx={{ borderBottom: "solid 1px #2a1b3d" }}>
               <MenuItem component={Link} to={"/home"} sx={{ "&:hover": { bgcolor: "transparent" }, padding: "0" }}>
-                <img src="/images/logo_.png" style={{ height: "63px", margin: "3px 5px", padding: "3px 0" }} />
-                <Typography
-                  variant="logoWhite"
-                  sx={{
-                    fontSize: {
-                      xxs: "25px",
-                      xs: "30px",
-                      sm: "40px",
-                    },
-                  }}
-                >
-                  EVENT POST
-                </Typography>
+                <img src="/images/logo_test.svg" style={{ height: "70px", margin: "3px 5px", padding: "3px 0" }} />
               </MenuItem>
 
               <Fragment>
@@ -133,7 +121,7 @@ const Navbar = ({ isLoggedIn, handleLogout }) => {
                   },
                 }}
               >
-                <Typography variant="markerWhite">EXPLORE</Typography>
+                <Typography variant="karlaWhite">EXPLORE</Typography>
               </MenuItem>
               <MenuItem
                 component={Link}
@@ -147,7 +135,7 @@ const Navbar = ({ isLoggedIn, handleLogout }) => {
                   },
                 }}
               >
-                <Typography variant="markerWhite">POST EVENT</Typography>
+                <Typography variant="karlaWhite">POST EVENT</Typography>
               </MenuItem>
               <MenuItem
                 ref={anchorRef}
@@ -164,7 +152,7 @@ const Navbar = ({ isLoggedIn, handleLogout }) => {
                   },
                 }}
               >
-                <Typography variant="markerWhite">Hello, {user.username}</Typography>
+                <Typography variant="karlaWhite">Hello, {user.username}</Typography>
               </MenuItem>
               <Popper open={open} anchorEl={anchorRef.current} role={undefined} placement="bottom-start" transition disablePortal>
                 {({ TransitionProps, placement }) => (
@@ -204,22 +192,10 @@ const Navbar = ({ isLoggedIn, handleLogout }) => {
         </div>
       ) : (
         <div>
-          <AppBar position="fixed" sx={{ bgcolor: "#aa55ff" }}>
-            <Toolbar sx={{ borderBottom: "solid 1px grey" }}>
+          <AppBar position="fixed" sx={{ bgcolor: "#2a1b3d" }}>
+            <Toolbar sx={{ borderBottom: "solid 1px #2a1b3d" }}>
               <MenuItem component={Link} to={"/home"} sx={{ "&:hover": { bgcolor: "transparent" }, padding: "0" }}>
-                <img src="/images/logo_.png" style={{ height: "63px", margin: "3px 5px", padding: "3px 0" }} />
-                <Typography
-                  variant="logoWhite"
-                  sx={{
-                    fontSize: {
-                      xxs: "25px",
-                      xs: "30px",
-                      sm: "40px",
-                    },
-                  }}
-                >
-                  EVENT POST
-                </Typography>
+                <img src="/images/logo_test.svg" style={{ height: "70px", margin: "3px 5px", padding: "3px 0" }} />
               </MenuItem>
 
               <Fragment>
@@ -256,7 +232,7 @@ const Navbar = ({ isLoggedIn, handleLogout }) => {
                   },
                 }}
               >
-                <Typography variant="markerWhite">EXPLORE</Typography>
+                <Typography variant="karlaWhite">EXPLORE</Typography>
               </MenuItem>
               <MenuItem
                 component={Link}
@@ -270,7 +246,7 @@ const Navbar = ({ isLoggedIn, handleLogout }) => {
                   },
                 }}
               >
-                <Typography variant="markerWhite">POST EVENT</Typography>
+                <Typography variant="karlaWhite">POST EVENT</Typography>
               </MenuItem>
               <MenuItem
                 component={Link}
@@ -284,7 +260,7 @@ const Navbar = ({ isLoggedIn, handleLogout }) => {
                   },
                 }}
               >
-                <Typography variant="markerWhite">Log In/Sign up</Typography>
+                <Typography variant="karlaWhite">Log In/Sign up</Typography>
               </MenuItem>
             </Toolbar>
           </AppBar>

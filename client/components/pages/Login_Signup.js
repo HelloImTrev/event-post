@@ -18,7 +18,7 @@ const AuthForm = (props) => {
   };
   return (
     <Box sx={{ margin: "0 auto", width: "80%", textAlign: "center", paddingTop: "3vw" }}>
-      <Typography variant="marker" sx={{ fontSize: "4vw" }}>
+      <Typography variant="promptTitle" sx={{ fontSize: "4vw" }}>
         Sign In
       </Typography>
       <br />
@@ -52,7 +52,7 @@ const AuthForm = (props) => {
         <br />
         <Button
           onClick={() => handleSubmit({ target: { name: "login", username: "murphy", password: "123" } })}
-          color="purple"
+          color="pink"
           variant="contained"
           sx={{ width: "50%", marginTop: "1vw" }}
         >
@@ -90,7 +90,7 @@ const AuthForm = (props) => {
           </Typography>
         </Box>
       </Box>
-      <Typography variant="marker" sx={{ fontSize: "4vw" }}>
+      <Typography variant="promptTitle" sx={{ fontSize: "4vw" }}>
         Create an account
       </Typography>
       <form onSubmit={handleSubmit} name="signup">
@@ -100,7 +100,7 @@ const AuthForm = (props) => {
           variant="outlined"
           name="username"
           type="text"
-          color="purple"
+          color="pink"
           style={{ width: "50%" }}
           value={signupInput.username}
           onChange={handleCreateAccountInputFields}

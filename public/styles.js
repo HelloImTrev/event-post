@@ -42,6 +42,16 @@ export const theme = createTheme({
       fontSize: "15px",
       color: "black",
     },
+    karlaWhite: {
+      fontFamily: "Karla",
+      fontSize: "20px",
+      fontWeight: 700,
+      color: "#ffffff"
+    },
+    promptTitle: {
+      fontFamily: "Prompt",
+      fontWeight: 800
+    }
   },
   palette: {
     black: {
@@ -66,6 +76,10 @@ export const theme = createTheme({
       main: "#ffffff",
       contrastText: "#000000",
     },
+    pink: {
+      main: "#d83f87",
+      contrastText: "#ffffff"
+    }
   },
   components: {
     MuiButton: {
