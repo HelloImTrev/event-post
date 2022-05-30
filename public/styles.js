@@ -46,12 +46,15 @@ export const theme = createTheme({
       fontFamily: "Karla",
       fontSize: "20px",
       fontWeight: 700,
-      color: "#ffffff"
+      color: "#ffffff",
     },
     promptTitle: {
       fontFamily: "Prompt",
-      fontWeight: 800
-    }
+      fontWeight: 800,
+      color: "#d83f87",
+      textShadow:
+        "2px 0 white, -2px 0 #ebeced, 0 2px #ebeced, 0 -2px #ebeced, 1px 1px #ebeced, -1px -1px #ebeced, -1px 1px #ebeced, 1px -1px #ebeced",
+    },
   },
   palette: {
     black: {
@@ -78,8 +81,8 @@ export const theme = createTheme({
     },
     pink: {
       main: "#d83f87",
-      contrastText: "#ffffff"
-    }
+      contrastText: "#ffffff",
+    },
   },
   components: {
     MuiButton: {

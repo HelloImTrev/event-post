@@ -4,14 +4,20 @@ import axios from "axios";
 
 //MUI
 import { Box, Typography, TextField, Button, Alert } from "@mui/material";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
+
+// child component
+import Slides from "../Slides";
 
 export const Home = (props) => {
   const { username } = props;
 
   // For geolocation of user
   const [error, setError] = useState(null);
-  const [userCity, setUserCity] = useState("");
+  const [userCity, setUserCity] = useState("New York");
   let location = {};
   const getLocation = () => {
     if (!navigator.geolocation) {
@@ -34,16 +40,22 @@ export const Home = (props) => {
           window.localStorage.setItem("userLocation", JSON.stringify(location));
         },
         () => {
-          setError("Unable to retrieve your location");
+          window.localStorage.removeItem("userLocation");
+          setError("Unable to retrieve your location.");
         }
       );
     }
   };
 
+  let today;
   useEffect(() => {
-    const userLocation = JSON.parse(window.localStorage.getItem("userLocation"));
-    userLocation ? setUserCity(userLocation.city) : getLocation();
+    getLocation();
+    today = new Date().toLocaleDateString();
+    console.log("tday is", today);
   }, []);
+
+  // For date picker
+  const [date, setDate] = useState(today);
 
   return (
     <div>
@@ -62,28 +74,27 @@ export const Home = (props) => {
           },
         }}
       >
-        <img src={"/images/main_test.jpeg"} style={{ zIndex: "-1", width: "100%", height: "100%", display: "block" }} />
-        <Box sx={{ zIndex: "1", width: "100%", position: "absolute" }}>
+        <Slides />
+        <Box sx={{ zIndex: "1", width: "100%", position: "absolute", top: { xxs: "90px", xs: "100px" } }}>
           <Typography
             variant="promptTitle"
             sx={{
-              marginBottom: "1rem",
-              alignSelf: "flext-start",
+              alignSelf: "flex-start",
               fontSize: {
-                xxs: "35px",
-                xs: "50px",
-                sm: "70px",
+                xxs: "20px",
+                xs: "27px",
+                sm: "50px",
+                md: "60px",
               },
               display: "block",
               marginBottom: {
                 xxs: "0",
-                xs: "0",
+                xs: "10px",
               },
             }}
           >
-            Join the Hype!
+            Join the popular events!
           </Typography>
-          <br />
           <TextField
             id="filled-basic"
             label="Search events"
@@ -150,6 +161,39 @@ export const Home = (props) => {
             <></>
           )}
           {error !== null ? <></> : <br />}
+          <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <DatePicker
+              label="Basic example"
+              value={date}
+              onChange={(newDate) => {
+                setDate(newDate);
+              }}
+              renderInput={(params) => {
+                return (
+                  <TextField
+                    {...params}
+                    id="filled-basic"
+                    label="Date"
+                    variant="filled"
+                    color="pink"
+                    sx={{
+                      width: {
+                        xxs: "235px",
+                        xs: "80%",
+                        sm: "450px",
+                      },
+                      marginTop: "1vw",
+                      backgroundColor: "#ebeced",
+                      input: {
+                        background: "#ebeced",
+                      },
+                    }}
+                  />
+                );
+              }}
+            />
+          </LocalizationProvider>
+          <br />
           <Button
             color="pink"
             variant="contained"
@@ -179,3 +223,7 @@ const mapState = (state) => {
 };
 
 export default connect(mapState)(Home);
+
+{
+  /* <img src={"/images/main_test.jpeg"} style={{ zIndex: "-1", width: "100%", height: "100%", display: "block" }} /> */
+}
