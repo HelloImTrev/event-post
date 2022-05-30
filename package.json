@@ -40,7 +40,7 @@
     "morgan": "^1.9.1",
     "pg": "^8.5.1",
     "react-big-calendar": "^0.40.1",
-    "react-material-ui-carousel": "^3.4.1",
+    "react-material-ui-carousel": "^3.4.2",
     "react-social-login-buttons": "^3.6.0",
     "sequelize": "^6.3.5",
     "serve-favicon": "^2.5.0",
