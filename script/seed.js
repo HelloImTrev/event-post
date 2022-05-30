@@ -19,11 +19,15 @@ async function seed() {
     User.create({ username: "murphy", password: "123" }),
   ]);
 
-  for(const eventItem of sportEvents) {
+  for (const eventItem of sportEvents) {
+    // ticketmaster data doesnt have end time
+    let end = new Date(eventItem.dates.start.dateTime);
+    end.setHours(end.getHours() + 2);
+    end = end.toISOString();
     await Event.create({
       name: eventItem.name,
-      startDate: eventItem.dates.start.localDate,
-      startTime: eventItem.dates.start.localTime,
+      start: eventItem.dates.start.dateTime,
+      end: end,
       category: eventItem.classifications[0].segment.name,
       images: eventItem.images,
       description: "",
@@ -38,7 +42,6 @@ async function seed() {
       venueLatitude: eventItem._embedded.venues[0].location.latitude,
     });
   }
-
 
   console.log(`seeded ${users.length} users`);
   console.log(`seeded successfully`);

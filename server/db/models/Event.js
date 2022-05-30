@@ -1,73 +1,71 @@
 const Sequelize = require("sequelize");
 const db = require("../db");
 
-
 const Event = db.define("event", {
   name: {
     type: Sequelize.STRING,
     allowNull: false,
   },
-  startDate: {
+  start: {
     type: Sequelize.DATE,
     allowNull: false,
   },
-  startTime: {
-    type: Sequelize.TIME,
-    allowNull: false
+  end: {
+    type: Sequelize.DATE,
+    allowNull: false,
   },
   category: {
     type: Sequelize.STRING,
-    allowNull: false
+    allowNull: false,
   },
   images: {
     type: Sequelize.TEXT,
-    get: function() {
-      return JSON.parse(this.getDataValue('images'));
+    get: function () {
+      return JSON.parse(this.getDataValue("images"));
     },
-    set: function(val) {
-      return this.setDataValue('images', JSON.stringify(val));
-    }
+    set: function (val) {
+      return this.setDataValue("images", JSON.stringify(val));
+    },
   },
   description: {
-    type: Sequelize.TEXT
+    type: Sequelize.TEXT,
   },
   venueName: {
     type: Sequelize.STRING,
-    allowNull: false
+    allowNull: false,
   },
   venueLocale: {
     type: Sequelize.STRING,
-    allowNull: false
+    allowNull: false,
   },
   venuePostCode: {
     type: Sequelize.INTEGER,
-    allowNull: false
+    allowNull: false,
   },
   venueCity: {
     type: Sequelize.STRING,
-    allowNull: false
+    allowNull: false,
   },
   venueState: {
     type: Sequelize.STRING,
-    allowNull: false
+    allowNull: false,
   },
   venueCountry: {
     type: Sequelize.STRING,
-    allowNull: false
+    allowNull: false,
   },
   venueAddress: {
     type: Sequelize.STRING,
-    allowNull: false
+    allowNull: false,
   },
   venueLongitude: {
     type: Sequelize.STRING,
-    allowNull: false
+    allowNull: false,
   },
   venueLatitude: {
     type: Sequelize.STRING,
-    allowNull: false
-  }
+    allowNull: false,
+  },
 });
-
 
 module.exports = Event;

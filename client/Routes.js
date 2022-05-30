@@ -22,7 +22,7 @@ class Routes extends Component {
 
   render() {
     const { isLoggedIn } = this.props;
-    console.log("Route page", this.props);
+    //console.log("Route page", this.props);
     return (
       <Box sx={{ marginTop: "69px" }}>
         {isLoggedIn ? (
