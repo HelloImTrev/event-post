@@ -14,7 +14,7 @@ const Slides = () => {
       name: "concerts",
     },
     {
-      image: "/images/sports.jpg",
+      image: "/images/sports2.jpg",
       name: "sports",
     },
     {
