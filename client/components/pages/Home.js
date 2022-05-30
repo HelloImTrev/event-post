@@ -25,10 +25,10 @@ export const Home = (props) => {
           },
         }}
       >
-        <img src={"/images/main.jpg"} style={{ zIndex: "-1", width: "100%", height: "100%", display: "block" }} />
+        <img src={"/images/main_test.jpeg"} style={{ zIndex: "-1", width: "100%", height: "100%", display: "block" }} />
         <Box sx={{ zIndex: "1", width: "100%", position: "absolute" }}>
           <Typography
-            variant="marker"
+            variant="promptTitle"
             sx={{
               marginBottom: "1rem",
               alignSelf: "flext-start",
@@ -53,15 +53,16 @@ export const Home = (props) => {
             variant="filled"
             name="search"
             type="search"
-            color="purple"
+            color="pink"
             sx={{
               width: {
                 xxs: "235px",
                 xs: "80%",
                 sm: "450px",
               },
+              borderRadius: "20px",
               input: {
-                background: "white",
+                background: "#d3d3d3",
               },
             }}
           />
@@ -76,7 +77,7 @@ export const Home = (props) => {
             variant="filled"
             name="location"
             type="location"
-            color="purple"
+            color="pink"
             sx={{
               marginTop: "1vw",
               width: {
@@ -84,15 +85,14 @@ export const Home = (props) => {
                 xs: "80%",
                 sm: "450px",
               },
-              borderRadius: "1rem 1rem 0 0 ",
               input: {
-                background: "white",
+                background: "#d3d3d3",
               },
             }}
           />
           <br />
           <Button
-            color="purple"
+            color="pink"
             variant="contained"
             sx={{
               width: "150px",

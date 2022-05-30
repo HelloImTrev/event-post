@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { models: { Event }, models } = require('../db');
+const { models: { Event } } = require('../db');
 module.exports = router;
 
 router.get('/', async(req, res, next) => {
