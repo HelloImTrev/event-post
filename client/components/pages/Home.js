@@ -14,37 +14,35 @@ export const Home = (props) => {
   const [userCity, setUserCity] = useState("");
   let location = {};
   const getLocation = () => {
-    const userLocation = JSON.parse(window.localStorage.getItem("userLocation"));
-    if (!userLocation) {
-      if (!navigator.geolocation) {
-        setError("Geolocation is not supported by your browser");
-      } else {
-        navigator.geolocation.getCurrentPosition(
-          async (position) => {
-            setError(null);
-            location["latitude"] = position.coords.latitude;
-            location["longitude"] = position.coords.longitude;
-            // console.log(userLocation);
-            const data = (
-              await axios.get(
-                `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${location.latitude}&longitude=${location.longitude}&localityLanguage=en`
-              )
-            ).data;
-            setUserCity(data.city);
-            location["city"] = data.city;
-            window.localStorage.setItem("userLocation", JSON.stringify(location));
-          },
-          () => {
-            setError("Unable to retrieve your location");
-          }
-        );
-      }
+    if (!navigator.geolocation) {
+      setError("Geolocation is not supported by your browser");
+    } else {
+      navigator.geolocation.getCurrentPosition(
+        async (position) => {
+          setError(null);
+          location["latitude"] = position.coords.latitude;
+          location["longitude"] = position.coords.longitude;
+
+          const data = (
+            await axios.get(
+              `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${location.latitude}&longitude=${location.longitude}&localityLanguage=en`
+            )
+          ).data;
+
+          setUserCity(data.city);
+          location["city"] = data.city;
+          window.localStorage.setItem("userLocation", JSON.stringify(location));
+        },
+        () => {
+          setError("Unable to retrieve your location");
+        }
+      );
     }
   };
 
   useEffect(() => {
     const userLocation = JSON.parse(window.localStorage.getItem("userLocation"));
-    userLocation ? setUserCity(userLocation.city) : "";
+    userLocation ? setUserCity(userLocation.city) : getLocation();
   }, []);
 
   return (
@@ -107,9 +105,6 @@ export const Home = (props) => {
           />
           <br style={{ marginTop: "1vw" }} />
           <TextField
-            onClick={() => {
-              getLocation();
-            }}
             onChange={(e) => {
               setUserCity(e.target.value);
             }}
