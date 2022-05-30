@@ -1,12 +1,48 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
+import axios from "axios";
 
 //MUI
-import { Box, Typography, TextField, Button } from "@mui/material";
+import { Box, Typography, TextField, Button, Alert } from "@mui/material";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 
 export const Home = (props) => {
   const { username } = props;
+
+  // For geolocation of user
+  const [error, setError] = useState(null);
+  const [userCity, setUserCity] = useState(null);
+  let userLocation = {};
+  const getLocation = () => {
+    if (!navigator.geolocation) {
+      setError("Geolocation is not supported by your browser");
+    } else {
+      navigator.geolocation.getCurrentPosition(
+        async (position) => {
+          setError(null);
+          userLocation["latitude"] = position.coords.latitude;
+          userLocation["longitude"] = position.coords.longitude;
+          // console.log(userLocation);
+          const data = (
+            await axios.get(
+              `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${userLocation.latitude}&longitude=${userLocation.longitude}&localityLanguage=en`
+            )
+          ).data;
+          setUserCity(data.city);
+          userLocation["city"] = data.city;
+          window.localStorage.setItem("userLocation", JSON.stringify(userLocation));
+        },
+        () => {
+          setError("Unable to retrieve your location");
+        }
+      );
+    }
+  };
+
+  useEffect(() => {
+    const userLocation = JSON.parse(window.localStorage.getItem("userLocation"));
+    userLocation ? setUserCity(userLocation.city) : "";
+  }, []);
 
   return (
     <div>
@@ -62,12 +98,15 @@ export const Home = (props) => {
               },
               borderRadius: "20px",
               input: {
-                background: "#d3d3d3",
+                background: "#ebeced",
               },
             }}
           />
           <br style={{ marginTop: "1vw" }} />
           <TextField
+            onClick={() => {
+              getLocation();
+            }}
             id="filled-basic"
             label={
               <Box>
@@ -78,6 +117,7 @@ export const Home = (props) => {
             name="location"
             type="location"
             color="pink"
+            value={userCity === null ? "" : userCity}
             sx={{
               marginTop: "1vw",
               width: {
@@ -86,11 +126,29 @@ export const Home = (props) => {
                 sm: "450px",
               },
               input: {
-                background: "#d3d3d3",
+                background: "#ebeced",
               },
             }}
           />
-          <br />
+          {error !== null ? (
+            <Alert
+              severity="warning"
+              sx={{
+                width: {
+                  xxs: "235px",
+                  xs: "80%",
+                  sm: "450px",
+                },
+                margin: "0 auto",
+                backgroundColor: "transparent",
+              }}
+            >
+              {error}
+            </Alert>
+          ) : (
+            <></>
+          )}
+          {error !== null ? <></> : <br />}
           <Button
             color="pink"
             variant="contained"
