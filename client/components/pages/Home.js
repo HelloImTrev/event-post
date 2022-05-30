@@ -11,31 +11,34 @@ export const Home = (props) => {
 
   // For geolocation of user
   const [error, setError] = useState(null);
-  const [userCity, setUserCity] = useState(null);
-  let userLocation = {};
+  const [userCity, setUserCity] = useState("");
+  let location = {};
   const getLocation = () => {
-    if (!navigator.geolocation) {
-      setError("Geolocation is not supported by your browser");
-    } else {
-      navigator.geolocation.getCurrentPosition(
-        async (position) => {
-          setError(null);
-          userLocation["latitude"] = position.coords.latitude;
-          userLocation["longitude"] = position.coords.longitude;
-          // console.log(userLocation);
-          const data = (
-            await axios.get(
-              `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${userLocation.latitude}&longitude=${userLocation.longitude}&localityLanguage=en`
-            )
-          ).data;
-          setUserCity(data.city);
-          userLocation["city"] = data.city;
-          window.localStorage.setItem("userLocation", JSON.stringify(userLocation));
-        },
-        () => {
-          setError("Unable to retrieve your location");
-        }
-      );
+    const userLocation = JSON.parse(window.localStorage.getItem("userLocation"));
+    if (!userLocation) {
+      if (!navigator.geolocation) {
+        setError("Geolocation is not supported by your browser");
+      } else {
+        navigator.geolocation.getCurrentPosition(
+          async (position) => {
+            setError(null);
+            location["latitude"] = position.coords.latitude;
+            location["longitude"] = position.coords.longitude;
+            // console.log(userLocation);
+            const data = (
+              await axios.get(
+                `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${location.latitude}&longitude=${location.longitude}&localityLanguage=en`
+              )
+            ).data;
+            setUserCity(data.city);
+            location["city"] = data.city;
+            window.localStorage.setItem("userLocation", JSON.stringify(location));
+          },
+          () => {
+            setError("Unable to retrieve your location");
+          }
+        );
+      }
     }
   };
 
@@ -107,6 +110,9 @@ export const Home = (props) => {
             onClick={() => {
               getLocation();
             }}
+            onChange={(e) => {
+              setUserCity(e.target.value);
+            }}
             id="filled-basic"
             label={
               <Box>
@@ -117,7 +123,7 @@ export const Home = (props) => {
             name="location"
             type="location"
             color="pink"
-            value={userCity === null ? "" : userCity}
+            value={userCity}
             sx={{
               marginTop: "1vw",
               width: {
