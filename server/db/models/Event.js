@@ -15,7 +15,7 @@ const Event = db.define("event", {
     allowNull: false,
   },
   category: {
-    type: Sequelize.STRING,
+    type: Sequelize.ENUM(['Sports', 'Music', 'Arts & Theatre', 'Film']),
     allowNull: false,
   },
   images: {
