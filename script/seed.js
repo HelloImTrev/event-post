@@ -14,11 +14,39 @@ async function seed() {
   console.log("db synced!");
 
   // Creating Users
-  const users = await Promise.all([
-    User.create({ username: "cody", password: "123" }),
-    User.create({ username: "murphy", password: "123" }),
-  ]);
 
+  const chrisi = await User.create({
+    username: "chrisi",
+    password: "123",
+    firstName: "Chrisi",
+    lastName: "Smith",
+    email: "chrisi@gmail.com",
+  });
+
+  const cody = await User.create({
+    username: "cody",
+    password: "123",
+    firstName: "Cody",
+    lastName: "The Coder",
+    email: "cody@gmail.com",
+  });
+  const murphy = await User.create({
+    username: "murphy",
+    password: "123",
+    firstName: "Murphy",
+    lastName: "Smurphy",
+    email: "murph@gmail.com",
+  });
+  const bob = await User.create({
+    username: "bob",
+    password: "123",
+    firstName: "Bob",
+    lastName: "Marley",
+    email: "bob@gmail.com",
+  });
+
+  const userIds = [chrisi.id, cody.id, murphy.id, bob.id];
+  let i = 0;
   for (const eventItem of sportEvents) {
     // ticketmaster data doesnt have end time
     let end = new Date(eventItem.dates.start.dateTime);
@@ -40,18 +68,12 @@ async function seed() {
       venueAddress: eventItem._embedded.venues[0].address.line1,
       venueLongitude: eventItem._embedded.venues[0].location.longitude,
       venueLatitude: eventItem._embedded.venues[0].location.latitude,
+      ownerId: userIds[i % userIds.length],
     });
+    i++;
   }
 
-  console.log(`seeded ${users.length} users`);
   console.log(`seeded successfully`);
-
-  return {
-    users: {
-      cody: users[0],
-      murphy: users[1],
-    },
-  };
 }
 
 /*
