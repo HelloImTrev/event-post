@@ -102,7 +102,7 @@ export const Home = (props) => {
               },
             }}
           >
-            Find events near you!
+            Lets do something!
           </Typography>
           <TextField
             id="filled-basic"
