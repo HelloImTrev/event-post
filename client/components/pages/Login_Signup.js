@@ -18,7 +18,7 @@ const AuthForm = (props) => {
   };
   return (
     <Box sx={{ margin: "0 auto", width: "80%", textAlign: "center", paddingTop: "3vw" }}>
-      <Typography variant="promptTitle" sx={{ fontSize: "4vw" }}>
+      <Typography id= "signin" variant="promptTitle" sx={{ fontSize: "4vw" }}>
         Sign In
       </Typography>
       <br />
@@ -90,7 +90,7 @@ const AuthForm = (props) => {
           </Typography>
         </Box>
       </Box>
-      <Typography variant="promptTitle" sx={{ fontSize: "4vw" }}>
+      <Typography id = "signin" variant="promptTitle" sx={{ fontSize: "4vw" }}>
         Create an account
       </Typography>
       <form onSubmit={handleSubmit} name="signup">
