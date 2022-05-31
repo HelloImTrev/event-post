@@ -232,7 +232,7 @@ const Navbar = ({ isLoggedIn, handleLogout }) => {
                   },
                 }}
               >
-                <Typography variant="karlaWhite">EXPLORE</Typography>
+                <Typography id= "navtitle" variant="karlaWhite">EXPLORE</Typography>
               </MenuItem>
               <MenuItem
                 component={Link}
@@ -246,7 +246,7 @@ const Navbar = ({ isLoggedIn, handleLogout }) => {
                   },
                 }}
               >
-                <Typography variant="karlaWhite">POST EVENT</Typography>
+                <Typography id= "navtitle" variant="karlaWhite">POST EVENT</Typography>
               </MenuItem>
               <MenuItem
                 component={Link}
@@ -260,7 +260,7 @@ const Navbar = ({ isLoggedIn, handleLogout }) => {
                   },
                 }}
               >
-                <Typography variant="karlaWhite">Log In/Sign up</Typography>
+                <Typography id= "navtitle" variant="karlaWhite">Log In/Sign up</Typography>
               </MenuItem>
             </Toolbar>
           </AppBar>

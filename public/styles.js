@@ -48,13 +48,36 @@ export const theme = createTheme({
       fontWeight: 700,
       color: "#ffffff",
     },
-    promptTitle: {
+    promptMainTitle: {
       fontFamily: "Prompt",
       fontWeight: 800,
       color: "#d83f87",
       textShadow:
         "2px 0 white, -2px 0 #ebeced, 0 2px #ebeced, 0 -2px #ebeced, 1px 1px #ebeced, -1px -1px #ebeced, -1px 1px #ebeced, 1px -1px #ebeced",
     },
+    promptTitle: {
+      fontFamily: "Prompt",
+      fontWeight: 800,
+      color: "black",
+    },
+    cardTitle: {
+      fontFamily: "'Roboto', sans-serif",
+      fontWeight: 500,
+      fontSize: "20px",
+      color: "black"
+    },
+    cardLocation: {
+      fontFamily: "'Roboto', sans-serif",
+      fontWeight: 300,
+      fontSize: "15px",
+      color: "#a6a6a6"
+    },
+    cardDate: {
+      fontFamily: "'Roboto', sans-serif",
+      fontWeight: 500,
+      fontSize: "15px",
+      color: "#8265a7"
+    }
   },
   palette: {
     black: {

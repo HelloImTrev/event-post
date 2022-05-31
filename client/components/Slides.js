@@ -32,7 +32,7 @@ const Slides = () => {
   ];
   return (
     <div style={{ zIndex: "-1", width: "100%", height: "100%" }}>
-      <Carousel animation="slide" sx={{ height: "100%" }}>
+      <Carousel animation="slide" indicators={false} sx={{ height: "100%" }}>
         {items.map((item, i) => (
           <Item key={i} item={item} />
         ))}
@@ -48,7 +48,7 @@ function Item({ item }) {
         className="imageCarousel"
         src={item.image}
         alt={item.name}
-        style={{ width: "100%", height: "450px", display: "block" }}
+        style={{ width: "100%", height: "600px", display: "block"}}
       />
     </Paper>
   );

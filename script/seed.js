@@ -5,6 +5,7 @@ const {
   models: { User, Event },
 } = require("../server/db");
 const sportEvents = require("./sportEvents");
+const musicEvents = require("./musicEvents");
 /**
  * seed - this function clears the database, updates tables to
  *      match the models, and populates the database.
@@ -14,16 +15,46 @@ async function seed() {
   console.log("db synced!");
 
   // Creating Users
-  const users = await Promise.all([
-    User.create({ username: "cody", password: "123" }),
-    User.create({ username: "murphy", password: "123" }),
-  ]);
+
+  const chrisi = await User.create({
+    username: "chrisi",
+    password: "123",
+    firstName: "Chrisi",
+    lastName: "Smith",
+    email: "chrisi@gmail.com",
+  });
+
+  const cody = await User.create({
+    username: "cody",
+    password: "123",
+    firstName: "Cody",
+    lastName: "The Coder",
+    email: "cody@gmail.com",
+  });
+  const murphy = await User.create({
+    username: "murphy",
+    password: "123",
+    firstName: "Murphy",
+    lastName: "Smurphy",
+    email: "murph@gmail.com",
+  });
+  const bob = await User.create({
+    username: "bob",
+    password: "123",
+    firstName: "Bob",
+    lastName: "Marley",
+    email: "bob@gmail.com",
+  });
+
+  const userIds = [chrisi.id, cody.id, murphy.id, bob.id];
+  let i = 0;
 
   for (const eventItem of sportEvents) {
     // ticketmaster data doesnt have end time
     let end = new Date(eventItem.dates.start.dateTime);
     end.setHours(end.getHours() + 2);
     end = end.toISOString();
+
     await Event.create({
       name: eventItem.name,
       start: eventItem.dates.start.dateTime,
@@ -36,22 +67,50 @@ async function seed() {
       venuePostCode: eventItem._embedded.venues[0].postalCode * 1,
       venueCity: eventItem._embedded.venues[0].city.name,
       venueState: eventItem._embedded.venues[0].state.name,
+      venueStateCode: eventItem._embedded.venues[0].state.stateCode,
       venueCountry: eventItem._embedded.venues[0].country.name,
+      venueCountryCode: eventItem._embedded.venues[0].country.countryCode,
       venueAddress: eventItem._embedded.venues[0].address.line1,
       venueLongitude: eventItem._embedded.venues[0].location.longitude,
       venueLatitude: eventItem._embedded.venues[0].location.latitude,
+      ownerId: userIds[i % userIds.length],
     });
+    i++;
+  }
+  
+  i = 0;
+
+  for (const eventItem of musicEvents) {
+    // ticketmaster data doesnt have end time
+    let end = new Date(eventItem.dates.start.dateTime);
+    end.setHours(end.getHours() + 2);
+    end = end.toISOString();
+    
+
+    await Event.create({
+      name: eventItem.name,
+      start: eventItem.dates.start.dateTime,
+      end: end,
+      category: eventItem.classifications[0].segment.name,
+      images: eventItem.images,
+      description: "",
+      venueName: eventItem._embedded.venues[0].name,
+      venueLocale: eventItem._embedded.venues[0].locale,
+      venuePostCode: eventItem._embedded.venues[0].postalCode * 1,
+      venueCity: eventItem._embedded.venues[0].city.name,
+      venueState: eventItem._embedded.venues[0].state.name,
+      venueStateCode: eventItem._embedded.venues[0].state.stateCode,
+      venueCountry: eventItem._embedded.venues[0].country.name,
+      venueCountryCode: eventItem._embedded.venues[0].country.countryCode,
+      venueAddress: eventItem._embedded.venues[0].address.line1,
+      venueLongitude: eventItem._embedded.venues[0].location.longitude,
+      venueLatitude: eventItem._embedded.venues[0].location.latitude,
+      ownerId: userIds[i % userIds.length],
+    });
+    i++;
   }
 
-  console.log(`seeded ${users.length} users`);
   console.log(`seeded successfully`);
-
-  return {
-    users: {
-      cody: users[0],
-      murphy: users[1],
-    },
-  };
 }
 
 /*

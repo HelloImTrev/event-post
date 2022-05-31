@@ -11,13 +11,25 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 
 // child component
 import Slides from "../Slides";
+import HomepageEvents from "../helperComponents/HomepageEvents";
 
 export const Home = (props) => {
   const { username } = props;
+  let today;
 
   // For geolocation of user
   const [error, setError] = useState(null);
   const [userCity, setUserCity] = useState("New York");
+
+  // For date picker
+  const [date, setDate] = useState(today);
+
+  useEffect(() => {
+    getLocation();
+    today = new Date().toLocaleDateString();
+    console.log("tday is", today);
+  }, []);
+
   let location = {};
   const getLocation = () => {
     if (!navigator.geolocation) {
@@ -47,39 +59,36 @@ export const Home = (props) => {
     }
   };
 
-  let today;
-  useEffect(() => {
-    getLocation();
-    today = new Date().toLocaleDateString();
-    console.log("tday is", today);
-  }, []);
-
-  // For date picker
-  const [date, setDate] = useState(today);
-
   return (
     <div>
       <Box
         sx={{
-          display: "flex",
-          textAlign: "center",
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center",
           width: "100%",
           height: {
             xxs: "300px",
             xs: "400px",
             sm: "500px",
+            md: "600px"
           },
         }}
       >
         <Slides />
-        <Box sx={{ zIndex: "1", width: "100%", position: "absolute", top: { xxs: "90px", xs: "100px" } }}>
+        <Box
+          sx={{
+            zIndex: "1",
+            display: "flex",
+            textAlign: "center",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+            width: "100%",
+            position: "absolute",
+            top: { xxs: "90px", xs: "100px", sm: "125px", md: "150px" },
+          }}
+        >
           <Typography
-            variant="promptTitle"
+            variant="promptMainTitle"
             sx={{
-              alignSelf: "flex-start",
               fontSize: {
                 xxs: "20px",
                 xs: "27px",
@@ -93,7 +102,7 @@ export const Home = (props) => {
               },
             }}
           >
-            Join the popular events!
+            Lets do something!
           </Typography>
           <TextField
             id="filled-basic"
@@ -211,6 +220,7 @@ export const Home = (props) => {
             Go
           </Button>
         </Box>
+        <HomepageEvents location={location.city}/>
       </Box>
     </div>
   );
