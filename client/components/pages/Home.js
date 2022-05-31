@@ -219,7 +219,7 @@ export const Home = (props) => {
             Go
           </Button>
         </Box>
-        <HomepageEvents />
+        <HomepageEvents location={location.city}/>
       </Box>
     </div>
   );

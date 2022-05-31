@@ -6,9 +6,9 @@ const EventCard = ({event}) => {
   const formatedDate = ((date.getMonth() > 8) ? (date.getMonth() + 1) : ('0' + (date.getMonth() + 1))) + '/' + ((date.getDate() > 9) ? date.getDate() : ('0' + date.getDate())) + '/' + date.getFullYear();
 
   return (
-    <Grid item xs={3} sm={4} md={3}>
+    <Grid item xs={3} sm={4} md={3} marginBottom="1rem">
       <Card sx={{ maxWidth: 305 }}>
-        <CardMedia component="img" height="203" image={event.images[0].url}/>
+        <CardMedia component="img" sx={{width: "100%", height: "100%"}} image={event.images[0].url}/>
         <CardContent>
           <Typography variant="cardTitle" marginBottom="1rem" component="div" >
             {event.name}
