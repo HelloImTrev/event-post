@@ -10,7 +10,7 @@ import { Paper, Button } from "@mui/material";
 const Slides = () => {
   var items = [
     {
-      image: "/images/concert2.jpg",
+      image: "/images/concert.jpg",
       name: "concerts",
     },
     {
