@@ -88,7 +88,7 @@ export const Myevents = (props) => {
         }}
       >
         <Typography
-          variant="marker"
+          variant="promptTitle"
           sx={{
             marginBottom: "1rem",
             alignSelf: "flext-start",

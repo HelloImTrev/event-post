@@ -67,7 +67,7 @@ export const Home = (props) => {
           height: {
             xxs: "300px",
             xs: "400px",
-            sm: "500px",
+            sm: "450px",
           },
         }}
       >

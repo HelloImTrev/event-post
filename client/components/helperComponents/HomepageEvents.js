@@ -4,8 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { getEvents } from "../../store/events";
 import EventCard from "./EventCard";
 
-const HomepageEvents = ({location = "New York"}) => {
-  const events = useSelector((state) => state.events);
+const HomepageEvents = ({location = "Los Angeles"}) => {
+  const events = useSelector((state) => state.events.filter((event) => event.venueCity === location));
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -13,10 +13,9 @@ const HomepageEvents = ({location = "New York"}) => {
   }, []);
 
   console.log(events);
-
   if (events) {
     return (
-      <Box margin="1rem">
+      <Box sx={{margin: "1.5rem 1rem 1rem 1rem"}}>
         <Box>
           <Typography
             variant="promptTitle"
@@ -29,7 +28,7 @@ const HomepageEvents = ({location = "New York"}) => {
               },
             }}
           >
-            {`Things to do in, ${location}`}
+            Things to do in, <Box sx={{display: "inline-block", color: "#d83f87"}}>{location}</Box>
           </Typography>
         </Box>
         <Box sx={{margin: "1rem"}}>
