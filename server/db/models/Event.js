@@ -50,9 +50,15 @@ const Event = db.define("event", {
     type: Sequelize.STRING,
     allowNull: false,
   },
+  venueStateCode: {
+    type: Sequelize.STRING,
+  },
   venueCountry: {
     type: Sequelize.STRING,
     allowNull: false,
+  },
+  venueCountryCode: {
+    type: Sequelize.STRING
   },
   venueAddress: {
     type: Sequelize.STRING,

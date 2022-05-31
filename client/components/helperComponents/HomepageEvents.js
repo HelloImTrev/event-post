@@ -1,11 +1,11 @@
-import { Box, Grid } from "@mui/material";
+import { Box, Grid, Typography } from "@mui/material";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getEvents } from "../../store/events";
 import EventCard from "./EventCard";
 
-const HomepageEvents = () => {
-  const events = useSelector((state) => state.events);
+const HomepageEvents = ({location = "Los Angeles"}) => {
+  const events = useSelector((state) => state.events.filter((event) => event.venueCity === location));
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -13,18 +13,31 @@ const HomepageEvents = () => {
   }, []);
 
   console.log(events);
-
   if (events) {
     return (
-      <Box>
+      <Box sx={{margin: "1.5rem 1rem 1rem 1rem"}}>
         <Box>
-          <h1>Tester</h1>
+          <Typography
+            variant="promptTitle"
+            sx={{
+              fontSize: {
+                xxs: "15px",
+                xs: "19px",
+                sm: "30px",
+                md: "35px",
+              },
+            }}
+          >
+            Things to do in, <Box sx={{display: "inline-block", color: "#d83f87"}}>{location}</Box>
+          </Typography>
         </Box>
-        {/* <Grid container spacing={3} sx={{ padding: "2rem" }}>
+        <Box sx={{margin: "1rem"}}>
+        <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }} sx={{padding:"0 2rem"}}>
           {events.map((event) => {
-            return <EventCard event={event} />;
+            return <EventCard key={event.id} event={event} />;
           })}
-        </Grid> */}
+        </Grid>
+        </Box>
       </Box>
     );
   } else {
