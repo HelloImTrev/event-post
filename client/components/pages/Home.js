@@ -163,7 +163,7 @@ export const Home = (props) => {
           {error !== null ? <></> : <br />}
           <LocalizationProvider dateAdapter={AdapterDateFns}>
             <DatePicker
-              label="Basic example"
+              label="Date"
               value={date}
               onChange={(newDate) => {
                 setDate(newDate);
