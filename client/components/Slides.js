@@ -32,7 +32,7 @@ const Slides = () => {
   ];
   return (
     <div style={{ zIndex: "-1", width: "100%", height: "100%" }}>
-      <Carousel animation="slide" sx={{ height: "100%" }}>
+      <Carousel animation="slide" indicators={false} sx={{ height: "100%" }}>
         {items.map((item, i) => (
           <Item key={i} item={item} />
         ))}

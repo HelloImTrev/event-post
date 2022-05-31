@@ -1,10 +1,10 @@
-import { Box, Grid } from "@mui/material";
+import { Box, Grid, Typography } from "@mui/material";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getEvents } from "../../store/events";
 import EventCard from "./EventCard";
 
-const HomepageEvents = () => {
+const HomepageEvents = ({location = "New York"}) => {
   const events = useSelector((state) => state.events);
   const dispatch = useDispatch();
 
@@ -16,15 +16,29 @@ const HomepageEvents = () => {
 
   if (events) {
     return (
-      <Box>
+      <Box margin="1rem">
         <Box>
-          <h1>Tester</h1>
+          <Typography
+            variant="promptTitle"
+            sx={{
+              fontSize: {
+                xxs: "15px",
+                xs: "19px",
+                sm: "30px",
+                md: "35px",
+              },
+            }}
+          >
+            {`Things to do in, ${location}`}
+          </Typography>
         </Box>
-        {/* <Grid container spacing={3} sx={{ padding: "2rem" }}>
+        <Box sx={{margin: "1rem"}}>
+        <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }} sx={{padding:"0 2rem"}}>
           {events.map((event) => {
-            return <EventCard event={event} />;
+            return <EventCard key={event.id} event={event} />;
           })}
-        </Grid> */}
+        </Grid>
+        </Box>
       </Box>
     );
   } else {

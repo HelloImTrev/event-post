@@ -32,7 +32,7 @@ const AuthForm = (props) => {
           variant="outlined"
           name="username"
           type="text"
-          color="purple"
+          color="pink"
           style={{ width: "50%" }}
         />
         <br />
@@ -42,7 +42,7 @@ const AuthForm = (props) => {
           variant="outlined"
           name="password"
           type="password"
-          color="purple"
+          color="pink"
           style={{ width: "50%" }}
         />
         <br />
@@ -112,7 +112,7 @@ const AuthForm = (props) => {
           variant="outlined"
           name="password"
           type="password"
-          color="purple"
+          color="pink"
           style={{ width: "50%" }}
           value={signupInput.password}
           onChange={handleCreateAccountInputFields}
