@@ -48,7 +48,7 @@ function Item({ item }) {
         className="imageCarousel"
         src={item.image}
         alt={item.name}
-        style={{ width: "100%", height: "450px", display: "block"}}
+        style={{ width: "100%", height: "600px", display: "block"}}
       />
     </Paper>
   );
