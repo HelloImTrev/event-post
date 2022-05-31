@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from "react";
-import { connect } from "react-redux";
+import React, { useEffect } from "react";
+import { connect, useDispatch } from "react-redux";
+import { getMyEvents } from "../../store/events";
 import { Calendar, dateFnsLocalizer } from "react-big-calendar";
 import format from "date-fns/format";
 import parse from "date-fns/parse";
 import startOfWeek from "date-fns/startOfWeek";
 import getDay from "date-fns/getDay";
 import "react-big-calendar/lib/css/react-big-calendar.css";
-import axios from "axios";
 import { Box, Typography, Grid } from "@mui/material";
 
 const locales = {
@@ -36,25 +36,17 @@ const convertEvents = (events) => {
     : [];
 };
 
-const getEvents = async () => {
-  try {
-    const response = await axios.get("/api/events");
-    const events = convertEvents(response.data);
-    return events;
-  } catch (err) {
-    console.log(err);
-  }
-};
-
 export const Myevents = (props) => {
-  const { username } = props;
-  const [allEvents, setAllEvents] = useState([]);
+  const dispatch = useDispatch();
+  const { username, events } = props;
+  const calenderEvents = convertEvents(events);
+  const fetchMyEvents = () => dispatch(getMyEvents());
 
   useEffect(() => {
     let mounted = true;
-    getEvents().then((events) => {
+    fetchMyEvents().then((events) => {
       if (mounted) {
-        setAllEvents(events);
+        return events;
       }
     });
     return () => (mounted = false);
@@ -67,10 +59,10 @@ export const Myevents = (props) => {
   //   console.log(event);
   // }
 
-//   <EventBox
-//   orientation="vertical"
-//   event={selectedEvent}
-// />  
+  //   <EventBox
+  //   orientation="vertical"
+  //   event={selectedEvent}
+  // />
   // function handleAddEvent() {
   //   setAllEvents([...allEvents, newEvent])
   // }
@@ -101,7 +93,7 @@ export const Myevents = (props) => {
       <Calendar
         showMultiDayTimes={true}
         localizer={localizer}
-        events={allEvents}
+        events={calenderEvents}
         startAccessor="start"
         endAccessor="end"
         style={{ height: 500, margin: "50px" }}
@@ -116,6 +108,7 @@ export const Myevents = (props) => {
 const mapState = (state) => {
   return {
     username: state.auth.username,
+    events: state.events,
   };
 };
 
