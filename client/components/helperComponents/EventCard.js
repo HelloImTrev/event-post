@@ -7,8 +7,8 @@ const EventCard = ({event}) => {
 
   return (
     <Grid item xs={3} sm={4} md={3} marginBottom="1rem">
-      <Card sx={{ maxWidth: 305 }}>
-        <CardMedia component="img" sx={{width: "100%", height: "100%"}} image={event.images[0].url}/>
+      <Card sx={{ maxWidth: 305, height: "350px"}}>
+        <CardMedia component="img" sx={{width: "100%", height: "205px"}} image={event.images[0].url}/>
         <CardContent>
           <Typography variant="cardTitle" marginBottom="1rem" component="div" >
             {event.name}
