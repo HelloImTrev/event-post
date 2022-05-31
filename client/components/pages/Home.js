@@ -67,7 +67,8 @@ export const Home = (props) => {
           height: {
             xxs: "300px",
             xs: "400px",
-            sm: "450px",
+            sm: "500px",
+            md: "600px"
           },
         }}
       >
@@ -82,7 +83,7 @@ export const Home = (props) => {
             alignItems: "center",
             width: "100%",
             position: "absolute",
-            top: { xxs: "90px", xs: "100px" },
+            top: { xxs: "90px", xs: "100px", sm: "125px", md: "150px" },
           }}
         >
           <Typography
