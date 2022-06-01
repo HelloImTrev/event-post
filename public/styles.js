@@ -64,20 +64,20 @@ export const theme = createTheme({
       fontFamily: "'Roboto', sans-serif",
       fontWeight: 500,
       fontSize: "20px",
-      color: "black"
+      color: "black",
     },
     cardLocation: {
       fontFamily: "'Roboto', sans-serif",
       fontWeight: 300,
       fontSize: "15px",
-      color: "#a6a6a6"
+      color: "#a6a6a6",
     },
     cardDate: {
       fontFamily: "'Roboto', sans-serif",
       fontWeight: 500,
       fontSize: "15px",
-      color: "#8265a7"
-    }
+      color: "#8265a7",
+    },
   },
   palette: {
     black: {

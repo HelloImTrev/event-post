@@ -24,7 +24,7 @@ export const me = () => async (dispatch) => {
         authorization: token,
       },
     });
-    history.push("/home");
+    // history.push("/home");
     return dispatch(setAuth(res.data));
   }
 };
@@ -42,7 +42,7 @@ export const authenticate = (username, password, method) => async (dispatch) => 
 
 export const logout = () => {
   window.localStorage.removeItem(TOKEN);
-  // history.push('/login')
+  history.push("/home");
   return {
     type: SET_AUTH,
     auth: {},

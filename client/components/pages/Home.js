@@ -68,7 +68,7 @@ export const Home = (props) => {
             xxs: "300px",
             xs: "400px",
             sm: "500px",
-            md: "600px"
+            md: "600px",
           },
         }}
       >
@@ -220,7 +220,7 @@ export const Home = (props) => {
             Go
           </Button>
         </Box>
-        <HomepageEvents location={location.city}/>
+        <HomepageEvents location={location.city} />
       </Box>
     </div>
   );

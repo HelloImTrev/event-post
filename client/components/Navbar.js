@@ -83,7 +83,11 @@ const Navbar = ({ isLoggedIn, handleLogout }) => {
         <div>
           <AppBar position="fixed" sx={{ bgcolor: "#2a1b3d" }}>
             <Toolbar sx={{ borderBottom: "solid 1px #2a1b3d" }}>
-              <MenuItem component={Link} to={"/home"} sx={{ "&:hover": { bgcolor: "transparent" }, padding: "0" }}>
+              <MenuItem
+                component={Link}
+                to={"/home"}
+                sx={{ "&:hover": { bgcolor: "transparent" }, padding: "0", height: { xxs: "60px", xs: "69px" } }}
+              >
                 <img src="/images/logo_test.svg" style={{ height: "70px", margin: "3px 5px", padding: "3px 0" }} />
               </MenuItem>
 
@@ -121,7 +125,9 @@ const Navbar = ({ isLoggedIn, handleLogout }) => {
                   },
                 }}
               >
-                <Typography variant="karlaWhite">EXPLORE</Typography>
+                <Typography id="navtitle" variant="karlaWhite">
+                  EXPLORE
+                </Typography>
               </MenuItem>
               <MenuItem
                 component={Link}
@@ -135,7 +141,9 @@ const Navbar = ({ isLoggedIn, handleLogout }) => {
                   },
                 }}
               >
-                <Typography variant="karlaWhite">POST EVENT</Typography>
+                <Typography id="navtitle" variant="karlaWhite">
+                  POST EVENT
+                </Typography>
               </MenuItem>
               <MenuItem
                 ref={anchorRef}
@@ -152,7 +160,9 @@ const Navbar = ({ isLoggedIn, handleLogout }) => {
                   },
                 }}
               >
-                <Typography variant="karlaWhite">Hello, {user.username}</Typography>
+                <Typography id="navtitle" variant="karlaWhite">
+                  Hello, {user.username}
+                </Typography>
               </MenuItem>
               <Popper open={open} anchorEl={anchorRef.current} role={undefined} placement="bottom-start" transition disablePortal>
                 {({ TransitionProps, placement }) => (
@@ -194,7 +204,11 @@ const Navbar = ({ isLoggedIn, handleLogout }) => {
         <div>
           <AppBar position="fixed" sx={{ bgcolor: "#2a1b3d" }}>
             <Toolbar sx={{ borderBottom: "solid 1px #2a1b3d" }}>
-              <MenuItem component={Link} to={"/home"} sx={{ "&:hover": { bgcolor: "transparent" }, padding: "0" }}>
+              <MenuItem
+                component={Link}
+                to={"/home"}
+                sx={{ "&:hover": { bgcolor: "transparent" }, padding: "0", height: { xxs: "60px", xs: "69px" } }}
+              >
                 <img src="/images/logo_test.svg" style={{ height: "70px", margin: "3px 5px", padding: "3px 0" }} />
               </MenuItem>
 
@@ -232,7 +246,9 @@ const Navbar = ({ isLoggedIn, handleLogout }) => {
                   },
                 }}
               >
-                <Typography id= "navtitle" variant="karlaWhite">EXPLORE</Typography>
+                <Typography id="navtitle" variant="karlaWhite">
+                  EXPLORE
+                </Typography>
               </MenuItem>
               <MenuItem
                 component={Link}
@@ -246,7 +262,9 @@ const Navbar = ({ isLoggedIn, handleLogout }) => {
                   },
                 }}
               >
-                <Typography id= "navtitle" variant="karlaWhite">POST EVENT</Typography>
+                <Typography id="navtitle" variant="karlaWhite">
+                  POST EVENT
+                </Typography>
               </MenuItem>
               <MenuItem
                 component={Link}
@@ -260,7 +278,9 @@ const Navbar = ({ isLoggedIn, handleLogout }) => {
                   },
                 }}
               >
-                <Typography id= "navtitle" variant="karlaWhite">Log In/Sign up</Typography>
+                <Typography id="navtitle" variant="karlaWhite">
+                  Log In/Sign up
+                </Typography>
               </MenuItem>
             </Toolbar>
           </AppBar>
