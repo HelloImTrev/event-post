@@ -12,7 +12,6 @@ import {
   Toolbar,
   MenuItem,
   Typography,
-  useMediaQuery,
   Button,
   ClickAwayListener,
   Grow,
@@ -125,11 +124,9 @@ const Navbar = ({ isLoggedIn, handleLogout }) => {
                   },
                 }}
               >
-
                 <Typography id="navtitle" variant="karlaWhite">
                   EXPLORE
                 </Typography>
-
               </MenuItem>
               <MenuItem
                 component={Link}
@@ -146,7 +143,6 @@ const Navbar = ({ isLoggedIn, handleLogout }) => {
                 <Typography id="navtitle" variant="karlaWhite">
                   POST EVENT
                 </Typography>
-
               </MenuItem>
               <MenuItem
                 ref={anchorRef}
@@ -163,13 +159,9 @@ const Navbar = ({ isLoggedIn, handleLogout }) => {
                   },
                 }}
               >
-
                 <Typography id="navtitle" variant="karlaWhite">
                   Hello, {user.username}
                 </Typography>
-
-                <Typography id = "navtitle" variant="karlaWhite">Hello, {user.username}</Typography>
-
               </MenuItem>
               <Popper open={open} anchorEl={anchorRef.current} role={undefined} placement="bottom-start" transition disablePortal>
                 {({ TransitionProps, placement }) => (
