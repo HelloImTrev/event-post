@@ -10,7 +10,7 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 
 // child component
-import Slides from "../Slides";
+import Slides from "../helperComponents/Slides";
 import HomepageEvents from "../helperComponents/HomepageEvents";
 
 export const Home = (props) => {

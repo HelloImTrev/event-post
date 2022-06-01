@@ -1,6 +1,6 @@
 import React from "react";
 
-import Navbar from "./components/Navbar";
+import Navbar from "./components/helperComponents/Navbar";
 import Routes from "./Routes";
 
 import { ThemeProvider } from "@mui/material/styles";

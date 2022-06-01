@@ -2,7 +2,7 @@ import React, { Fragment } from "react";
 
 // redux
 import { connect, useSelector, useDispatch } from "react-redux";
-import { logout } from "../store/auth";
+import { logout } from "../../store/auth";
 
 // router
 import { Link } from "react-router-dom";
