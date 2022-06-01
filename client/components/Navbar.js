@@ -12,7 +12,6 @@ import {
   Toolbar,
   MenuItem,
   Typography,
-  useMediaQuery,
   Button,
   ClickAwayListener,
   Grow,
