@@ -22,7 +22,7 @@ a {
 }
 
 #navtitle:hover {
-  color: #d83f8660;
+  color:   rgba(255, 0, 195, 0.321);
  
 }
 
@@ -34,3 +34,4 @@ a {
       white;
       font-family: "karla", sans-serif;
 }
+
