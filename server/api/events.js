@@ -63,3 +63,22 @@ router.post("/subscribe/:id", async (req, res, next) => {
     next(err);
   }
 });
+
+// with this rute a user unsubscribes from an event
+router.put("/unsubscribe/:id", async (req, res, next) => {
+  try {
+    const user = await User.findByToken(req.headers.authorization);
+    const event = await EventSubscription.findOne({
+      where: {
+        userId: user.id,
+        eventId: req.params.id,
+      },
+    });
+    if (event) {
+      await event.destroy();
+    }
+    res.sendStatus(204);
+  } catch (err) {
+    next(err);
+  }
+});
