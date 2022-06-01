@@ -18,7 +18,7 @@ const AuthForm = (props) => {
   };
   return (
     <Box sx={{ margin: "0 auto", width: "80%", textAlign: "center", paddingTop: "3vw" }}>
-      <Typography id="signin" variant="promptTitle" sx={{ fontSize: "4vw" }}>
+      <Typography variant="promptTitle" sx={{ fontSize: "4vw" }}>
         Sign In
       </Typography>
       <br />
@@ -134,7 +134,7 @@ const AuthForm = (props) => {
         </Box>
       </Box>
       <Typography
-        id="signin"
+    
         variant="promptTitle"
         sx={{
           width: {

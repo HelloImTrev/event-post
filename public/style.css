@@ -11,18 +11,9 @@ a {
   text-decoration: none;
 }
 
-
-#navtitle {
-  color: "#d83f87";
-  text-shadow: -2px 2px 4px 
-      rgba(0, 0, 0, 0.5), 
-      2px -2px 0 
-      rgba(255, 0, 195, 0.9);
-      font-family: "karla", sans-serif;
-}
-
 #navtitle:hover {
-  color:   rgba(255, 0, 195, 0.321);
+  color:  #D83F87;
+
  
 }
 
