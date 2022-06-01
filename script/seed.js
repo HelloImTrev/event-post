@@ -77,7 +77,7 @@ async function seed() {
     });
     i++;
   }
-  
+
   i = 0;
 
   for (const eventItem of musicEvents) {
@@ -85,7 +85,6 @@ async function seed() {
     let end = new Date(eventItem.dates.start.dateTime);
     end.setHours(end.getHours() + 2);
     end = end.toISOString();
-    
 
     await Event.create({
       name: eventItem.name,
