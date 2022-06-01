@@ -33,7 +33,13 @@ const AuthForm = (props) => {
           name="username"
           type="text"
           color="pink"
-          style={{ width: "50%" }}
+          sx={{
+            width: {
+              xxs: "95%",
+              sm: "80%",
+              md: "50%",
+            },
+          }}
         />
         <br />
         <TextField
@@ -43,7 +49,13 @@ const AuthForm = (props) => {
           name="password"
           type="password"
           color="pink"
-          style={{ width: "50%" }}
+          sx={{
+            width: {
+              xxs: "95%",
+              sm: "80%",
+              md: "50%",
+            },
+          }}
         />
         <br />
         <Button type="submit" color="grey" variant="contained" sx={{ width: "50%" }}>
@@ -101,7 +113,13 @@ const AuthForm = (props) => {
           name="username"
           type="text"
           color="pink"
-          style={{ width: "50%" }}
+          sx={{
+            width: {
+              xxs: "95%",
+              sm: "80%",
+              md: "50%",
+            },
+          }}
           value={signupInput.username}
           onChange={handleCreateAccountInputFields}
         />
@@ -113,7 +131,13 @@ const AuthForm = (props) => {
           name="password"
           type="password"
           color="pink"
-          style={{ width: "50%" }}
+          sx={{
+            width: {
+              xxs: "95%",
+              sm: "80%",
+              md: "50%",
+            },
+          }}
           value={signupInput.password}
           onChange={handleCreateAccountInputFields}
         />
