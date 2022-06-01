@@ -18,7 +18,7 @@ const AuthForm = (props) => {
   };
   return (
     <Box sx={{ margin: "0 auto", width: "80%", textAlign: "center", paddingTop: "3vw" }}>
-      <Typography variant="promptTitle" sx={{ fontSize: "4vw" }}>
+      <Typography id="signin" variant="promptTitle" sx={{ fontSize: "4vw" }}>
         Sign In
       </Typography>
       <br />
@@ -36,8 +36,8 @@ const AuthForm = (props) => {
           sx={{
             width: {
               xxs: "95%",
-              sm: "80%",
-              md: "50%",
+              md: "60%",
+              lg: "50%",
             },
           }}
         />
@@ -52,13 +52,24 @@ const AuthForm = (props) => {
           sx={{
             width: {
               xxs: "95%",
-              sm: "80%",
-              md: "50%",
+              md: "60%",
+              lg: "50%",
             },
           }}
         />
         <br />
-        <Button type="submit" color="grey" variant="contained" sx={{ width: "50%" }}>
+        <Button
+          type="submit"
+          color="grey"
+          variant="contained"
+          sx={{
+            width: {
+              xxs: "95%",
+              md: "60%",
+              lg: "50%",
+            },
+          }}
+        >
           LOG IN
         </Button>
         <br />
@@ -66,11 +77,27 @@ const AuthForm = (props) => {
           onClick={() => handleSubmit({ target: { name: "login", username: "murphy", password: "123" } })}
           color="pink"
           variant="contained"
-          sx={{ width: "50%", marginTop: "1vw" }}
+          sx={{
+            width: {
+              xxs: "95%",
+              md: "60%",
+              lg: "50%",
+            },
+            marginTop: "1vw",
+          }}
         >
           Sign in as a Demo User
         </Button>
-        <Box sx={{ width: "50%", margin: "1vw auto" }}>
+        <Box
+          sx={{
+            width: {
+              xxs: "95%",
+              md: "60%",
+              lg: "50%",
+            },
+            margin: "1vw auto",
+          }}
+        >
           {error && error.response && <Alert severity="error">{error.response.data}</Alert>}
         </Box>
       </form>
@@ -83,7 +110,11 @@ const AuthForm = (props) => {
           justifyContent: "center",
           alignItems: "center",
           height: "1px",
-          width: "50%",
+          width: {
+            xxs: "95%",
+            md: "60%",
+            lg: "50%",
+          },
           backgroundColor: "#5e5e5e",
           margin: "3vw auto",
         }}
@@ -102,7 +133,18 @@ const AuthForm = (props) => {
           </Typography>
         </Box>
       </Box>
-      <Typography variant="promptTitle" sx={{ fontSize: "4vw" }}>
+      <Typography
+        id="signin"
+        variant="promptTitle"
+        sx={{
+          width: {
+            xxs: "95%",
+            md: "60%",
+            lg: "50%",
+          },
+          fontSize: "4vw",
+        }}
+      >
         Create an account
       </Typography>
       <form onSubmit={handleSubmit} name="signup">
@@ -116,8 +158,8 @@ const AuthForm = (props) => {
           sx={{
             width: {
               xxs: "95%",
-              sm: "80%",
-              md: "50%",
+              md: "60%",
+              lg: "50%",
             },
           }}
           value={signupInput.username}
@@ -134,8 +176,8 @@ const AuthForm = (props) => {
           sx={{
             width: {
               xxs: "95%",
-              sm: "80%",
-              md: "50%",
+              md: "60%",
+              lg: "50%",
             },
           }}
           value={signupInput.password}
@@ -148,11 +190,26 @@ const AuthForm = (props) => {
           }}
           color="grey"
           variant="contained"
-          sx={{ width: "50%" }}
+          sx={{
+            width: {
+              xxs: "95%",
+              md: "60%",
+              lg: "50%",
+            },
+          }}
         >
           CREATE AN ACCOUNT
         </Button>
-        <Box sx={{ width: "50%", margin: "1vw auto" }}>
+        <Box
+          sx={{
+            width: {
+              xxs: "95%",
+              md: "60%",
+              lg: "50%",
+            },
+            margin: "1vw auto",
+          }}
+        >
           {signupError && signupError.response && <Alert severity="error">{signupError.response.data}</Alert>}
         </Box>
       </form>
