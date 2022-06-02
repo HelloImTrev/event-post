@@ -8,7 +8,7 @@ export const theme = createTheme({
       xs: 350,
       sm: 600,
       md: 930,
-      mdLg: 1140,
+      mdLg: 1340,
       lg: 1200,
     },
   },
@@ -59,7 +59,6 @@ export const theme = createTheme({
     promptTitle: {
       fontFamily: "Prompt",
       fontWeight: 800,
-      color: "black",
     },
     cardTitle: {
       fontFamily: "'Roboto', sans-serif",
@@ -93,11 +92,18 @@ export const theme = createTheme({
       dark: "#cfcfcf",
       contrastText: "#000000",
     },
+    lightPurple: {
+      main: "#8265a7"
+    },
     purple: {
       light: "#ca9cf7",
       main: "#aa55ff",
       dark: "#600bb3",
       contrastText: "#ffffff",
+    },
+    eggplant: {
+      main: "#2a1b3d",
+      contrastText: "#ffffff"
     },
     white: {
       main: "#ffffff",
