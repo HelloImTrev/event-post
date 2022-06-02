@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { connect } from "react-redux";
 import axios from "axios";
+
+// Redux
+import { connect, useDispatch, useSelector } from "react-redux";
+import { searchKeyword } from "../../store/events";
 
 //MUI
 import { Box, Typography, TextField, Button, Alert } from "@mui/material";
@@ -15,11 +18,15 @@ import HomepageEvents from "../helperComponents/HomepageEvents";
 
 export const Home = (props) => {
   const { username } = props;
+  const dispatch = useDispatch();
   let today;
+  let location = {};
+
+  // For search bar
+  const [searchObj, setSearchObj] = useState({ name: "", location: location.city ? location.city : "New York" });
 
   // For geolocation of user
   const [error, setError] = useState(null);
-  const [userCity, setUserCity] = useState("New York");
 
   // For date picker
   const [date, setDate] = useState(today);
@@ -27,10 +34,8 @@ export const Home = (props) => {
   useEffect(() => {
     getLocation();
     today = new Date().toLocaleDateString();
-    console.log("tday is", today);
   }, []);
 
-  let location = {};
   const getLocation = () => {
     if (!navigator.geolocation) {
       setError("Geolocation is not supported by your browser");
@@ -47,7 +52,7 @@ export const Home = (props) => {
             )
           ).data;
 
-          setUserCity(data.city);
+          setSearchObj({ ...searchObj, location: data.city });
           location["city"] = data.city;
           window.localStorage.setItem("userLocation", JSON.stringify(location));
         },
@@ -58,6 +63,15 @@ export const Home = (props) => {
       );
     }
   };
+
+  // For searchbar
+  const handleChange = async (e) => {
+    setSearchObj({ ...searchObj, [e.target.name]: e.target.value });
+  };
+
+  useEffect(() => {
+    console.log("changed", searchObj);
+  }, [searchObj]);
 
   return (
     <div>
@@ -108,9 +122,11 @@ export const Home = (props) => {
             id="filled-basic"
             label="Search events"
             variant="filled"
-            name="search"
+            name="name"
             type="search"
             color="pink"
+            value={searchObj.name}
+            onChange={handleChange}
             sx={{
               width: {
                 xxs: "235px",
@@ -126,7 +142,7 @@ export const Home = (props) => {
           <br style={{ marginTop: "1vw" }} />
           <TextField
             onChange={(e) => {
-              setUserCity(e.target.value);
+              handleChange(e);
             }}
             id="filled-basic"
             label={
@@ -138,7 +154,7 @@ export const Home = (props) => {
             name="location"
             type="location"
             color="pink"
-            value={userCity}
+            value={searchObj.location}
             sx={{
               marginTop: "1vw",
               width: {
@@ -215,6 +231,9 @@ export const Home = (props) => {
               },
               borderRadius: "3rem",
               fontSize: "20px",
+            }}
+            onClick={() => {
+              dispatch(searchKeyword(searchObj));
             }}
           >
             Go

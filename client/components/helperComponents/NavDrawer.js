@@ -26,12 +26,12 @@ const NavDrawer = ({ toggleDrawer, user, handleLogout }) => {
     <Box sx={{ width: 250 }} role="presentation" onClick={toggleDrawer(false)} onKeyDown={toggleDrawer(false)}>
       <List>
         <ListItem disablePadding>
-          <ListItemButton>
+          <ListItemButton component={Link} to={"/explore"}>
             <ListItemText primary={"Explore"} />
           </ListItemButton>
         </ListItem>
         <ListItem disablePadding>
-          <ListItemButton>
+          <ListItemButton component={Link} to={"/post"}>
             <ListItemText primary={"Post an event"} />
           </ListItemButton>
         </ListItem>

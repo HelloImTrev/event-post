@@ -10,7 +10,23 @@ module.exports = router;
 router.get("/", async (req, res, next) => {
   try {
     const events = await Event.findAll({});
+    res.json(events);
+  } catch (err) {
+    next(err);
+  }
+});
 
+router.get("/search", async (req, res, next) => {
+  try {
+    const { keyword, location } = req.query;
+    // console.log("ln23..................", req.query);
+    const events = await Event.findAll({
+      where: {
+        name: {
+          [Op.iLike]: "%" + keyword + "%",
+        },
+      },
+    });
     res.json(events);
   } catch (err) {
     next(err);
