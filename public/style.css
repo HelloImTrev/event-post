@@ -11,8 +11,12 @@ a {
   text-decoration: none;
 }
 
+#single-event-container {
+  height: calc(100vh - 76px);
+}
 
-#navtitle {
+
+/* #navtitle {
   color: "#d83f87";
   text-shadow: -2px 2px 4px 
       rgba(0, 0, 0, 0.5), 
@@ -33,4 +37,4 @@ a {
       2px -2px 0 
       white;
       font-family: "karla", sans-serif;
-}
+} */
