@@ -40,6 +40,19 @@ export const getMyEvents = () => {
   };
 };
 
+export const searchKeyword =
+  ({ name, location }) =>
+  async (dispatch) => {
+    try {
+      console.log("entered store", name, location);
+      const events = (await axios.get(`/api/events/search?keyword=${name}&location=${location}`)).data;
+      dispatch(_getEvents(events));
+      // history.push("/explore");
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
 //Reducer\\
 export default function (state = [], action) {
   switch (action.type) {
