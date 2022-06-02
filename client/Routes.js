@@ -12,6 +12,7 @@ import Home from "./components/pages/Home";
 import { LoginSignup } from "./components/pages/Login_Signup";
 import Myevents from "./components/pages/Myevents";
 import SingleEvent from "./components/pages/SingleEvent";
+import Explore from "./components/pages/Explore.js";
 
 // MUI
 import { Box } from "@mui/material";
@@ -23,18 +24,21 @@ class Routes extends Component {
 
   render() {
     const { isLoggedIn } = this.props;
-    //console.log("Route page", this.props);
     return (
-      <Box sx={{ marginTop: "69px" }}>
+      <Box sx={{ marginTop: { xxs: "60px", xs: "69px" } }}>
         {isLoggedIn ? (
           <Switch>
+            <Route path="/" exact component={Home} />
             <Route path="/home" component={Home} />
+            <Route path="/explore" component={Explore} />
             <Route path="/myevents" component={Myevents} />
+            <Redirect to="/home" />
           </Switch>
         ) : (
           <Switch>
             <Route path="/" exact component={Home} />
             <Route path="/home" component={Home} />
+            <Route path="/explore" component={Explore} />
             <Route path="/login" component={LoginSignup} />
             <Route path="/events/:id" component={SingleEvent} />
             <Redirect to="/home" />

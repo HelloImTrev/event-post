@@ -10,7 +10,7 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 
 // child component
-import Slides from "../Slides";
+import Slides from "../helperComponents/Slides";
 import HomepageEvents from "../helperComponents/HomepageEvents";
 
 export const Home = (props) => {
@@ -65,10 +65,10 @@ export const Home = (props) => {
         sx={{
           width: "100%",
           height: {
-            xxs: "300px",
+            xxs: "350px",
             xs: "400px",
             sm: "500px",
-            md: "600px"
+            md: "600px",
           },
         }}
       >
@@ -83,7 +83,7 @@ export const Home = (props) => {
             alignItems: "center",
             width: "100%",
             position: "absolute",
-            top: { xxs: "90px", xs: "100px", sm: "125px", md: "150px" },
+            top: { xxs: "75px", xs: "100px", sm: "125px", md: "150px" },
           }}
         >
           <Typography
@@ -172,7 +172,7 @@ export const Home = (props) => {
           {error !== null ? <></> : <br />}
           <LocalizationProvider dateAdapter={AdapterDateFns}>
             <DatePicker
-              label="Basic example"
+              label="Date"
               value={date}
               onChange={(newDate) => {
                 setDate(newDate);
@@ -220,7 +220,7 @@ export const Home = (props) => {
             Go
           </Button>
         </Box>
-        <HomepageEvents location={location.city}/>
+        <HomepageEvents location={location.city} />
       </Box>
     </div>
   );
