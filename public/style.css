@@ -9,20 +9,14 @@ body {
 
 a {
   text-decoration: none;
+  color: unset;
 }
 
 #navtitle:hover {
   color:  #D83F87;
-
- 
 }
 
-#signin {
-  color: black;
-  text-shadow: -2px 2px 4px 
-  rgba(255, 0, 195, 0.9), 
-      2px -2px 0 
-      white;
-      font-family: "karla", sans-serif;
+#single-event-container {
+  height: calc(100vh - 76px);
 }
 

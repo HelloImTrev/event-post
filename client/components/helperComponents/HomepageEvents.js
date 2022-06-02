@@ -4,8 +4,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { getEvents } from "../../store/events";
 import EventCard from "./EventCard";
 
-const HomepageEvents = ({ location = "Los Angeles" }) => {
-  const events = useSelector((state) => state.events.filter((event) => event.venueCity === location));
+const HomepageEvents = ({location = "Los Angeles"}) => {
+  const events = useSelector((state) => state.events);
+  //const events = useSelector((state) => state.events.filter((event) => event.venueCity === location));
   const dispatch = useDispatch();
 
   useEffect(() => {
