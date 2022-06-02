@@ -11,6 +11,7 @@ import { me } from "./store";
 import Home from "./components/pages/Home";
 import { LoginSignup } from "./components/pages/Login_Signup";
 import Myevents from "./components/pages/Myevents";
+import SingleEvent from "./components/pages/SingleEvent";
 import Explore from "./components/pages/Explore.js";
 
 // MUI
@@ -39,6 +40,8 @@ class Routes extends Component {
             <Route path="/home" component={Home} />
             <Route path="/explore" component={Explore} />
             <Route path="/login" component={LoginSignup} />
+            <Route path="/events/:id" component={SingleEvent} />
+            <Redirect to="/home" />
           </Switch>
         )}
       </Box>
