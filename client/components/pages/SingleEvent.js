@@ -6,6 +6,7 @@ import {
   CardContent,
   CardMedia,
   IconButton,
+  Skeleton,
   Typography,
 } from "@mui/material";
 import { Box } from "@mui/system";
@@ -89,9 +90,41 @@ const SingleEvent = (props) => {
     );
   } else {
     return (
-      <Box>
-        <h1>loading...</h1>
-      </Box>
+      <Box
+      id="single-event-container"
+      sx={{
+        marginTop: "76px",
+        paddingLeft: "2.5rem",
+        paddingRight: "2.5rem",
+      }}
+    >
+      <Card
+        sx={{
+          display: "flex",
+          flexDirection: { mdLg: "row", xxs: "column" },
+          width: "100%",
+        }}
+      >
+        <CardMedia
+          component="img"
+          sx={{ width: { mdLg: "840px", xxs: "100%" }, height: "472px" }}
+        />
+        <CardContent
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            width: { mdLg: "528px", xxs: "100%" },
+            backgroundColor: "#ececec",
+          }}
+        >
+         <Skeleton />    
+         <Skeleton />    
+         <Skeleton />    
+         <Skeleton />    
+         <Skeleton />    
+        </CardContent>
+      </Card>
+    </Box>
     );
   }
 };
