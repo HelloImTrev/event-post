@@ -1,4 +1,5 @@
 import axios from "axios";
+import history from "../history";
 
 //Action Types\\
 const GET_EVENTS = "GET_EVENTS";
@@ -41,13 +42,17 @@ export const getMyEvents = () => {
 };
 
 export const searchKeyword =
-  ({ name, location }) =>
+  ({ name, location, date }) =>
   async (dispatch) => {
     try {
-      console.log("entered store", name, location);
-      const events = (await axios.get(`/api/events/search?keyword=${name}&location=${location}`)).data;
-      dispatch(_getEvents(events));
-      // history.push("/explore");
+      console.log("date is ", date);
+      const events = (await axios.get(`/api/events/search?keyword=${name}&location=${location}&date=${date}`)).data;
+      if (events.length === 0) {
+        window.localStorage.setItem("error", JSON.stringify({ output: "Result not found." }));
+      } else {
+        dispatch(_getEvents(events));
+      }
+      history.push("/explore");
     } catch (err) {
       console.log(err);
     }

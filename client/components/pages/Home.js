@@ -23,13 +23,13 @@ export const Home = (props) => {
   let location = {};
 
   // For search bar
-  const [searchObj, setSearchObj] = useState({ name: "", location: location.city ? location.city : "New York" });
+  const [searchObj, setSearchObj] = useState({ name: "", location: location.city ? location.city : "New York", date: today });
 
   // For geolocation of user
   const [error, setError] = useState(null);
 
   // For date picker
-  const [date, setDate] = useState(today);
+  // const [date, setDate] = useState(today);
 
   useEffect(() => {
     getLocation();
@@ -69,9 +69,12 @@ export const Home = (props) => {
     setSearchObj({ ...searchObj, [e.target.name]: e.target.value });
   };
 
-  useEffect(() => {
-    console.log("changed", searchObj);
-  }, [searchObj]);
+  const handleEnter = (e) => {
+    console.log("key is", e.key);
+    if (e.key === "Enter") {
+      dispatch(searchKeyword(searchObj));
+    }
+  };
 
   return (
     <div>
@@ -127,6 +130,7 @@ export const Home = (props) => {
             color="pink"
             value={searchObj.name}
             onChange={handleChange}
+            onKeyDown={handleEnter}
             sx={{
               width: {
                 xxs: "235px",
@@ -150,6 +154,7 @@ export const Home = (props) => {
                 <LocationOnIcon /> Location
               </Box>
             }
+            onKeyDown={handleEnter}
             variant="filled"
             name="location"
             type="location"
@@ -189,9 +194,11 @@ export const Home = (props) => {
           <LocalizationProvider dateAdapter={AdapterDateFns}>
             <DatePicker
               label="Date"
-              value={date}
+              value={searchObj.date}
               onChange={(newDate) => {
-                setDate(newDate);
+                // setDate(newDate);
+                console.log("date is", newDate, search.date);
+                setSearchObj({ ...searchObj, date: newDate });
               }}
               renderInput={(params) => {
                 return (
