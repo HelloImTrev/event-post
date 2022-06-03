@@ -28,9 +28,6 @@ export const Home = (props) => {
   // For geolocation of user
   const [error, setError] = useState(null);
 
-  // For date picker
-  // const [date, setDate] = useState(today);
-
   useEffect(() => {
     getLocation();
     today = new Date().toLocaleDateString();
@@ -70,7 +67,6 @@ export const Home = (props) => {
   };
 
   const handleEnter = (e) => {
-    console.log("key is", e.key);
     if (e.key === "Enter") {
       dispatch(searchKeyword(searchObj));
     }
@@ -196,8 +192,6 @@ export const Home = (props) => {
               label="Date"
               value={searchObj.date}
               onChange={(newDate) => {
-                // setDate(newDate);
-                console.log("date is", newDate, search.date);
                 setSearchObj({ ...searchObj, date: newDate });
               }}
               renderInput={(params) => {
