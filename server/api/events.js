@@ -18,13 +18,25 @@ router.get("/", async (req, res, next) => {
 
 router.get("/search", async (req, res, next) => {
   try {
-    const { keyword, location } = req.query;
-    // console.log("ln23..................", req.query);
+    const { keyword, location, date } = req.query;
+    console.log("ln23..................", req.query);
     const events = await Event.findAll({
       where: {
         name: {
           [Op.iLike]: "%" + keyword + "%",
         },
+        [Op.or]: [
+          {
+            venueCity: {
+              [Op.iLike]: "%" + location + "%",
+            },
+          },
+          {
+            venueState: {
+              [Op.iLike]: "%" + location + "%",
+            },
+          },
+        ],
       },
     });
     res.json(events);
