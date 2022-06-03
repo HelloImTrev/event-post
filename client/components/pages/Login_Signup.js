@@ -134,7 +134,6 @@ const AuthForm = (props) => {
         </Box>
       </Box>
       <Typography
-    
         variant="promptTitle"
         sx={{
           width: {
@@ -234,7 +233,6 @@ const mapDispatch = (dispatch) => {
         const password = evt.target.password.value;
         dispatch(authenticate(username, password, formName));
       } else {
-        console.log("log", evt.target);
         const formName = evt.target.name;
         const username = evt.target.username;
         const password = evt.target.password;
