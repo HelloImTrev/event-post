@@ -30,7 +30,6 @@ const Explore = () => {
     window.localStorage.removeItem("error");
   }, []);
 
-  console.log("evnets are", events);
   return (
     <Grid
       container

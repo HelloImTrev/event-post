@@ -5,23 +5,9 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
 //MUI
-import {
-  Box,
-  Typography,
-  Grid,
-  TextField,
-  Button,
-  Drawer,
-  List,
-  Divider,
-  ListItem,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
-} from "@mui/material";
+import { Box, Typography, Grid, TextField, Button, Drawer, List, Divider, ListItem, ListItemButton, ListItemIcon, ListItemText } from "@mui/material";
 
 const NavDrawer = ({ toggleDrawer, user, handleLogout }) => {
-  console.log("user is", user);
   return (
     <Box sx={{ width: 250 }} role="presentation" onClick={toggleDrawer(false)} onKeyDown={toggleDrawer(false)}>
       <List>
