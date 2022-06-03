@@ -13,8 +13,8 @@ const EventCard = ({ event }) => {
 
   return (
     <Grid item xxs={12} xs={12} sm={6} md={4} lg={3} sx={{ width: "100%" }}>
-      <Card sx={{ maxWidth: 305, height: "350px", margin: "0 auto" }}>
-        <CardMedia component="img" sx={{ width: "100%", height: "205px" }} image={event.images[0].url} />
+      <Card id="event-card" sx={{ maxWidth: 305, height: "350px", margin: "0 auto" }}>
+        <CardMedia id="event-card-img" component="img" sx={{ width: "100%", height: "205px" }} image={event.images[0].url} />
         <CardContent>
           <Typography variant="cardTitle" marginBottom="1rem" component="div" >
             <Link to={`/events/${event.id}`}>{event.name}</Link>
