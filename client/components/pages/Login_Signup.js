@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 
 // redux
 import { connect } from "react-redux";
@@ -8,16 +9,35 @@ import { authenticate } from "../../store";
 import { TextField, Button, Alert, Typography, Box } from "@mui/material";
 
 //SOCIAL BTNS
-import { FacebookLoginButton, GoogleLoginButton } from "react-social-login-buttons";
+import {
+  FacebookLoginButton,
+  GoogleLoginButton,
+} from "react-social-login-buttons";
 
 const AuthForm = (props) => {
   const { name, displayName, handleSubmit, error, signupError } = props;
-  const [signupInput, setSignupInput] = useState({ username: "", password: "" });
+  const [signupInput, setSignupInput] = useState({
+    username: "",
+    password: "",
+  });
   const handleCreateAccountInputFields = (e) => {
     setSignupInput({ ...signupInput, [e.target.name]: e.target.value });
   };
+
+  let history = useHistory();
+  const googleLogin = () => {
+    history.push("/asdf");
+  };
+
   return (
-    <Box sx={{ margin: "0 auto", width: "80%", textAlign: "center", paddingTop: "3vw" }}>
+    <Box
+      sx={{
+        margin: "0 auto",
+        width: "80%",
+        textAlign: "center",
+        paddingTop: "3vw",
+      }}
+    >
       <Typography variant="promptTitle" sx={{ fontSize: "4vw" }}>
         Sign In
       </Typography>
@@ -74,7 +94,11 @@ const AuthForm = (props) => {
         </Button>
         <br />
         <Button
-          onClick={() => handleSubmit({ target: { name: "login", username: "murphy", password: "123" } })}
+          onClick={() =>
+            handleSubmit({
+              target: { name: "login", username: "murphy", password: "123" },
+            })
+          }
           color="pink"
           variant="contained"
           sx={{
@@ -88,6 +112,7 @@ const AuthForm = (props) => {
         >
           Sign in as a Demo User
         </Button>
+        <GoogleLoginButton onClick={googleLogin} />
         <Box
           sx={{
             width: {
@@ -98,7 +123,9 @@ const AuthForm = (props) => {
             margin: "1vw auto",
           }}
         >
-          {error && error.response && <Alert severity="error">{error.response.data}</Alert>}
+          {error && error.response && (
+            <Alert severity="error">{error.response.data}</Alert>
+          )}
         </Box>
       </form>
 
@@ -209,7 +236,9 @@ const AuthForm = (props) => {
             margin: "1vw auto",
           }}
         >
-          {signupError && signupError.response && <Alert severity="error">{signupError.response.data}</Alert>}
+          {signupError && signupError.response && (
+            <Alert severity="error">{signupError.response.data}</Alert>
+          )}
         </Box>
       </form>
     </Box>
@@ -218,8 +247,15 @@ const AuthForm = (props) => {
 
 const mapLogin = (state) => {
   return {
-    error: state.auth.error && state.auth.error.response.data.includes("Incorrect") ? state.auth.error : null,
-    signupError: state.auth.error && state.auth.error.response.data.includes("already exists") ? state.auth.error : null,
+    error:
+      state.auth.error && state.auth.error.response.data.includes("Incorrect")
+        ? state.auth.error
+        : null,
+    signupError:
+      state.auth.error &&
+      state.auth.error.response.data.includes("already exists")
+        ? state.auth.error
+        : null,
   };
 };
 
