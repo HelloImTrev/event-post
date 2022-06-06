@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
 
 // redux
 import { connect } from "react-redux";
@@ -20,13 +19,9 @@ const AuthForm = (props) => {
     username: "",
     password: "",
   });
+
   const handleCreateAccountInputFields = (e) => {
     setSignupInput({ ...signupInput, [e.target.name]: e.target.value });
-  };
-
-  let history = useHistory();
-  const googleLogin = () => {
-    history.push("/asdf");
   };
 
   return (
@@ -112,7 +107,22 @@ const AuthForm = (props) => {
         >
           Sign in as a Demo User
         </Button>
-        <GoogleLoginButton onClick={googleLogin} />
+        <GoogleLoginButton
+          onClick={() => (window.location.href = "/googleOauth")}
+          className="ggbttn"
+          align="center"
+          variant="contained"
+          sx={{
+            width: {
+              xxs: "95%",
+              md: "60%",
+              lg: "50%",
+            },
+            marginTop: "1vw",
+          }}
+        >
+          CONTINUE WITH GOOGLE
+        </GoogleLoginButton>
         <Box
           sx={{
             width: {
