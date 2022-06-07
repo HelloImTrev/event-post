@@ -25,6 +25,7 @@ const AuthForm = (props) => {
   };
 
   return (
+<<<<<<< Updated upstream
     <Box
       sx={{
         margin: "0 auto",
@@ -34,6 +35,10 @@ const AuthForm = (props) => {
       }}
     >
       <Typography variant="promptTitle" sx={{ fontSize: "4vw" }}>
+=======
+    <Box sx={{ margin: "0 auto", width: "80%", textAlign: "center", paddingTop: "3vw" }}>
+      <Typography variant="promptTitle" sx={{fontSize:{xxs: "30px", xs: "35 px", sm: "40px", md: "40px", lg: "50px"},}}>
+>>>>>>> Stashed changes
         Sign In
       </Typography>
       <br />
@@ -54,6 +59,7 @@ const AuthForm = (props) => {
               md: "60%",
               lg: "50%",
             },
+            
           }}
         />
         <br />
@@ -70,6 +76,7 @@ const AuthForm = (props) => {
               md: "60%",
               lg: "50%",
             },
+            
           }}
         />
         <br />
@@ -156,16 +163,28 @@ const AuthForm = (props) => {
           margin: "3vw auto",
         }}
       >
-        <Box sx={{ zIndex: "1", width: "50%", position: "absolute" }}>
+        <Box sx={{ zIndex: "1",  width: {
+                xxs: "25%",
+                sm: "20%",
+                md: "30%",
+                lg: "50%",
+              }, position: "absolute" }}>
           <Typography
             style={{
-              fontSize: "1.5vw",
               padding: "0 5px",
               backgroundColor: "white",
-              width: "25%",
               margin: "0 auto",
             }}
-          >
+            sx = {{
+              width: {
+                xxs: "95%",
+                md: "50%",
+                lg: "20%",
+              },
+          fontSize:{xxs: "10px", xs: "15px", sm: "18px", md: "20px", lg: "20px"},
+        }}
+      >
+          
             Not a user?
           </Typography>
         </Box>
@@ -178,7 +197,7 @@ const AuthForm = (props) => {
             md: "60%",
             lg: "50%",
           },
-          fontSize: "4vw",
+          fontSize:{xxs: "30px", xs: "35 px", sm: "40px", md: "40px", lg: "50px"},
         }}
       >
         Create an account
@@ -232,6 +251,7 @@ const AuthForm = (props) => {
               md: "60%",
               lg: "50%",
             },
+            fontSize:{xxs: "15px", sm: "18px", md: "20px", lg: "20px"},
           }}
         >
           CREATE AN ACCOUNT
