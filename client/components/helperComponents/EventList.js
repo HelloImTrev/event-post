@@ -45,10 +45,10 @@ const EventList = ({ events }) => {
             <ListItemButton>
               <Card>
                 <Grid container direction="row" justifyContent="flex-start" alignItems="flex-start">
-                  <Grid item xxs={4}>
+                  <Grid item xxs={12} sm={4} md={4}>
                     <CardMedia component="img" sx={{ width: "100%" }} image={event.images[0].url} />
                   </Grid>
-                  <Grid item xxs={8}>
+                  <Grid item xxs={12} sm={8} md={8}>
                     <CardContent>
                       <Typography variant="cardTitle" marginBottom="1rem" component="div">
                         {event.name}
