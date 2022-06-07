@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 // router
 import { Link } from "react-router-dom";
@@ -15,8 +15,9 @@ import SearchBar from "../helperComponents/SearchBar";
 import EventList from "../helperComponents/EventList";
 
 const Explore = () => {
+  const [category, setCategory] = useState("");
   const dispatch = useDispatch();
-  const events = useSelector((state) => state.events);
+  let events = useSelector((state) => state.events);
 
   if (events[0] === undefined) {
     dispatch(getEvents());
@@ -30,6 +31,11 @@ const Explore = () => {
     window.localStorage.removeItem("error");
   }, []);
 
+  const filterCategory = (category) => {
+    // console.log("enteredddd cat", category);
+    // events = useSelector(({ events }) => events.category === category);
+  };
+
   return (
     <Grid
       container
@@ -38,14 +44,14 @@ const Explore = () => {
       alignItems="flex-start"
       sx={{ margin: { xxs: "60px auto 0 auto", xs: "69px auto 0 auto" }, width: "90%" }}
     >
-      <Grid item md={2} sx={{ width: "100%", height: "500px" }}>
-        <SearchBar />
+      <Grid item md={2} sx={{ width: "100%" }}>
+        <SearchBar filterCategory={filterCategory} />
       </Grid>
-      <Grid item md={6} sx={{ width: "100%", height: "500px" }}>
+      <Grid item md={6} sx={{ width: "100%" }}>
         {pageNotFoundError ? <Alert severity="error">{pageNotFoundError}</Alert> : <></>}
         <EventList events={events} />
       </Grid>
-      <Grid item md={4} sx={{ width: "100%", height: "500px" }}>
+      <Grid item md={4} sx={{ width: "100%" }}>
         Map
       </Grid>
     </Grid>
