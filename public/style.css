@@ -28,11 +28,11 @@ a {
 
 #event-card:hover #event-card-img {
   transition: .3s ease-in-out;
-  opacity: 85% !important;
+  opacity: 85%;
 }
 
 #event-card:hover {
-  transform: scale(1.05);
+  transform: scale(1.03);
 }
 
 
