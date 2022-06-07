@@ -18,8 +18,11 @@ router.get("/", async (req, res, next) => {
 
 router.get("/search", async (req, res, next) => {
   try {
-    // const { keyword, location, date } = req.query;
-    console.log("ln23..................", req.query);
+    const { keyword, location, date } = req.query;
+    const d = new Date(date);
+    const fullDate =
+      d.getFullYear() + "-" + (d.getMonth() > 8 ? d.getMonth() + 1 : "0" + (d.getMonth() + 1)) + "-" + (d.getDate() > 9 ? d.getDate() : "0" + d.getDate());
+
     const events = await Event.findAll({
       where: {
         name: {
@@ -37,6 +40,9 @@ router.get("/search", async (req, res, next) => {
             },
           },
         ],
+        start: {
+          [Op.gte]: fullDate,
+        },
       },
     });
     res.json(events);

@@ -1,62 +1,106 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 // router
 import { Link } from "react-router-dom";
 
+// redux
+import { useDispatch, useSelector } from "react-redux";
+
 //MUI
-import {
-  Box,
-  Grid,
-  Paper,
-  Button,
-  ListSubheader,
-  List,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
-  Collapse,
-} from "@mui/material";
+import { Box, Grid, Paper, Button, ListSubheader, List, ListItemButton, ListItemIcon, ListItemText, Collapse, Divider } from "@mui/material";
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
 
-const SearchBar = () => {
-  const [open, setOpen] = useState(true);
+function getWindowDimensions() {
+  const { innerWidth: width, innerHeight: height } = window;
+  return {
+    width,
+    height,
+  };
+}
+
+const SearchBar = ({ filterCategory }) => {
+  const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions());
+
+  useEffect(() => {
+    function handleResize() {
+      setWindowDimensions(getWindowDimensions());
+    }
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  const { width, height } = windowDimensions;
+
+  const [open, setOpen] = useState(width <= 930 ? false : true);
 
   const handleClick = () => {
     setOpen(!open);
   };
 
+  // ---------------------------------------
+
+  const handleCategory = (e) => {
+    filterCategory(e.target.innerHTML);
+  };
+
   return (
-    <List
-      sx={{ width: "100%", bgcolor: "#f2f2f2" }}
-      component="nav"
-      aria-labelledby="nested-list-subheader"
-      subheader={
-        <ListSubheader component="div" id="nested-list-subheader" sx={{ bgcolor: "#f2f2f2" }}>
-          Filters
-        </ListSubheader>
-      }
-    >
-      <ListItemButton>
-        <ListItemText primary="Date" />
-      </ListItemButton>
-      <ListItemButton>
-        <ListItemText primary="Price" />
-      </ListItemButton>
-      <ListItemButton onClick={handleClick}>
-        <ListItemText primary="Category" />
-        {open ? <ExpandLess /> : <ExpandMore />}
-      </ListItemButton>
-      <Collapse in={open} timeout="auto" unmountOnExit>
-        <List component="div" disablePadding>
-          <ListItemButton sx={{ pl: 4 }}>
-            <ListItemText primary="Sports" />
+    <Box sx={{ marginTop: "20px" }}>
+      <List
+        sx={{ width: "100%", bgcolor: "#f2f2f2", display: { xxs: "none", md: "block" } }}
+        component="nav"
+        aria-labelledby="nested-list-subheader"
+        subheader={
+          <ListSubheader component="div" id="nested-list-subheader" sx={{ bgcolor: "#f2f2f2" }}>
+            Filters
+          </ListSubheader>
+        }
+      >
+        <ListItemButton>
+          <ListItemText primary="Price - Low to High" />
+        </ListItemButton>
+        <ListItemButton>
+          <ListItemText primary="Price - High to Low" />
+        </ListItemButton>
+        <ListItemButton onClick={handleClick}>
+          <ListItemText primary="Category" />
+          {open ? <ExpandLess /> : <ExpandMore />}
+        </ListItemButton>
+        <Collapse in={open} timeout="auto" unmountOnExit>
+          <List component="div" disablePadding>
+            <ListItemButton sx={{ pl: 4 }} onClick={(e) => handleCategory(e)}>
+              <ListItemText primary="Sports" />
+            </ListItemButton>
+            <ListItemButton sx={{ pl: 4 }} onClick={(e) => handleCategory(e)}>
+              <ListItemText primary="Music" />
+            </ListItemButton>
+          </List>
+        </Collapse>
+      </List>
+      <List sx={{ width: "100%", bgcolor: "#f2f2f2", display: { xxs: "block", md: "none" } }} component="nav" aria-labelledby="nested-list-subheader">
+        <ListItemButton onClick={handleClick}>
+          <ListItemText primary="Filter" />
+          {open ? <ExpandLess /> : <ExpandMore />}
+        </ListItemButton>
+        <Collapse in={open} timeout="auto" unmountOnExit>
+          <ListItemButton>
+            <ListItemText primary="Price - Low to High" />
           </ListItemButton>
-          <ListItemButton sx={{ pl: 4 }}>
-            <ListItemText primary="Music" />
+          <ListItemButton>
+            <ListItemText primary="Price - High to Low" />
           </ListItemButton>
-        </List>
-      </Collapse>
-    </List>
+          <Divider />
+          <List component="div" disablePadding>
+            <ListItemButton sx={{ pl: 4 }} onClick={(e) => handleCategory(e)}>
+              <ListItemText primary="Sports" />
+            </ListItemButton>
+            <ListItemButton sx={{ pl: 4 }} onClick={(e) => handleCategory(e)}>
+              <ListItemText primary="Music" />
+            </ListItemButton>
+          </List>
+        </Collapse>
+      </List>
+    </Box>
   );
 };
 
