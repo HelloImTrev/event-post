@@ -29,93 +29,163 @@ const SingleEvent = (props) => {
   console.log(event);
 
   if (event) {
+    const date = new Date(event.start);
+    const formatedDate =
+      (date.getMonth() > 8
+        ? date.getMonth() + 1
+        : "0" + (date.getMonth() + 1)) +
+      "/" +
+      (date.getDate() > 9 ? date.getDate() : "0" + date.getDate()) +
+      "/" +
+      date.getFullYear();
+
     return (
-      <Paper
-        sx={{ marginTop: "76px", marginLeft: "2.5rem", marginRight: "2.5rem" }}
-      >
-        <Box
-          id="single-event-container"
+      <div id="single-event-page">
+        <Paper
           sx={{
-            marginTop: "76px",
+            maxWidth: "1460px",
+            marginLeft: "auto",
+            marginTop: "70px",
+            marginRight: "auto",
+            marginBottom: "2.5rem",
           }}
         >
-          <Card
-            elevation={0}
-            sx={{
-              borderBottomLeftRadius: "0px",
-              borderBottomRightRadius: "0px",
-              display: "flex",
-              flexDirection: { mdLg: "row", xxs: "column" },
-              width: "100%",
-            }}
+          <Box
+            id="single-event-container"
           >
-            <CardMedia
-              component="img"
-              image={event.images[0].url}
-              sx={{ width: { mdLg: "840px", xxs: "100%" }, height: "472px" }}
-            />
-            <CardContent
+            <Card
+              elevation={0}
               sx={{
+                borderBottomLeftRadius: "0px",
+                borderBottomRightRadius: "0px",
                 display: "flex",
-                flexDirection: "column",
-                justifyContent: "space-between",
-                width: { mdLg: "100%", xxs: "100%" },
-                backgroundColor: "#ececec",
+                flexDirection: { mdLg: "row", xxs: "column" },
+                width: "100%",
               }}
             >
-              <Box>
-                <Typography
-                  fontFamily="Roboto"
-                  fontWeight="400"
-                  fontSize="25px"
+              <CardMedia
+                component="img"
+                image={event.images[0].url}
+                sx={{ width: { mdLg: "840px", xxs: "100%" }, height: "472px" }}
+              />
+              <CardContent
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "space-between",
+                  width: { mdLg: "100%", xxs: "100%" },
+                  backgroundColor: "#ececec",
+                }}
+              >
+                <Box>
+                  <Typography
+                    fontFamily="Roboto"
+                    fontWeight="400"
+                    fontSize="25px"
+                  >
+                    {event.name}
+                  </Typography>
+                  <Typography>{`${event.venueName}`}</Typography>
+                  <Typography>{`${event.venueCity} - ${event.venueStateCode}`}</Typography>
+                  <Typography>{formatedDate}</Typography>
+                  <Typography>Organizer: *Username here*</Typography>
+                </Box>
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    marginTop: "1.5rem",
+                  }}
                 >
-                  {event.name}
-                </Typography>
-                <Typography>*Location here*</Typography>
-                <Typography>*Date and time here*</Typography>
-                <Typography>Organizer: *Username here*</Typography>
-              </Box>
+                  <Button
+                    variant="contained"
+                    color="pink"
+                    sx={{ width: "200px" }}
+                    disableElevation
+                  >
+                    Get Tickets
+                  </Button>
+                  <Box>
+                    <IconButton
+                      color="lightPurple"
+                      sx={{ marginRight: ".5rem" }}
+                    >
+                      <FavoriteIcon />
+                    </IconButton>
+                    <IconButton color="lightPurple">
+                      <IosShareIcon />
+                    </IconButton>
+                  </Box>
+                </Box>
+              </CardContent>
+            </Card>
+            <Box sx={{ display: "flex", marginTop: "1.5rem" }}>
               <Box
                 sx={{
                   display: "flex",
-                  justifyContent: "space-between",
-                  marginTop: "1.5rem",
+                  flexDirection: "column",
+                  width: "65%",
+                  marginLeft: "1.5rem",
                 }}
               >
-                <Button
-                  variant="contained"
-                  color="pink"
-                  sx={{ width: "200px" }}
-                  disableElevation
-                >
-                  Get Tickets
-                </Button>
                 <Box>
-                  <IconButton color="lightPurple" sx={{ marginRight: ".5rem" }}>
-                    <FavoriteIcon />
-                  </IconButton>
-                  <IconButton color="lightPurple">
-                    <IosShareIcon />
-                  </IconButton>
+                  <Typography
+                    variant="promptTitle"
+                    sx={{
+                      borderBottom: "3px solid #D83F87",
+                      fontWeight: 700,
+                      fontSize: {
+                        xs: "25px",
+                        sm: "30px",
+                        md: "30px",
+                      },
+                    }}
+                  >
+                    The Deets
+                  </Typography>
                 </Box>
               </Box>
-            </CardContent>
-          </Card>
-          <Box sx={{display: "flex", }}>
-          <Typography
-            variant="promptTitle"
-            sx={{
-              fontSize: {
-                sm: "30px",
-                md: "35px",
-              },
-            }}
-          >
-            The Deets:
-          </Typography>
-        </Box>
-        </Box>
-      </Paper>
+              <Box
+                sx={{ display: "flex", flexDirection: "column", width: "35%" }}
+              >
+                <Box>
+                  <Typography
+                    variant="promptTitle"
+                    sx={{
+                      borderBottom: "3px solid #D83F87",
+                      alignSelf: "flex-start",
+                      fontWeight: 700,
+                      fontSize: {
+                        xs: "25px",
+                        sm: "30px",
+                        md: "30px",
+                      },
+                    }}
+                  >
+                    Address
+                  </Typography>
+                </Box>
+                <Box>
+                  <Typography
+                    variant="promptTitle"
+                    sx={{
+                      borderBottom: "3px solid #D83F87",
+                      fontWeight: 700,
+                      fontSize: {
+                        xs: "25px",
+                        sm: "30px",
+                        md: "30px",
+                      },
+                    }}
+                  >
+                    Date and time
+                  </Typography>
+                </Box>
+              </Box>
+            </Box>
+          </Box>
+        </Paper>
+      </div>
     );
   } else {
     return (
