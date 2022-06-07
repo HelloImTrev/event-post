@@ -12,9 +12,30 @@ a {
   color: unset;
 }
 
+
 #navtitle:hover {
   color:  #D83F87;
 }
+
+#event-card-img {
+  opacity: 100%;
+  transition: .3s ease-in-out;
+}
+
+#event-card {
+  transition: .3s ease-in-out;
+}
+
+#event-card:hover #event-card-img {
+  transition: .3s ease-in-out;
+  opacity: 85%;
+}
+
+#event-card:hover {
+  transform: scale(1.03);
+}
+
+
 
 #single-event-container {
   height: calc(100vh - 76px);

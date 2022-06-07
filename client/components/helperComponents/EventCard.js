@@ -1,4 +1,14 @@
-import { Card, CardContent, CardMedia, Grid, Typography } from "@mui/material";
+import {
+  Card,
+  CardContent,
+  CardMedia,
+  Grid,
+  Typography,
+  IconButton,
+  Box,
+} from "@mui/material";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import IosShareIcon from "@mui/icons-material/IosShare";
 import React from "react";
 import { Link } from "react-router-dom";
 
@@ -13,10 +23,18 @@ const EventCard = ({ event }) => {
 
   return (
     <Grid item xxs={12} xs={12} sm={6} md={4} lg={3} sx={{ width: "100%" }}>
-      <Card sx={{ maxWidth: 305, height: "350px", margin: "0 auto" }}>
-        <CardMedia component="img" sx={{ width: "100%", height: "205px" }} image={event.images[0].url} />
-        <CardContent>
-          <Typography variant="cardTitle" marginBottom="1rem" component="div" >
+      <Card
+        id="event-card"
+        sx={{ maxWidth: 305, height: "378px", margin: "0 auto" }}
+      >
+        <CardMedia
+          id="event-card-img"
+          component="img"
+          sx={{ width: "100%", height: "205px" }}
+          image={event.images[0].url}
+        />
+        <CardContent sx={{ display: "flex", flexDirection: "column" }}>
+          <Typography variant="cardTitle" marginBottom="1rem" component="div">
             <Link to={`/events/${event.id}`}>{event.name}</Link>
           </Typography>
           <Typography variant="cardDate" component="div" marginBottom=".3rem">
@@ -25,6 +43,20 @@ const EventCard = ({ event }) => {
           <Typography variant="cardLocation">
             {`${event.venueName} - ${event.venueCity}, ${event.venueStateCode}`}
           </Typography>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "flex-end",
+              marginTop: ".5rem",
+            }}
+          >
+            <IconButton color="lightPurple" sx={{ marginRight: ".5rem" }}>
+              <IosShareIcon />
+            </IconButton>
+            <IconButton color="lightPurple">
+              <FavoriteIcon />
+            </IconButton>
+          </Box>
         </CardContent>
       </Card>
     </Grid>
