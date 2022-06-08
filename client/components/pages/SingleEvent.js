@@ -42,22 +42,21 @@ const SingleEvent = (props) => {
     return (
       <div id="single-event-page">
         <Paper
+          elevation={2}
           sx={{
-            maxWidth: "1460px",
+            maxWidth: "1350px",
+            marginTop: "95px",
             marginLeft: "auto",
-            marginTop: "70px",
             marginRight: "auto",
-            marginBottom: "2.5rem",
           }}
         >
-          <Box
-            id="single-event-container"
-          >
+          <Box id="single-event-container">
             <Card
               elevation={0}
               sx={{
                 borderBottomLeftRadius: "0px",
                 borderBottomRightRadius: "0px",
+                borderBottom: "1px solid #eaeaea",
                 display: "flex",
                 flexDirection: { mdLg: "row", xxs: "column" },
                 width: "100%",
@@ -74,7 +73,6 @@ const SingleEvent = (props) => {
                   flexDirection: "column",
                   justifyContent: "space-between",
                   width: { mdLg: "100%", xxs: "100%" },
-                  backgroundColor: "#ececec",
                 }}
               >
                 <Box>
@@ -128,21 +126,26 @@ const SingleEvent = (props) => {
                   marginLeft: "1.5rem",
                 }}
               >
-                <Box>
-                  <Typography
-                    variant="promptTitle"
-                    sx={{
-                      borderBottom: "3px solid #D83F87",
-                      fontWeight: 700,
-                      fontSize: {
-                        xs: "25px",
-                        sm: "30px",
-                        md: "30px",
-                      },
-                    }}
-                  >
-                    The Deets
-                  </Typography>
+                <Box sx={{ display: "flex", flexDirection: "column" }}>
+                  <Box>
+                    <Typography
+                      variant="promptTitle"
+                      sx={{
+                        borderBottom: "3px solid #D83F87",
+                        fontWeight: 700,
+                        fontSize: {
+                          xs: "25px",
+                          sm: "30px",
+                          md: "30px",
+                        },
+                      }}
+                    >
+                      The Deets
+                    </Typography>
+                  </Box>
+                  <Box>
+                    <Typography>{event.description}</Typography>
+                  </Box>
                 </Box>
               </Box>
               <Box
