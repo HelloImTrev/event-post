@@ -10,26 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Box, Grid, Paper, Button, ListSubheader, List, ListItemButton, ListItemIcon, ListItemText, Collapse, Divider } from "@mui/material";
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
 
-function getWindowDimensions() {
-  const { innerWidth: width, innerHeight: height } = window;
-  return {
-    width,
-    height,
-  };
-}
-
-const SearchBar = ({ filterCategory }) => {
-  const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions());
-
-  useEffect(() => {
-    function handleResize() {
-      setWindowDimensions(getWindowDimensions());
-    }
-
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
+const SearchBar = ({ filterCategory, windowDimensions }) => {
   const { width, height } = windowDimensions;
 
   const [open, setOpen] = useState(width <= 930 ? false : true);
@@ -37,8 +18,6 @@ const SearchBar = ({ filterCategory }) => {
   const handleClick = () => {
     setOpen(!open);
   };
-
-  // ---------------------------------------
 
   const handleCategory = (e) => {
     filterCategory(e.target.innerHTML);

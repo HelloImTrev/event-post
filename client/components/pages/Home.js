@@ -19,18 +19,18 @@ import HomepageEvents from "../helperComponents/HomepageEvents";
 export const Home = (props) => {
   const { username } = props;
   const dispatch = useDispatch();
-  let today;
   let location = {};
 
   // For search bar
-  const [searchObj, setSearchObj] = useState({ name: "", location: location.city ? location.city : "New York", date: today });
+  const [searchObj, setSearchObj] = useState({ name: "", location: location.city ? location.city : "New York", date: new Date() });
 
   // For geolocation of user
   const [error, setError] = useState(null);
 
   useEffect(() => {
     getLocation();
-    today = new Date().toLocaleDateString();
+    const today = new Date();
+    setSearchObj({ ...searchObj, date: today });
   }, []);
 
   const getLocation = () => {
@@ -235,6 +235,7 @@ export const Home = (props) => {
               fontSize: "20px",
             }}
             onClick={() => {
+              console.log("the object", searchObj);
               dispatch(searchKeyword(searchObj));
             }}
           >
@@ -254,7 +255,3 @@ const mapState = (state) => {
 };
 
 export default connect(mapState)(Home);
-
-{
-  /* <img src={"/images/main_test.jpeg"} style={{ zIndex: "-1", width: "100%", height: "100%", display: "block" }} /> */
-}
