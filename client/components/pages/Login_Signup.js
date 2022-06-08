@@ -70,6 +70,7 @@ const AuthForm = (props) => {
               md: "60%",
               lg: "50%",
             },
+            fontSize:{xxs: "15px", sm: "18px", md: "20px", lg: "20px"},
           }}
         >
           LOG IN
@@ -85,6 +86,7 @@ const AuthForm = (props) => {
               md: "60%",
               lg: "50%",
             },
+            fontSize:{xxs: "15px", sm: "18px", md: "20px", lg: "20px"},
             marginTop: "1vw",
           }}
         >
@@ -102,6 +104,11 @@ const AuthForm = (props) => {
         >
           {error && error.response && <Alert severity="error">{error.response.data}</Alert>}
         </Box>
+        {
+<GoogleLoginButton onClick={() => alert("Hello")} className="ggbttn" align="center" style={{ width: "100%" }}>
+          CONTINUE WITH GOOGLE
+        </GoogleLoginButton> 
+}
       </form>
 
       <Box
@@ -261,8 +268,3 @@ const mapDispatch = (dispatch) => {
 
 export const LoginSignup = connect(mapLogin, mapDispatch)(AuthForm);
 
-{
-  /* <GoogleLoginButton onClick={() => alert("Hello")} className="ggbttn" align="center" style={{ width: "70%" }}>
-          CONTINUE WITH GOOGLE
-        </GoogleLoginButton> */
-}
