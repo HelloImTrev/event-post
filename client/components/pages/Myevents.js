@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { connect, useDispatch } from "react-redux";
 import { getMyEvents } from "../../store/events";
 import { Calendar, dateFnsLocalizer } from "react-big-calendar";
@@ -8,6 +8,7 @@ import startOfWeek from "date-fns/startOfWeek";
 import getDay from "date-fns/getDay";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import { Box, Typography, Grid } from "@mui/material";
+import EventCard from "../helperComponents/EventCard";
 
 const locales = {
   "en-US": require("date-fns/locale/en-US"),
@@ -40,6 +41,7 @@ export const Myevents = (props) => {
   const dispatch = useDispatch();
   const { username, events } = props;
   const calenderEvents = convertEvents(events);
+  const [selectedEvent, setSelectedEvent] = useState(null);
   const fetchMyEvents = () => dispatch(getMyEvents());
 
   useEffect(() => {
@@ -52,22 +54,10 @@ export const Myevents = (props) => {
     return () => (mounted = false);
   }, []);
 
-  //********************************** Next Steps *********************************************/
+  const handleSelectEvent = (calendarEvent) => {
+    setSelectedEvent(events.find((event) => event.id === calendarEvent.id));
+  };
 
-  // function eventSelected(event) {
-  //   this.setState(selectedEvent=event)
-  //   console.log(event);
-  // }
-
-  //   <EventBox
-  //   orientation="vertical"
-  //   event={selectedEvent}
-  // />
-  // function handleAddEvent() {
-  //   setAllEvents([...allEvents, newEvent])
-  // }
-
-  //onSelectEvent={eventSelected}  add this to Calender component
   return (
     <div>
       <Box
@@ -90,6 +80,7 @@ export const Myevents = (props) => {
           My events
         </Typography>
       </Box>
+
       <Calendar
         showMultiDayTimes={true}
         localizer={localizer}
@@ -97,7 +88,9 @@ export const Myevents = (props) => {
         startAccessor="start"
         endAccessor="end"
         style={{ height: 500, margin: "50px" }}
+        onSelectEvent={handleSelectEvent}
       />
+      {selectedEvent ? <EventCard event={selectedEvent} /> : ""}
     </div>
   );
 };
