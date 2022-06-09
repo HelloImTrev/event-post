@@ -46,6 +46,7 @@ const SingleEvent = (props) => {
           sx={{
             maxWidth: "1350px",
             marginTop: "95px",
+            marginBottom: "2rem",
             marginLeft: "auto",
             marginRight: "auto",
           }}
@@ -142,8 +143,9 @@ const SingleEvent = (props) => {
                     >
                       The Deets
                     </Typography>
+                    
                   </Box>
-                  <Box>
+                  <Box sx={{marginTop: "1.5rem", marginBottom: "1.5rem", paddingRight: "3rem"}}>
                     <Typography>{event.description}</Typography>
                   </Box>
                 </Box>
