@@ -6,6 +6,19 @@ const {
 } = require("../server/db");
 const sportEvents = require("./sportEvents");
 const musicEvents = require("./musicEvents");
+const LoremIpsum = require("lorem-ipsum").LoremIpsum;
+
+const lorem = new LoremIpsum({
+  sentencesPerParagraph: {
+    max: 8,
+    min: 4
+  },
+  wordsPerSentence: {
+    max: 16,
+    min: 4
+  }
+});
+
 /**
  * seed - this function clears the database, updates tables to
  *      match the models, and populates the database.
@@ -61,7 +74,7 @@ async function seed() {
       end: end,
       category: eventItem.classifications[0].segment.name,
       images: eventItem.images,
-      description: "",
+      description: lorem.generateParagraphs(4),
       venueName: eventItem._embedded.venues[0].name,
       venueLocale: eventItem._embedded.venues[0].locale,
       venuePostCode: eventItem._embedded.venues[0].postalCode * 1,

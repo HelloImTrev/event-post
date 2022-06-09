@@ -25,7 +25,7 @@ const EventCard = ({ event }) => {
     <Grid item xxs={12} xs={12} sm={6} md={4} lg={3} sx={{ width: "100%" }}>
       <Card
         id="event-card"
-        sx={{ maxWidth: 305, height: "378px", margin: "0 auto" }}
+        sx={{ maxWidth: 405, height: "385px", margin: "0 auto" }}
       >
         <CardMedia
           id="event-card-img"
