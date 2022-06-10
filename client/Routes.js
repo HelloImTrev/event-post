@@ -32,7 +32,6 @@ class Routes extends Component {
             <Route path="/" exact component={Home} />
             <Route path="/home" component={Home} />
             <Route path="/explore/filter/:filter?" component={Explore} />
-            <Route path="/explore/sort/:sort" component={Explore} />
             <Route path="/explore" component={Explore} />
             <Route path="/myevents" component={Myevents} />
             <Redirect to="/home" />
@@ -42,7 +41,6 @@ class Routes extends Component {
             <Route path="/" exact component={Home} />
             <Route path="/home" component={Home} />
             <Route path="/explore/filter/:filter?" component={Explore} />
-            <Route path="/explore/sort/:sort" component={Explore} />
             <Route path="/explore" component={Explore} />
             <Route path="/login" component={LoginSignup} />
             <Route path="/events/:id" component={SingleEvent} />

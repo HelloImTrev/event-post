@@ -191,7 +191,6 @@ export const Home = (props) => {
               label="Date"
               value={searchObj.date}
               onChange={(newDate) => {
-                console.log(newDate);
                 setSearchObj({ ...searchObj, date: newDate });
               }}
               renderInput={(params) => {
@@ -234,7 +233,6 @@ export const Home = (props) => {
               fontSize: "20px",
             }}
             onClick={() => {
-              console.log("the object", searchObj);
               dispatch(searchKeyword(searchObj));
             }}
           >

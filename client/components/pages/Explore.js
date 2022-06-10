@@ -23,14 +23,7 @@ const getWindowDimensions = () => {
   };
 };
 
-// let sort = match.params.sort;
-// console.log(sort);
-// if (sort === "price_low") events.sort((a, b) => a.price - b.price);
-// if (sort === "price_high") events.sort((a, b) => b.price - a.price);
-
 const Explore = ({ history, match }) => {
-  console.log("explore props", history, match.params);
-
   const error = useSelector(({ error }) => error);
   const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions());
   const [loading, setLoading] = useState(true);
@@ -38,7 +31,7 @@ const Explore = ({ history, match }) => {
   let categories = ["Sports", "Music"];
   let filter = match.params.filter;
   if (filter) filter = JSON.parse(filter);
-  filter = filter || {}; // {category: "Music", sort: "price_low"}
+  filter = filter || {};
 
   const events = useSelector(({ events }) => {
     if (filter.sort && filter.sort === "price_low") events.sort((a, b) => a.price - b.price);
