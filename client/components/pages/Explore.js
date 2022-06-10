@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import history from "../../history";
 
 // router
 import { Link } from "react-router-dom";
@@ -22,14 +23,22 @@ const getWindowDimensions = () => {
   };
 };
 
-const Explore = () => {
-  const events = useSelector(({ events }) => events);
+const Explore = ({ history, match }) => {
+  console.log("explore props", history, match.params);
+
+  let filter = match.params.filter; // 1. undefined
+  if (filter) filter = JSON.parse(filter);
+  filter = filter || {}; // 2. {}
+
+  const events = useSelector(({ events }) =>
+    events.filter((evt) => {
+      return !filter.category || filter.category === evt.category;
+    })
+  );
   const error = useSelector(({ error }) => error);
-  const [filteredEvents, setFilteredEvents] = useState(null); // too slow for page to render /explore
   const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions());
   const [loading, setLoading] = useState(true);
-  console.log("event", events);
-  console.log("filtered", filteredEvents);
+
   useEffect((props) => {
     setLoading(false);
 
@@ -41,7 +50,8 @@ const Explore = () => {
   }, []);
 
   const filterCategory = (category) => {
-    setFilteredEvents(events.filter((evt) => evt.category === category));
+    filter["category"] = category;
+    history.push(`/explore/filter/${JSON.stringify(filter)}`);
   };
 
   if (loading) {
@@ -60,7 +70,8 @@ const Explore = () => {
         </Grid>
         <Grid item md={6} sx={{ width: "100%" }}>
           {error.error ? <Alert severity="error">{error.error}</Alert> : <></>}
-          <EventList events={filteredEvents === null ? events : filteredEvents} />
+          {/* <EventList events={filteredEvents === null ? events : filteredEvents} /> */}
+          <EventList events={events} />
         </Grid>
         <Grid item md={4} sx={{ width: "100%" }}>
           Map
