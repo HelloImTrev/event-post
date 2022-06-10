@@ -23,19 +23,19 @@ const getWindowDimensions = () => {
 };
 
 const Explore = () => {
-  const dispatch = useDispatch();
   const events = useSelector(({ events }) => events);
-  const [filteredEvents, setFilteredEvents] = useState(events);
+  const error = useSelector(({ error }) => error);
+  const [filteredEvents, setFilteredEvents] = useState(null); // too slow for page to render /explore
   const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions());
   const [loading, setLoading] = useState(true);
+  console.log("event", events);
+  console.log("filtered", filteredEvents);
+  useEffect((props) => {
+    setLoading(false);
 
-  useEffect(() => {
     function handleResize() {
       setWindowDimensions(getWindowDimensions());
     }
-    dispatch(getEvents());
-    setLoading(false);
-    window.localStorage.removeItem("error");
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
@@ -43,10 +43,6 @@ const Explore = () => {
   const filterCategory = (category) => {
     setFilteredEvents(events.filter((evt) => evt.category === category));
   };
-
-  // error handler
-  const error = JSON.parse(window.localStorage.getItem("error"));
-  const pageNotFoundError = error ? error.output : null;
 
   if (loading) {
     return <CircularProgress />;
@@ -63,8 +59,8 @@ const Explore = () => {
           <SearchBar filterCategory={filterCategory} windowDimensions={windowDimensions} />
         </Grid>
         <Grid item md={6} sx={{ width: "100%" }}>
-          {pageNotFoundError ? <Alert severity="error">{pageNotFoundError}</Alert> : <></>}
-          <EventList events={filteredEvents} />
+          {error.error ? <Alert severity="error">{error.error}</Alert> : <></>}
+          <EventList events={filteredEvents === null ? events : filteredEvents} />
         </Grid>
         <Grid item md={4} sx={{ width: "100%" }}>
           Map
@@ -76,31 +72,6 @@ const Explore = () => {
 
 export default Explore;
 
-// do not erase below cmnt. Keep for reference.
 // const userLocation = JSON.parse(window.localStorage.getItem("userLocation"));
 // const location = userLocation ? userLocation : "New York";
 // const userSearchedEvents = useSelector((state) => state.events.filter((event) => event.venueCity === location));
-
-// const [category, setCategory] = useState("");
-// const dispatch = useDispatch();
-// useEffect(() => {
-//   window.localStorage.removeItem("error");
-// }, []);
-// let events = useSelector((state) => state.events);
-
-// if (events[0] === undefined) {
-//   dispatch(getEvents());
-// }
-
-// // error handler
-// const error = JSON.parse(window.localStorage.getItem("error"));
-// const pageNotFoundError = error ? error.output : null;
-
-// useEffect(() => {
-//   window.localStorage.removeItem("error");
-// }, []);
-
-// const filterCategory = (category) => {
-//   // console.log("enteredddd cat", category);
-//   events = useSelector(({ events }) => events.filter((evt) => evt.category === category));
-// };

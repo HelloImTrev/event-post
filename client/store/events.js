@@ -1,5 +1,6 @@
 import axios from "axios";
 import history from "../history";
+import { getError } from "./error";
 
 //Action Types\\
 const GET_EVENTS = "GET_EVENTS";
@@ -45,10 +46,9 @@ export const searchKeyword =
   ({ name, location, date }) =>
   async (dispatch) => {
     try {
-      console.log(name, location, date);
       const events = (await axios.get(`/api/events/search?keyword=${name}&location=${location}&date=${date}`)).data;
       if (events.length === 0) {
-        window.localStorage.setItem("error", JSON.stringify({ output: "Result not found." }));
+        dispatch(getError("Result not found."));
       } else {
         dispatch(_getEvents(events));
       }

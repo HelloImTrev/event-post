@@ -1,4 +1,5 @@
 import React, { Fragment } from "react";
+import history from "../../history";
 
 // redux
 import { connect, useSelector, useDispatch } from "react-redux";
@@ -98,6 +99,9 @@ const Navbar = ({ isLoggedIn, handleLogout }) => {
               <MenuItem
                 onClick={() => {
                   dispatch(getEvents());
+                  if (window.location.href.includes("/explore")) {
+                    window.location.reload();
+                  }
                 }}
                 component={Link}
                 to={"/explore"}
@@ -213,6 +217,9 @@ const Navbar = ({ isLoggedIn, handleLogout }) => {
               <MenuItem
                 onClick={() => {
                   dispatch(getEvents());
+                  if (window.location.href.includes("/explore")) {
+                    window.location.reload();
+                  }
                 }}
                 component={Link}
                 to={"/explore"}

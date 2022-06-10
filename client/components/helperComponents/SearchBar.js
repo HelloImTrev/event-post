@@ -5,18 +5,30 @@ import { Link } from "react-router-dom";
 
 // redux
 import { useDispatch, useSelector } from "react-redux";
+import { removeError } from "../../store/error";
 
 //MUI
-import { Box, Grid, Paper, Button, ListSubheader, List, ListItemButton, ListItemIcon, ListItemText, Collapse, Divider } from "@mui/material";
+import { Box, Grid, Paper, Button, ListSubheader, List, ListItemButton, ListItemIcon, ListItemText, Collapse, Divider, Typography } from "@mui/material";
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
 
 const SearchBar = ({ filterCategory, windowDimensions }) => {
+  const dispatch = useDispatch();
   const { width, height } = windowDimensions;
 
   const [open, setOpen] = useState(width <= 930 ? false : true);
+  const [categoryOpen, setCategoryOpen] = useState(width <= 930 ? false : true);
+  const [sortClickOpen, setSortClickOpen] = useState(width <= 930 ? false : true);
 
   const handleClick = () => {
     setOpen(!open);
+  };
+
+  const handleCategoryClick = () => {
+    setCategoryOpen(!categoryOpen);
+  };
+
+  const handleSortClick = () => {
+    setSortClickOpen(!sortClickOpen);
   };
 
   const handleCategory = (e) => {
@@ -35,23 +47,47 @@ const SearchBar = ({ filterCategory, windowDimensions }) => {
           </ListSubheader>
         }
       >
-        <ListItemButton>
-          <ListItemText primary="Price - Low to High" />
+        <ListItemButton onClick={handleCategoryClick}>
+          <Typography variant="promptTitle" color="#d83f87" sx={{ fontSize: "1rem", fontWeight: "300" }}>
+            Categories
+          </Typography>
+          {categoryOpen ? <ExpandLess /> : <ExpandMore />}
         </ListItemButton>
-        <ListItemButton>
-          <ListItemText primary="Price - High to Low" />
-        </ListItemButton>
-        <ListItemButton onClick={handleClick}>
-          <ListItemText primary="Category" />
-          {open ? <ExpandLess /> : <ExpandMore />}
-        </ListItemButton>
-        <Collapse in={open} timeout="auto" unmountOnExit>
+        <Collapse in={categoryOpen} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
-            <ListItemButton sx={{ pl: 4 }} onClick={(e) => handleCategory(e)}>
+            <ListItemButton
+              sx={{ pl: 4 }}
+              onClick={(e) => {
+                handleCategory(e);
+                dispatch(removeError());
+              }}
+            >
               <ListItemText primary="Sports" />
             </ListItemButton>
-            <ListItemButton sx={{ pl: 4 }} onClick={(e) => handleCategory(e)}>
+            <ListItemButton
+              sx={{ pl: 4 }}
+              onClick={(e) => {
+                handleCategory(e);
+                dispatch(removeError());
+              }}
+            >
               <ListItemText primary="Music" />
+            </ListItemButton>
+          </List>
+        </Collapse>
+        <ListItemButton onClick={handleSortClick}>
+          <Typography variant="promptTitle" color="#d83f87" sx={{ fontSize: "1rem", fontWeight: "300" }}>
+            Sort by
+          </Typography>
+          {sortClickOpen ? <ExpandLess /> : <ExpandMore />}
+        </ListItemButton>
+        <Collapse in={sortClickOpen} timeout="auto" unmountOnExit>
+          <List component="div" disablePadding>
+            <ListItemButton sx={{ pl: 4 }}>
+              <ListItemText primary="Price Low" />
+            </ListItemButton>
+            <ListItemButton sx={{ pl: 4 }}>
+              <ListItemText primary="Price High" />
             </ListItemButton>
           </List>
         </Collapse>
@@ -62,20 +98,51 @@ const SearchBar = ({ filterCategory, windowDimensions }) => {
           {open ? <ExpandLess /> : <ExpandMore />}
         </ListItemButton>
         <Collapse in={open} timeout="auto" unmountOnExit>
-          <ListItemButton>
-            <ListItemText primary="Price - Low to High" />
-          </ListItemButton>
-          <ListItemButton>
-            <ListItemText primary="Price - High to Low" />
-          </ListItemButton>
-          <Divider />
           <List component="div" disablePadding>
-            <ListItemButton sx={{ pl: 4 }} onClick={(e) => handleCategory(e)}>
-              <ListItemText primary="Sports" />
+            <ListItemButton onClick={handleCategoryClick}>
+              <Typography variant="promptTitle" color="#d83f87" sx={{ fontSize: "1rem", fontWeight: "300" }}>
+                Categories
+              </Typography>
+              {categoryOpen ? <ExpandLess /> : <ExpandMore />}
             </ListItemButton>
-            <ListItemButton sx={{ pl: 4 }} onClick={(e) => handleCategory(e)}>
-              <ListItemText primary="Music" />
+            <Collapse in={categoryOpen} timeout="auto" unmountOnExit>
+              <List component="div" disablePadding>
+                <ListItemButton
+                  sx={{ pl: 4 }}
+                  onClick={(e) => {
+                    handleCategory(e);
+                    dispatch(removeError());
+                  }}
+                >
+                  <ListItemText primary="Sports" />
+                </ListItemButton>
+                <ListItemButton
+                  sx={{ pl: 4 }}
+                  onClick={(e) => {
+                    handleCategory(e);
+                    dispatch(removeError());
+                  }}
+                >
+                  <ListItemText primary="Music" />
+                </ListItemButton>
+              </List>
+            </Collapse>
+            <ListItemButton onClick={handleSortClick}>
+              <Typography variant="promptTitle" color="#d83f87" sx={{ fontSize: "1rem", fontWeight: "300" }}>
+                Sort by
+              </Typography>
+              {sortClickOpen ? <ExpandLess /> : <ExpandMore />}
             </ListItemButton>
+            <Collapse in={sortClickOpen} timeout="auto" unmountOnExit>
+              <List component="div" disablePadding>
+                <ListItemButton sx={{ pl: 4 }}>
+                  <ListItemText primary="Price Low" />
+                </ListItemButton>
+                <ListItemButton sx={{ pl: 4 }}>
+                  <ListItemText primary="Price High" />
+                </ListItemButton>
+              </List>
+            </Collapse>
           </List>
         </Collapse>
       </List>
