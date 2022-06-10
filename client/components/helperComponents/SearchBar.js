@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Box, Grid, Paper, Button, ListSubheader, List, ListItemButton, ListItemIcon, ListItemText, Collapse, Divider } from "@mui/material";
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
 
-const SearchBar = ({ filterCategory, windowDimensions }) => {
+const SearchBar = ({ filterCategory, windowDimensions, removeError }) => {
   const { width, height } = windowDimensions;
 
   const [open, setOpen] = useState(width <= 930 ? false : true);
@@ -47,10 +47,22 @@ const SearchBar = ({ filterCategory, windowDimensions }) => {
         </ListItemButton>
         <Collapse in={open} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
-            <ListItemButton sx={{ pl: 4 }} onClick={(e) => handleCategory(e)}>
+            <ListItemButton
+              sx={{ pl: 4 }}
+              onClick={(e) => {
+                handleCategory(e);
+                removeError();
+              }}
+            >
               <ListItemText primary="Sports" />
             </ListItemButton>
-            <ListItemButton sx={{ pl: 4 }} onClick={(e) => handleCategory(e)}>
+            <ListItemButton
+              sx={{ pl: 4 }}
+              onClick={(e) => {
+                handleCategory(e);
+                removeError();
+              }}
+            >
               <ListItemText primary="Music" />
             </ListItemButton>
           </List>
@@ -70,10 +82,22 @@ const SearchBar = ({ filterCategory, windowDimensions }) => {
           </ListItemButton>
           <Divider />
           <List component="div" disablePadding>
-            <ListItemButton sx={{ pl: 4 }} onClick={(e) => handleCategory(e)}>
+            <ListItemButton
+              sx={{ pl: 4 }}
+              onClick={(e) => {
+                handleCategory(e);
+                removeError();
+              }}
+            >
               <ListItemText primary="Sports" />
             </ListItemButton>
-            <ListItemButton sx={{ pl: 4 }} onClick={(e) => handleCategory(e)}>
+            <ListItemButton
+              sx={{ pl: 4 }}
+              onClick={(e) => {
+                handleCategory(e);
+                removeError();
+              }}
+            >
               <ListItemText primary="Music" />
             </ListItemButton>
           </List>

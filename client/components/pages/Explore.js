@@ -28,14 +28,18 @@ const Explore = () => {
   const [filteredEvents, setFilteredEvents] = useState(events);
   const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions());
   const [loading, setLoading] = useState(true);
+  // const fail = JSON.parse(window.localStorage.getItem("error"));
+  const [error, setError] = useState(events.find((evt) => evt.error) ? null : "Page not found");
 
   useEffect(() => {
+    dispatch(getEvents());
+    setLoading(false);
+
+    // window.localStorage.removeItem("error");
+
     function handleResize() {
       setWindowDimensions(getWindowDimensions());
     }
-    dispatch(getEvents());
-    setLoading(false);
-    window.localStorage.removeItem("error");
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
@@ -44,9 +48,10 @@ const Explore = () => {
     setFilteredEvents(events.filter((evt) => evt.category === category));
   };
 
-  // error handler
-  const error = JSON.parse(window.localStorage.getItem("error"));
-  const pageNotFoundError = error ? error.output : null;
+  const removeError = () => {
+    setError(null);
+    window.localStorage.removeItem("error");
+  };
 
   if (loading) {
     return <CircularProgress />;
@@ -60,10 +65,10 @@ const Explore = () => {
         sx={{ margin: { xxs: "60px auto 0 auto", xs: "69px auto 0 auto" }, width: "90%" }}
       >
         <Grid item md={2} sx={{ width: "100%" }}>
-          <SearchBar filterCategory={filterCategory} windowDimensions={windowDimensions} />
+          <SearchBar filterCategory={filterCategory} windowDimensions={windowDimensions} removeError={removeError} />
         </Grid>
         <Grid item md={6} sx={{ width: "100%" }}>
-          {pageNotFoundError ? <Alert severity="error">{pageNotFoundError}</Alert> : <></>}
+          {error ? <Alert severity="error">{error}</Alert> : <></>}
           <EventList events={filteredEvents} />
         </Grid>
         <Grid item md={4} sx={{ width: "100%" }}>
@@ -80,27 +85,3 @@ export default Explore;
 // const userLocation = JSON.parse(window.localStorage.getItem("userLocation"));
 // const location = userLocation ? userLocation : "New York";
 // const userSearchedEvents = useSelector((state) => state.events.filter((event) => event.venueCity === location));
-
-// const [category, setCategory] = useState("");
-// const dispatch = useDispatch();
-// useEffect(() => {
-//   window.localStorage.removeItem("error");
-// }, []);
-// let events = useSelector((state) => state.events);
-
-// if (events[0] === undefined) {
-//   dispatch(getEvents());
-// }
-
-// // error handler
-// const error = JSON.parse(window.localStorage.getItem("error"));
-// const pageNotFoundError = error ? error.output : null;
-
-// useEffect(() => {
-//   window.localStorage.removeItem("error");
-// }, []);
-
-// const filterCategory = (category) => {
-//   // console.log("enteredddd cat", category);
-//   events = useSelector(({ events }) => events.filter((evt) => evt.category === category));
-// };

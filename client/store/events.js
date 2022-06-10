@@ -4,6 +4,7 @@ import history from "../history";
 //Action Types\\
 const GET_EVENTS = "GET_EVENTS";
 const GET_MY_EVENTS = "GET_MY_EVENTS";
+const ADD_ERROR = "ADD_ERROR";
 
 //Action Creators\\
 const _getEvents = (events) => {
@@ -19,6 +20,8 @@ const _getMyEvents = (myEvents) => {
     myEvents,
   };
 };
+
+const _addError = (error) => ({ type: ADD_ERROR, error });
 
 //Thunks\\
 export const getEvents = () => {
@@ -45,10 +48,10 @@ export const searchKeyword =
   ({ name, location, date }) =>
   async (dispatch) => {
     try {
-      console.log(name, location, date);
       const events = (await axios.get(`/api/events/search?keyword=${name}&location=${location}&date=${date}`)).data;
       if (events.length === 0) {
-        window.localStorage.setItem("error", JSON.stringify({ output: "Result not found." }));
+        // window.localStorage.setItem("error", JSON.stringify({ output: "Result not found." }));
+        dispatch(_addError({ error: "Result not found." }));
       } else {
         dispatch(_getEvents(events));
       }
@@ -65,6 +68,8 @@ export default function (state = [], action) {
       return action.events;
     case GET_MY_EVENTS:
       return action.myEvents;
+    case ADD_ERROR:
+      return [action.error, ...state];
     default:
       return state;
   }
