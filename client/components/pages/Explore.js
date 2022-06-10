@@ -29,6 +29,7 @@ const Explore = ({ history, match }) => {
   let filter = match.params.filter; // 1. undefined
   if (filter) filter = JSON.parse(filter);
   filter = filter || {}; // 2. {}
+  console.log("filter:", filter);
 
   const events = useSelector(({ events }) =>
     events.filter((evt) => {
@@ -50,7 +51,11 @@ const Explore = ({ history, match }) => {
   }, []);
 
   const filterCategory = (category) => {
-    filter["category"] = category;
+    if (category.length === 0) {
+      filter = {};
+    } else {
+      filter["category"] = category;
+    }
     history.push(`/explore/filter/${JSON.stringify(filter)}`);
   };
 
@@ -70,7 +75,6 @@ const Explore = ({ history, match }) => {
         </Grid>
         <Grid item md={6} sx={{ width: "100%" }}>
           {error.error ? <Alert severity="error">{error.error}</Alert> : <></>}
-          {/* <EventList events={filteredEvents === null ? events : filteredEvents} /> */}
           <EventList events={events} />
         </Grid>
         <Grid item md={4} sx={{ width: "100%" }}>

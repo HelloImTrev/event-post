@@ -58,6 +58,8 @@ const EventList = ({ events }) => {
                           {`Event starts ${getDate(event)}`}
                         </Typography>
                         <Typography variant="cardLocation">{`${event.venueName} - ${event.venueCity}, ${event.venueStateCode}`}</Typography>
+                        <br />
+                        <Typography variant="cardLocation">{`Ticket price: $${event.price}`}</Typography>
                         <Box
                           sx={{
                             display: "flex",

@@ -8,7 +8,25 @@ import { useDispatch, useSelector } from "react-redux";
 import { removeError } from "../../store/error";
 
 //MUI
-import { Box, Grid, Paper, Button, ListSubheader, List, ListItemButton, ListItemIcon, ListItemText, Collapse, Divider, Typography } from "@mui/material";
+import {
+  Box,
+  Grid,
+  Paper,
+  Button,
+  ListSubheader,
+  List,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  Collapse,
+  Divider,
+  Typography,
+  Radio,
+  RadioGroup,
+  FormControlLabel,
+  FormControl,
+  FormLabel,
+} from "@mui/material";
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
 
 const SearchBar = ({ filterCategory, windowDimensions }) => {
@@ -18,6 +36,7 @@ const SearchBar = ({ filterCategory, windowDimensions }) => {
   const [open, setOpen] = useState(width <= 930 ? false : true);
   const [categoryOpen, setCategoryOpen] = useState(width <= 930 ? false : true);
   const [sortClickOpen, setSortClickOpen] = useState(width <= 930 ? false : true);
+  const [category, setCategory] = useState("");
 
   const handleClick = () => {
     setOpen(!open);
@@ -32,7 +51,13 @@ const SearchBar = ({ filterCategory, windowDimensions }) => {
   };
 
   const handleCategory = (e) => {
-    filterCategory(e.target.innerHTML);
+    if (e.target.value === category) {
+      setCategory("");
+      filterCategory("");
+    } else {
+      setCategory(e.target.value);
+      filterCategory(e.target.value);
+    }
   };
 
   return (
@@ -55,7 +80,48 @@ const SearchBar = ({ filterCategory, windowDimensions }) => {
         </ListItemButton>
         <Collapse in={categoryOpen} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
-            <ListItemButton
+            <Box sx={{ paddingLeft: "30px" }}>
+              <FormControl>
+                <RadioGroup name="controlled-radio-buttons-group" value={category}>
+                  <FormControlLabel
+                    value="Sports"
+                    control={
+                      <Radio
+                        onClick={(e) => {
+                          handleCategory(e);
+                          dispatch(removeError());
+                        }}
+                        sx={{
+                          "&.Mui-checked": {
+                            color: "#d83f87",
+                          },
+                        }}
+                      />
+                    }
+                    label="Sports"
+                  />
+                  <FormControlLabel
+                    value="Music"
+                    control={
+                      <Radio
+                        onClick={(e) => {
+                          handleCategory(e);
+                          dispatch(removeError());
+                        }}
+                        sx={{
+                          "&.Mui-checked": {
+                            color: "#d83f87",
+                          },
+                        }}
+                      />
+                    }
+                    label="Music"
+                  />
+                </RadioGroup>
+              </FormControl>
+            </Box>
+
+            {/* <ListItemButton
               sx={{ pl: 4 }}
               onClick={(e) => {
                 handleCategory(e);
@@ -72,7 +138,7 @@ const SearchBar = ({ filterCategory, windowDimensions }) => {
               }}
             >
               <ListItemText primary="Music" />
-            </ListItemButton>
+            </ListItemButton> */}
           </List>
         </Collapse>
         <ListItemButton onClick={handleSortClick}>

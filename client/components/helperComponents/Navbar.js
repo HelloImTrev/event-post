@@ -98,13 +98,13 @@ const Navbar = ({ isLoggedIn, handleLogout }) => {
 
               <MenuItem
                 onClick={() => {
-                  dispatch(getEvents());
                   if (window.location.href.includes("/explore")) {
-                    window.location.reload();
+                    const filter = window.location.href.split("/");
+                    history.push(`/explore/filter/${filter[filter.length - 1]}`);
+                  } else {
+                    history.push("/explore");
                   }
                 }}
-                component={Link}
-                to={"/explore"}
                 sx={{
                   "&:hover": { bgcolor: "transparent" },
                   marginLeft: "auto",
@@ -216,13 +216,13 @@ const Navbar = ({ isLoggedIn, handleLogout }) => {
 
               <MenuItem
                 onClick={() => {
-                  dispatch(getEvents());
                   if (window.location.href.includes("/explore")) {
-                    window.location.reload();
+                    const filter = window.location.href.split("/");
+                    history.push(`/explore/filter/${filter[filter.length - 1]}`);
+                  } else {
+                    history.push("/explore");
                   }
                 }}
-                component={Link}
-                to={"/explore"}
                 sx={{
                   "&:hover": { bgcolor: "transparent" },
                   marginLeft: "auto",

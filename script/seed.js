@@ -11,12 +11,12 @@ const LoremIpsum = require("lorem-ipsum").LoremIpsum;
 const lorem = new LoremIpsum({
   sentencesPerParagraph: {
     max: 8,
-    min: 4
+    min: 4,
   },
   wordsPerSentence: {
     max: 16,
-    min: 4
-  }
+    min: 4,
+  },
 });
 
 /**
@@ -60,9 +60,10 @@ async function seed() {
   });
 
   const userIds = [chrisi.id, cody.id, murphy.id, bob.id];
-  let i = 0;
 
-  for (const eventItem of sportEvents) {
+  //***********************************************************************Seeding events */
+
+  for (const [i, eventItem] of sportEvents.entries()) {
     // ticketmaster data doesnt have end time
     let end = new Date(eventItem.dates.start.dateTime);
     end.setHours(end.getHours() + 2);
@@ -87,13 +88,12 @@ async function seed() {
       venueLongitude: eventItem._embedded.venues[0].location.longitude,
       venueLatitude: eventItem._embedded.venues[0].location.latitude,
       ownerId: userIds[i % userIds.length],
+      price: eventItem.priceRanges ? eventItem.priceRanges[0].min : await Event.generateRandPrice(),
     });
-    i++;
   }
+  console.log(`*********************************** ${sportEvents.length} Sport Events Seeded`);
 
-  i = 0;
-
-  for (const eventItem of musicEvents) {
+  for (const [i, eventItem] of musicEvents.entries()) {
     // ticketmaster data doesnt have end time
     let end = new Date(eventItem.dates.start.dateTime);
     end.setHours(end.getHours() + 2);
@@ -118,9 +118,10 @@ async function seed() {
       venueLongitude: eventItem._embedded.venues[0].location.longitude,
       venueLatitude: eventItem._embedded.venues[0].location.latitude,
       ownerId: userIds[i % userIds.length],
+      price: eventItem.priceRanges ? eventItem.priceRanges[0].min : await Event.generateRandPrice(),
     });
-    i++;
   }
+  console.log(`*********************************** ${musicEvents.length} Sport Events Seeded`);
 
   console.log(`seeded successfully`);
 }

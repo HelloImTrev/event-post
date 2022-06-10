@@ -29,6 +29,7 @@ export const Home = (props) => {
 
   useEffect(() => {
     getLocation();
+    window.scrollTo(0, 0);
   }, []);
 
   const getLocation = () => {
