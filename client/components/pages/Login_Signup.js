@@ -19,11 +19,9 @@ const AuthForm = (props) => {
     username: "",
     password: "",
   });
-
   const handleCreateAccountInputFields = (e) => {
     setSignupInput({ ...signupInput, [e.target.name]: e.target.value });
   };
-
   return (
     <Box
       sx={{
@@ -33,7 +31,18 @@ const AuthForm = (props) => {
         paddingTop: "3vw",
       }}
     >
-      <Typography variant="promptTitle" sx={{ fontSize: "4vw" }}>
+      <Typography
+        variant="promptTitle"
+        sx={{
+          fontSize: {
+            xxs: "30px",
+            xs: "35 px",
+            sm: "40px",
+            md: "40px",
+            lg: "50px",
+          },
+        }}
+      >
         Sign In
       </Typography>
       <br />
@@ -83,6 +92,7 @@ const AuthForm = (props) => {
               md: "60%",
               lg: "50%",
             },
+            fontSize: { xxs: "15px", sm: "18px", md: "20px", lg: "20px" },
           }}
         >
           LOG IN
@@ -102,27 +112,12 @@ const AuthForm = (props) => {
               md: "60%",
               lg: "50%",
             },
+            fontSize: { xxs: "15px", sm: "18px", md: "20px", lg: "20px" },
             marginTop: "1vw",
           }}
         >
           Sign in as a Demo User
         </Button>
-        <GoogleLoginButton
-          onClick={() => (window.location.href = "/googleOauth")}
-          className="ggbttn"
-          align="center"
-          variant="contained"
-          sx={{
-            width: {
-              xxs: "95%",
-              md: "60%",
-              lg: "50%",
-            },
-            marginTop: "1vw",
-          }}
-        >
-          CONTINUE WITH GOOGLE
-        </GoogleLoginButton>
         <Box
           sx={{
             width: {
@@ -137,6 +132,24 @@ const AuthForm = (props) => {
             <Alert severity="error">{error.response.data}</Alert>
           )}
         </Box>
+        {
+          <GoogleLoginButton
+            onClick={() => (window.location.href = "/googleOauth")}
+            className="ggbttn"
+            align="center"
+            variant="contained"
+            sx={{
+              width: {
+                xxs: "95%",
+                md: "60%",
+                lg: "50%",
+              },
+              marginTop: "1vw",
+            }}
+          >
+            CONTINUE WITH GOOGLE
+          </GoogleLoginButton>
+        }
       </form>
 
       <Box
@@ -156,14 +169,37 @@ const AuthForm = (props) => {
           margin: "3vw auto",
         }}
       >
-        <Box sx={{ zIndex: "1", width: "50%", position: "absolute" }}>
+        <Box
+          sx={{
+            zIndex: "1",
+            width: {
+              xxs: "25%",
+              sm: "20%",
+              md: "40%",
+              lg: "50%",
+            },
+            position: "absolute",
+          }}
+        >
           <Typography
             style={{
-              fontSize: "1.5vw",
               padding: "0 5px",
               backgroundColor: "white",
-              width: "25%",
               margin: "0 auto",
+            }}
+            sx={{
+              width: {
+                xxs: "95%",
+                md: "50%",
+                lg: "20%",
+              },
+              fontSize: {
+                xxs: "10px",
+                xs: "15px",
+                sm: "18px",
+                md: "20px",
+                lg: "20px",
+              },
             }}
           >
             Not a user?
@@ -178,7 +214,13 @@ const AuthForm = (props) => {
             md: "60%",
             lg: "50%",
           },
-          fontSize: "4vw",
+          fontSize: {
+            xxs: "30px",
+            xs: "35 px",
+            sm: "40px",
+            md: "40px",
+            lg: "50px",
+          },
         }}
       >
         Create an account
@@ -232,6 +274,7 @@ const AuthForm = (props) => {
               md: "60%",
               lg: "50%",
             },
+            fontSize: { xxs: "15px", sm: "18px", md: "20px", lg: "20px" },
           }}
         >
           CREATE AN ACCOUNT
@@ -279,6 +322,7 @@ const mapDispatch = (dispatch) => {
         const password = evt.target.password.value;
         dispatch(authenticate(username, password, formName));
       } else {
+        console.log("log", evt.target);
         const formName = evt.target.name;
         const username = evt.target.username;
         const password = evt.target.password;
@@ -289,9 +333,3 @@ const mapDispatch = (dispatch) => {
 };
 
 export const LoginSignup = connect(mapLogin, mapDispatch)(AuthForm);
-
-{
-  /* <GoogleLoginButton onClick={() => alert("Hello")} className="ggbttn" align="center" style={{ width: "70%" }}>
-          CONTINUE WITH GOOGLE
-        </GoogleLoginButton> */
-}
