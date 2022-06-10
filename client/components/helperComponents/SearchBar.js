@@ -37,6 +37,7 @@ const SearchBar = ({ filterCategory, windowDimensions }) => {
   const [categoryOpen, setCategoryOpen] = useState(width <= 930 ? false : true);
   const [sortClickOpen, setSortClickOpen] = useState(width <= 930 ? false : true);
   const [category, setCategory] = useState("");
+  const [sort, setSort] = useState("");
 
   const handleClick = () => {
     setOpen(!open);
@@ -53,9 +54,19 @@ const SearchBar = ({ filterCategory, windowDimensions }) => {
   const handleCategory = (e) => {
     if (e.target.value === category) {
       setCategory("");
-      filterCategory("");
+      filterCategory("category_null");
     } else {
       setCategory(e.target.value);
+      filterCategory(e.target.value);
+    }
+  };
+
+  const handleSort = (e) => {
+    if (e.target.value === sort) {
+      setSort("");
+      filterCategory("price_null");
+    } else {
+      setSort(e.target.value);
       filterCategory(e.target.value);
     }
   };
@@ -120,25 +131,6 @@ const SearchBar = ({ filterCategory, windowDimensions }) => {
                 </RadioGroup>
               </FormControl>
             </Box>
-
-            {/* <ListItemButton
-              sx={{ pl: 4 }}
-              onClick={(e) => {
-                handleCategory(e);
-                dispatch(removeError());
-              }}
-            >
-              <ListItemText primary="Sports" />
-            </ListItemButton>
-            <ListItemButton
-              sx={{ pl: 4 }}
-              onClick={(e) => {
-                handleCategory(e);
-                dispatch(removeError());
-              }}
-            >
-              <ListItemText primary="Music" />
-            </ListItemButton> */}
           </List>
         </Collapse>
         <ListItemButton onClick={handleSortClick}>
@@ -149,12 +141,52 @@ const SearchBar = ({ filterCategory, windowDimensions }) => {
         </ListItemButton>
         <Collapse in={sortClickOpen} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
-            <ListItemButton sx={{ pl: 4 }}>
+            <Box sx={{ paddingLeft: "30px" }}>
+              <FormControl>
+                <RadioGroup name="controlled-radio-buttons-group" value={sort}>
+                  <FormControlLabel
+                    value="price_low"
+                    control={
+                      <Radio
+                        onClick={(e) => {
+                          handleSort(e);
+                          dispatch(removeError());
+                        }}
+                        sx={{
+                          "&.Mui-checked": {
+                            color: "#d83f87",
+                          },
+                        }}
+                      />
+                    }
+                    label="Price low to high"
+                  />
+                  <FormControlLabel
+                    value="price_high"
+                    control={
+                      <Radio
+                        onClick={(e) => {
+                          handleSort(e);
+                          dispatch(removeError());
+                        }}
+                        sx={{
+                          "&.Mui-checked": {
+                            color: "#d83f87",
+                          },
+                        }}
+                      />
+                    }
+                    label="Price high to low"
+                  />
+                </RadioGroup>
+              </FormControl>
+            </Box>
+            {/* <ListItemButton sx={{ pl: 4 }}>
               <ListItemText primary="Price Low" />
             </ListItemButton>
             <ListItemButton sx={{ pl: 4 }}>
               <ListItemText primary="Price High" />
-            </ListItemButton>
+            </ListItemButton> */}
           </List>
         </Collapse>
       </List>
@@ -173,24 +205,46 @@ const SearchBar = ({ filterCategory, windowDimensions }) => {
             </ListItemButton>
             <Collapse in={categoryOpen} timeout="auto" unmountOnExit>
               <List component="div" disablePadding>
-                <ListItemButton
-                  sx={{ pl: 4 }}
-                  onClick={(e) => {
-                    handleCategory(e);
-                    dispatch(removeError());
-                  }}
-                >
-                  <ListItemText primary="Sports" />
-                </ListItemButton>
-                <ListItemButton
-                  sx={{ pl: 4 }}
-                  onClick={(e) => {
-                    handleCategory(e);
-                    dispatch(removeError());
-                  }}
-                >
-                  <ListItemText primary="Music" />
-                </ListItemButton>
+                <Box sx={{ paddingLeft: "30px" }}>
+                  <FormControl>
+                    <RadioGroup name="controlled-radio-buttons-group" value={category}>
+                      <FormControlLabel
+                        value="Sports"
+                        control={
+                          <Radio
+                            onClick={(e) => {
+                              handleCategory(e);
+                              dispatch(removeError());
+                            }}
+                            sx={{
+                              "&.Mui-checked": {
+                                color: "#d83f87",
+                              },
+                            }}
+                          />
+                        }
+                        label="Sports"
+                      />
+                      <FormControlLabel
+                        value="Music"
+                        control={
+                          <Radio
+                            onClick={(e) => {
+                              handleCategory(e);
+                              dispatch(removeError());
+                            }}
+                            sx={{
+                              "&.Mui-checked": {
+                                color: "#d83f87",
+                              },
+                            }}
+                          />
+                        }
+                        label="Music"
+                      />
+                    </RadioGroup>
+                  </FormControl>
+                </Box>
               </List>
             </Collapse>
             <ListItemButton onClick={handleSortClick}>

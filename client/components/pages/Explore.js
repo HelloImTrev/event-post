@@ -23,24 +23,32 @@ const getWindowDimensions = () => {
   };
 };
 
+// let sort = match.params.sort;
+// console.log(sort);
+// if (sort === "price_low") events.sort((a, b) => a.price - b.price);
+// if (sort === "price_high") events.sort((a, b) => b.price - a.price);
+
 const Explore = ({ history, match }) => {
   console.log("explore props", history, match.params);
 
-  let filter = match.params.filter; // 1. undefined
-  if (filter) filter = JSON.parse(filter);
-  filter = filter || {}; // 2. {}
-  console.log("filter:", filter);
-
-  const events = useSelector(({ events }) =>
-    events.filter((evt) => {
-      return !filter.category || filter.category === evt.category;
-    })
-  );
   const error = useSelector(({ error }) => error);
   const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions());
   const [loading, setLoading] = useState(true);
 
-  useEffect((props) => {
+  let categories = ["Sports", "Music"];
+  let filter = match.params.filter;
+  if (filter) filter = JSON.parse(filter);
+  filter = filter || {}; // {category: "Music", sort: "price_low"}
+
+  const events = useSelector(({ events }) => {
+    if (filter.sort && filter.sort === "price_low") events.sort((a, b) => a.price - b.price);
+    if (filter.sort && filter.sort === "price_high") events.sort((a, b) => b.price - a.price);
+    return events.filter((evt) => {
+      return !filter.category || filter.category === evt.category;
+    });
+  });
+
+  useEffect(() => {
     setLoading(false);
 
     function handleResize() {
@@ -50,12 +58,12 @@ const Explore = ({ history, match }) => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const filterCategory = (category) => {
-    if (category.length === 0) {
-      filter = {};
-    } else {
-      filter["category"] = category;
-    }
+  const filterCategory = (query) => {
+    if (query === "category_null") delete filter["category"];
+    if (query === "price_null") delete filter["sort"];
+    if (categories.includes(query)) filter["category"] = query;
+    if (query === "price_low" || query === "price_high") filter["sort"] = query;
+
     history.push(`/explore/filter/${JSON.stringify(filter)}`);
   };
 
@@ -90,3 +98,17 @@ export default Explore;
 // const userLocation = JSON.parse(window.localStorage.getItem("userLocation"));
 // const location = userLocation ? userLocation : "New York";
 // const userSearchedEvents = useSelector((state) => state.events.filter((event) => event.venueCity === location));
+
+// const address = window.location.href.split("/");
+// if (address.length > 2) {
+//   history.push(`/explore/sort/${address[address.length - 1]}`);
+// } else {
+//   history.push(`/explore`);
+// }
+
+// if (category.length === 0) {
+//   filter = {};
+// } else {
+//   filter["category"] = category;
+// }
+// history.push(`/explore/filter/${JSON.stringify(filter)}`);
