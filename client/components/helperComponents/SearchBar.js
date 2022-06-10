@@ -5,12 +5,14 @@ import { Link } from "react-router-dom";
 
 // redux
 import { useDispatch, useSelector } from "react-redux";
+import { removeError } from "../../store/error";
 
 //MUI
 import { Box, Grid, Paper, Button, ListSubheader, List, ListItemButton, ListItemIcon, ListItemText, Collapse, Divider } from "@mui/material";
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
 
-const SearchBar = ({ filterCategory, windowDimensions, removeError }) => {
+const SearchBar = ({ filterCategory, windowDimensions }) => {
+  const dispatch = useDispatch();
   const { width, height } = windowDimensions;
 
   const [open, setOpen] = useState(width <= 930 ? false : true);
@@ -51,7 +53,7 @@ const SearchBar = ({ filterCategory, windowDimensions, removeError }) => {
               sx={{ pl: 4 }}
               onClick={(e) => {
                 handleCategory(e);
-                removeError();
+                dispatch(removeError());
               }}
             >
               <ListItemText primary="Sports" />
@@ -60,7 +62,7 @@ const SearchBar = ({ filterCategory, windowDimensions, removeError }) => {
               sx={{ pl: 4 }}
               onClick={(e) => {
                 handleCategory(e);
-                removeError();
+                dispatch(removeError());
               }}
             >
               <ListItemText primary="Music" />
@@ -86,7 +88,7 @@ const SearchBar = ({ filterCategory, windowDimensions, removeError }) => {
               sx={{ pl: 4 }}
               onClick={(e) => {
                 handleCategory(e);
-                removeError();
+                dispatch(removeError());
               }}
             >
               <ListItemText primary="Sports" />
@@ -95,7 +97,7 @@ const SearchBar = ({ filterCategory, windowDimensions, removeError }) => {
               sx={{ pl: 4 }}
               onClick={(e) => {
                 handleCategory(e);
-                removeError();
+                dispatch(removeError());
               }}
             >
               <ListItemText primary="Music" />

@@ -6,6 +6,7 @@ import { withRouter, Route, Switch, Redirect } from "react-router-dom";
 // redux
 import { connect } from "react-redux";
 import { me } from "./store";
+import { getEvents } from "./store/events";
 
 // child components
 import Home from "./components/pages/Home";
@@ -64,6 +65,7 @@ const mapDispatch = (dispatch) => {
   return {
     loadInitialData() {
       dispatch(me());
+      dispatch(getEvents());
     },
   };
 };

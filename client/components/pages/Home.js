@@ -29,8 +29,6 @@ export const Home = (props) => {
 
   useEffect(() => {
     getLocation();
-    const today = new Date();
-    setSearchObj({ ...searchObj, date: today });
   }, []);
 
   const getLocation = () => {

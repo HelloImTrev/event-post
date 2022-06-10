@@ -3,10 +3,6 @@ import React, { useState, useEffect } from "react";
 // router
 import { Link } from "react-router-dom";
 
-// redux
-import { useDispatch, useSelector } from "react-redux";
-import { getEvents } from "../../store/events";
-
 //MUI
 import {
   Box,

@@ -22,7 +22,6 @@ router.get("/search", async (req, res, next) => {
     const d = new Date(date);
     const fullDate =
       d.getFullYear() + "-" + (d.getMonth() > 8 ? d.getMonth() + 1 : "0" + (d.getMonth() + 1)) + "-" + (d.getDate() > 9 ? d.getDate() : "0" + d.getDate());
-
     const events = await Event.findAll({
       where: {
         name: {

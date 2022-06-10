@@ -23,19 +23,15 @@ const getWindowDimensions = () => {
 };
 
 const Explore = () => {
-  const dispatch = useDispatch();
   const events = useSelector(({ events }) => events);
-  const [filteredEvents, setFilteredEvents] = useState(events);
+  const error = useSelector(({ error }) => error);
+  const [filteredEvents, setFilteredEvents] = useState(null); // too slow for page to render /explore
   const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions());
   const [loading, setLoading] = useState(true);
-  // const fail = JSON.parse(window.localStorage.getItem("error"));
-  const [error, setError] = useState(events.find((evt) => evt.error) ? null : "Page not found");
-
-  useEffect(() => {
-    dispatch(getEvents());
+  console.log("event", events);
+  console.log("filtered", filteredEvents);
+  useEffect((props) => {
     setLoading(false);
-
-    // window.localStorage.removeItem("error");
 
     function handleResize() {
       setWindowDimensions(getWindowDimensions());
@@ -46,11 +42,6 @@ const Explore = () => {
 
   const filterCategory = (category) => {
     setFilteredEvents(events.filter((evt) => evt.category === category));
-  };
-
-  const removeError = () => {
-    setError(null);
-    window.localStorage.removeItem("error");
   };
 
   if (loading) {
@@ -65,11 +56,11 @@ const Explore = () => {
         sx={{ margin: { xxs: "60px auto 0 auto", xs: "69px auto 0 auto" }, width: "90%" }}
       >
         <Grid item md={2} sx={{ width: "100%" }}>
-          <SearchBar filterCategory={filterCategory} windowDimensions={windowDimensions} removeError={removeError} />
+          <SearchBar filterCategory={filterCategory} windowDimensions={windowDimensions} />
         </Grid>
         <Grid item md={6} sx={{ width: "100%" }}>
-          {error ? <Alert severity="error">{error}</Alert> : <></>}
-          <EventList events={filteredEvents} />
+          {error.error ? <Alert severity="error">{error.error}</Alert> : <></>}
+          <EventList events={filteredEvents === null ? events : filteredEvents} />
         </Grid>
         <Grid item md={4} sx={{ width: "100%" }}>
           Map
@@ -81,7 +72,6 @@ const Explore = () => {
 
 export default Explore;
 
-// do not erase below cmnt. Keep for reference.
 // const userLocation = JSON.parse(window.localStorage.getItem("userLocation"));
 // const location = userLocation ? userLocation : "New York";
 // const userSearchedEvents = useSelector((state) => state.events.filter((event) => event.venueCity === location));
