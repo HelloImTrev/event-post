@@ -19,7 +19,11 @@ import {
   CardMedia,
   CardContent,
   Typography,
+  CardActionArea,
+  IconButton,
 } from "@mui/material";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import IosShareIcon from "@mui/icons-material/IosShare";
 
 const EventList = ({ events }) => {
   const getDate = (event) => {
@@ -40,22 +44,38 @@ const EventList = ({ events }) => {
           <ListItem disablePadding key={event.id}>
             <ListItemButton>
               <Card>
-                <Grid container direction="row" justifyContent="flex-start" alignItems="flex-start">
-                  <Grid item xxs={12} sm={4} md={4}>
-                    <CardMedia component="img" sx={{ width: "100%" }} image={event.images[0].url} />
+                <CardActionArea component={Link} to={`/events/${event.id}`}>
+                  <Grid container direction="row" justifyContent="flex-start" alignItems="center">
+                    <Grid item xxs={12} sm={4} md={4}>
+                      <CardMedia component="img" sx={{ width: "100%" }} image={event.images[0].url} />
+                    </Grid>
+                    <Grid item xxs={12} sm={8} md={8}>
+                      <CardContent>
+                        <Typography variant="cardTitle" marginBottom="1rem" component="div">
+                          {event.name}
+                        </Typography>
+                        <Typography variant="cardDate" component="div" marginBottom=".3rem">
+                          {`Event starts ${getDate(event)}`}
+                        </Typography>
+                        <Typography variant="cardLocation">{`${event.venueName} - ${event.venueCity}, ${event.venueStateCode}`}</Typography>
+                        <Box
+                          sx={{
+                            display: "flex",
+                            justifyContent: "flex-end",
+                            marginTop: ".5rem",
+                          }}
+                        >
+                          <IconButton color="lightPurple" sx={{ marginRight: ".5rem" }}>
+                            <IosShareIcon />
+                          </IconButton>
+                          <IconButton color="lightPurple">
+                            <FavoriteIcon />
+                          </IconButton>
+                        </Box>
+                      </CardContent>
+                    </Grid>
                   </Grid>
-                  <Grid item xxs={12} sm={8} md={8}>
-                    <CardContent>
-                      <Typography variant="cardTitle" marginBottom="1rem" component="div">
-                        {event.name}
-                      </Typography>
-                      <Typography variant="cardDate" component="div" marginBottom=".3rem">
-                        {`Event starts ${getDate(event)}`}
-                      </Typography>
-                      <Typography variant="cardLocation">{`${event.venueName} - ${event.venueCity}, ${event.venueStateCode}`}</Typography>
-                    </CardContent>
-                  </Grid>
-                </Grid>
+                </CardActionArea>
               </Card>
             </ListItemButton>
           </ListItem>

@@ -99,7 +99,9 @@ const Navbar = ({ isLoggedIn, handleLogout }) => {
               <MenuItem
                 onClick={() => {
                   dispatch(getEvents());
-                  window.location.reload();
+                  if (window.location.href.includes("/explore")) {
+                    window.location.reload();
+                  }
                 }}
                 component={Link}
                 to={"/explore"}
@@ -215,7 +217,9 @@ const Navbar = ({ isLoggedIn, handleLogout }) => {
               <MenuItem
                 onClick={() => {
                   dispatch(getEvents());
-                  window.location.reload();
+                  if (window.location.href.includes("/explore")) {
+                    window.location.reload();
+                  }
                 }}
                 component={Link}
                 to={"/explore"}
