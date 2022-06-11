@@ -104,11 +104,13 @@ const AuthForm = (props) => {
         >
           {error && error.response && <Alert severity="error">{error.response.data}</Alert>}
         </Box>
+        <Box>
         {
-<GoogleLoginButton onClick={() => alert("Hello")} className="ggbttn" align="center" style={{ width: "100%" }}>
+<GoogleLoginButton onClick={() => alert("Hello")} className="ggbttn" align="center" style={{ width: "60%", margin: "0 auto"}}>
           CONTINUE WITH GOOGLE
         </GoogleLoginButton> 
 }
+        </Box>
       </form>
 
       <Box
