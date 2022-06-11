@@ -34,6 +34,7 @@ class Routes extends Component {
             <Route path="/explore/filter/:filter?" component={Explore} />
             <Route path="/explore" component={Explore} />
             <Route path="/myevents" component={Myevents} />
+            <Route path="/events/:id" component={SingleEvent} />
             <Redirect to="/home" />
           </Switch>
         ) : (

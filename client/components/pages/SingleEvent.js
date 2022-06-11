@@ -1,5 +1,8 @@
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import IosShareIcon from "@mui/icons-material/IosShare";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
+import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
+
 import {
   Button,
   Card,
@@ -9,11 +12,18 @@ import {
   Paper,
   Skeleton,
   Typography,
+  Box,
 } from "@mui/material";
-import { Box } from "@mui/system";
+//import { Box } from "@mui/system";
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getEvents } from "../../store";
+import {
+  formatDate,
+  formatAddress,
+  dayOfWeek,
+  getMonth,
+} from "../helperFunctions/dateFormat";
 
 const SingleEvent = (props) => {
   const event = useSelector(({ events }) =>
@@ -29,15 +39,14 @@ const SingleEvent = (props) => {
   console.log(event);
 
   if (event) {
-    const date = new Date(event.start);
-    const formatedDate =
-      (date.getMonth() > 8
-        ? date.getMonth() + 1
-        : "0" + (date.getMonth() + 1)) +
-      "/" +
-      (date.getDate() > 9 ? date.getDate() : "0" + date.getDate()) +
-      "/" +
-      date.getFullYear();
+    const start = new Date(event.start);
+    const formatedDate = formatDate(start);
+    const formatedAddress = formatAddress(event);
+    const startWeekDay = dayOfWeek(start);
+    const startMonth = getMonth(start);
+    const startDate = start.getDate();
+
+    console.log("DATE:::", start);
 
     return (
       <div id="single-event-page">
@@ -84,10 +93,22 @@ const SingleEvent = (props) => {
                   >
                     {event.name}
                   </Typography>
-                  <Typography>{`${event.venueName}`}</Typography>
-                  <Typography>{`${event.venueCity} - ${event.venueStateCode}`}</Typography>
-                  <Typography>{formatedDate}</Typography>
-                  <Typography>Organizer: *Username here*</Typography>
+
+                  <Box sx={{ display: "flex", alignItems: "center" }}>
+                    <Typography fontSize="20px">
+                      <CalendarMonthIcon />
+                    </Typography>
+                    <Typography fontSize="20px" sx={{ marginLeft: ".3rem" }}>
+                      {startWeekDay}, {startMonth.month} {startDate}
+                    </Typography>
+                  </Box>
+                  <Box sx={{ marginTop: ".5rem" }}>
+                    <Typography>{`${event.venueName}`}</Typography>
+                    <Typography>{`${event.venueCity}, ${event.venueStateCode}`}</Typography>
+                  </Box>
+                  <Box sx={{ marginTop: "3rem" }}>
+                    <Typography>Organizer: *Username here*</Typography>
+                  </Box>
                 </Box>
                 <Box
                   sx={{
@@ -143,9 +164,14 @@ const SingleEvent = (props) => {
                     >
                       The Deets
                     </Typography>
-                    
                   </Box>
-                  <Box sx={{marginTop: "1.5rem", marginBottom: "1.5rem", paddingRight: "3rem"}}>
+                  <Box
+                    sx={{
+                      marginTop: "1.5rem",
+                      marginBottom: "1.5rem",
+                      paddingRight: "3rem",
+                    }}
+                  >
                     <Typography>{event.description}</Typography>
                   </Box>
                 </Box>
@@ -170,7 +196,33 @@ const SingleEvent = (props) => {
                     Address
                   </Typography>
                 </Box>
-                <Box>
+                <Box sx={{ display: "flex", marginTop: "1.5rem" }}>
+                  <Box>
+                    <Typography>
+                      <LocationOnIcon />
+                    </Typography>
+                  </Box>
+                  <Box>
+                    <Typography>
+                      {event.venueAddress}
+                      <br />
+                      {event.venueCity}, {event.venueStateCode},{" "}
+                      {event.venuePostCode}
+                    </Typography>
+                  </Box>
+                </Box>
+                <Box sx={{ marginTop: "1rem", marginRight: ".5rem" }}>
+                  <iframe
+                    width="450"
+                    height="250"
+                    frameBorder="0"
+                    style={{ border: "0" }}
+                    referrerPolicy="no-referrer-when-downgrade"
+                    src={`https://www.google.com/maps/embed/v1/place?key=${process.env.GOOGLE_API_KEY}&q=${formatedAddress}`}
+                    allowFullScreen
+                  />
+                </Box>
+                <Box sx={{marginTop: "1.5rem"}}>
                   <Typography
                     variant="promptTitle"
                     sx={{
@@ -185,6 +237,14 @@ const SingleEvent = (props) => {
                   >
                     Date and time
                   </Typography>
+                </Box>
+                <Box sx={{marginTop: "1rem", marginBottom:"1.5rem"}}>
+                    <Typography>
+                      Date
+                    </Typography>
+                    <Typography>
+                      Start time
+                    </Typography>
                 </Box>
               </Box>
             </Box>

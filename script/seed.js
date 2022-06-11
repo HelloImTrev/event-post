@@ -105,7 +105,7 @@ async function seed() {
       end: end,
       category: eventItem.classifications[0].segment.name,
       images: eventItem.images,
-      description: "",
+      description: lorem.generateParagraphs(4),
       venueName: eventItem._embedded.venues[0].name,
       venueLocale: eventItem._embedded.venues[0].locale,
       venuePostCode: eventItem._embedded.venues[0].postalCode * 1,
