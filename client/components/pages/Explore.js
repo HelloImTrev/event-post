@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getEvents } from "../../store/events";
 
 //MUI
-import { Box, Grid, Paper, Button, Alert, CircularProgress } from "@mui/material";
+import { Box, Grid, Paper, Button, Alert, CircularProgress, Divider, Typography } from "@mui/material";
 
 // child components
 import SearchBar from "../helperComponents/SearchBar";
@@ -69,12 +69,27 @@ const Explore = ({ history, match }) => {
         direction="row"
         justifyContent="center"
         alignItems="flex-start"
-        sx={{ margin: { xxs: "60px auto 0 auto", xs: "69px auto 0 auto" }, width: "90%" }}
+        sx={{ margin: { xxs: "60px auto 0 auto", xs: "69px auto 0 auto" }, width: "90%", paddingTop: "10px" }}
       >
         <Grid item md={2} sx={{ width: "100%" }}>
           <SearchBar filterCategory={filterCategory} windowDimensions={windowDimensions} />
         </Grid>
         <Grid item md={6} sx={{ width: "100%" }}>
+          <Typography
+            variant="promptTitle"
+            sx={{
+              borderBottom: "3px solid #D83F87",
+              fontWeight: 700,
+              fontSize: {
+                xs: "25px",
+                sm: "30px",
+                md: "30px",
+              },
+              margin: "8px 16px",
+            }}
+          >
+            Search Results
+          </Typography>
           {error.error ? <Alert severity="error">{error.error}</Alert> : <></>}
           <EventList events={events} />
         </Grid>

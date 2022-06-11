@@ -7,6 +7,9 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { removeError } from "../../store/error";
 
+// child component
+import SearchEngine from "../helperComponents/SearchEngine";
+
 //MUI
 import {
   Box,
@@ -72,7 +75,7 @@ const SearchBar = ({ filterCategory, windowDimensions }) => {
   };
 
   return (
-    <Box sx={{ marginTop: "20px" }}>
+    <Box sx={{ marginTop: "20px", width: "100%" }}>
       <List
         sx={{ width: "100%", bgcolor: "#f2f2f2", display: { xxs: "none", md: "block" } }}
         component="nav"
@@ -83,6 +86,9 @@ const SearchBar = ({ filterCategory, windowDimensions }) => {
           </ListSubheader>
         }
       >
+        <Box sx={{ textAlign: "center", flexDirection: "column", justifyContent: "center", alignItems: "center", width: "100%", marginBottom: "20px" }}>
+          <SearchEngine explore={true} />
+        </Box>
         <ListItemButton onClick={handleCategoryClick}>
           <Typography variant="promptTitle" color="#d83f87" sx={{ fontSize: "1rem", fontWeight: "300" }}>
             Categories
@@ -181,12 +187,6 @@ const SearchBar = ({ filterCategory, windowDimensions }) => {
                 </RadioGroup>
               </FormControl>
             </Box>
-            {/* <ListItemButton sx={{ pl: 4 }}>
-              <ListItemText primary="Price Low" />
-            </ListItemButton>
-            <ListItemButton sx={{ pl: 4 }}>
-              <ListItemText primary="Price High" />
-            </ListItemButton> */}
           </List>
         </Collapse>
       </List>
@@ -197,6 +197,9 @@ const SearchBar = ({ filterCategory, windowDimensions }) => {
         </ListItemButton>
         <Collapse in={open} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
+            <Box sx={{ textAlign: "center", flexDirection: "column", justifyContent: "center", alignItems: "center", width: "100%" }}>
+              <SearchEngine explore={true} />
+            </Box>
             <ListItemButton onClick={handleCategoryClick}>
               <Typography variant="promptTitle" color="#d83f87" sx={{ fontSize: "1rem", fontWeight: "300" }}>
                 Categories
@@ -255,12 +258,46 @@ const SearchBar = ({ filterCategory, windowDimensions }) => {
             </ListItemButton>
             <Collapse in={sortClickOpen} timeout="auto" unmountOnExit>
               <List component="div" disablePadding>
-                <ListItemButton sx={{ pl: 4 }}>
-                  <ListItemText primary="Price Low" />
-                </ListItemButton>
-                <ListItemButton sx={{ pl: 4 }}>
-                  <ListItemText primary="Price High" />
-                </ListItemButton>
+                <Box sx={{ paddingLeft: "30px" }}>
+                  <FormControl>
+                    <RadioGroup name="controlled-radio-buttons-group" value={sort}>
+                      <FormControlLabel
+                        value="price_low"
+                        control={
+                          <Radio
+                            onClick={(e) => {
+                              handleSort(e);
+                              dispatch(removeError());
+                            }}
+                            sx={{
+                              "&.Mui-checked": {
+                                color: "#d83f87",
+                              },
+                            }}
+                          />
+                        }
+                        label="Price low to high"
+                      />
+                      <FormControlLabel
+                        value="price_high"
+                        control={
+                          <Radio
+                            onClick={(e) => {
+                              handleSort(e);
+                              dispatch(removeError());
+                            }}
+                            sx={{
+                              "&.Mui-checked": {
+                                color: "#d83f87",
+                              },
+                            }}
+                          />
+                        }
+                        label="Price high to low"
+                      />
+                    </RadioGroup>
+                  </FormControl>
+                </Box>
               </List>
             </Collapse>
           </List>

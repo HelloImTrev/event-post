@@ -83,7 +83,7 @@ const Event = db.define("event", {
 });
 
 Event.generateRandPrice = () => {
-  return (randPrice = parseFloat((Math.random() * 100).toFixed(2)));
+  return parseFloat((Math.random() * 100).toFixed(2)) + 30;
 };
 
 module.exports = Event;
