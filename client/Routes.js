@@ -32,6 +32,7 @@ class Routes extends Component {
             <Route path="/home" component={Home} />
             <Route path="/explore" component={Explore} />
             <Route path="/myevents" component={Myevents} />
+            <Route path="/events/:id" component={SingleEvent} />
             <Redirect to="/home" />
           </Switch>
         ) : (

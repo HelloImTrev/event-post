@@ -1,5 +1,7 @@
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import IosShareIcon from "@mui/icons-material/IosShare";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
+
 import {
   Button,
   Card,
@@ -26,18 +28,34 @@ const SingleEvent = (props) => {
     dispatch(getEvents());
   }, []);
 
-  console.log(event);
-
-  if (event) {
-    const date = new Date(event.start);
-    const formatedDate =
+  const formatDate = (date) => {
+    return (
       (date.getMonth() > 8
         ? date.getMonth() + 1
         : "0" + (date.getMonth() + 1)) +
       "/" +
       (date.getDate() > 9 ? date.getDate() : "0" + date.getDate()) +
       "/" +
-      date.getFullYear();
+      date.getFullYear()
+    );
+  };
+
+  const formatAddress = (event) => {
+    if (event.venueName) {
+      const venue = event.venueName.split(" ").join("+");
+      const city = event.venueCity.split(" ").join("+");
+      return `${venue},${city},${event.venueStateCode}`;
+    } else {
+      return null;
+    }
+  };
+
+  console.log(event);
+
+  if (event) {
+    const date = new Date(event.start);
+    const formatedDate = formatDate(date);
+    const formatedAddress = formatAddress(event);
 
     return (
       <div id="single-event-page">
@@ -143,9 +161,14 @@ const SingleEvent = (props) => {
                     >
                       The Deets
                     </Typography>
-                    
                   </Box>
-                  <Box sx={{marginTop: "1.5rem", marginBottom: "1.5rem", paddingRight: "3rem"}}>
+                  <Box
+                    sx={{
+                      marginTop: "1.5rem",
+                      marginBottom: "1.5rem",
+                      paddingRight: "3rem",
+                    }}
+                  >
                     <Typography>{event.description}</Typography>
                   </Box>
                 </Box>
@@ -169,6 +192,31 @@ const SingleEvent = (props) => {
                   >
                     Address
                   </Typography>
+                </Box>
+                <Box sx={{ display: "flex", marginTop: "1.5rem" }}>
+                  <Box>
+                    <Typography>
+                      <LocationOnIcon />
+                    </Typography>
+                  </Box>
+                  <Box>
+                    <Typography>
+                      {event.venueAddress}
+                      <br />
+                      {event.venueCity}, {event.venueStateCode}, {event.venuePostCode}
+                    </Typography>
+                  </Box>
+                </Box>
+                <Box sx={{ marginTop: "1rem", marginRight: ".5rem" }}>
+                  <iframe
+                    width="450"
+                    height="250"
+                    frameBorder="0"
+                    style={{ border: "0" }}
+                    referrerPolicy="no-referrer-when-downgrade"
+                    src={`https://www.google.com/maps/embed/v1/place?key=AIzaSyCDowwJ-MLTiSqk1wBu0EsaJ9Ch2dEgYfI&q=${formatedAddress}`}
+                    allowFullScreen
+                  />
                 </Box>
                 <Box>
                   <Typography
