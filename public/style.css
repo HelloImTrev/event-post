@@ -5,6 +5,7 @@
 body {
   margin: 0;
   overflow-x: hidden;
+  background-color: #f8f7fa;
 }
 
 a {
@@ -35,11 +36,11 @@ a {
   transform: scale(1.03);
 }
 
-
-
-#single-event-container {
-  height: calc(100vh - 76px);
+#single-event-page {
+  background-color: #f8f7fa;
+  width: 100%;
 }
+
 
 @media screen and (max-width: 350px) {
   #ggbtn {

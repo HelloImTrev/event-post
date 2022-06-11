@@ -6,6 +6,19 @@ const {
 } = require("../server/db");
 const sportEvents = require("./sportEvents");
 const musicEvents = require("./musicEvents");
+const LoremIpsum = require("lorem-ipsum").LoremIpsum;
+
+const lorem = new LoremIpsum({
+  sentencesPerParagraph: {
+    max: 8,
+    min: 4,
+  },
+  wordsPerSentence: {
+    max: 16,
+    min: 4,
+  },
+});
+
 /**
  * seed - this function clears the database, updates tables to
  *      match the models, and populates the database.
@@ -47,9 +60,40 @@ async function seed() {
   });
 
   const userIds = [chrisi.id, cody.id, murphy.id, bob.id];
-  let i = 0;
 
-  for (const eventItem of sportEvents) {
+  //***********************************************************************Seeding events */
+
+  for (const [i, eventItem] of sportEvents.entries()) {
+    // ticketmaster data doesnt have end time
+    let end = new Date(eventItem.dates.start.dateTime);
+    end.setHours(end.getHours() + 2);
+    end = end.toISOString();
+
+    await Event.create({
+      name: eventItem.name,
+      start: eventItem.dates.start.dateTime,
+      end: end,
+      category: eventItem.classifications[0].segment.name,
+      images: eventItem.images,
+      description: lorem.generateParagraphs(4),
+      venueName: eventItem._embedded.venues[0].name,
+      venueLocale: eventItem._embedded.venues[0].locale,
+      venuePostCode: eventItem._embedded.venues[0].postalCode * 1,
+      venueCity: eventItem._embedded.venues[0].city.name,
+      venueState: eventItem._embedded.venues[0].state.name,
+      venueStateCode: eventItem._embedded.venues[0].state.stateCode,
+      venueCountry: eventItem._embedded.venues[0].country.name,
+      venueCountryCode: eventItem._embedded.venues[0].country.countryCode,
+      venueAddress: eventItem._embedded.venues[0].address.line1,
+      venueLongitude: eventItem._embedded.venues[0].location.longitude,
+      venueLatitude: eventItem._embedded.venues[0].location.latitude,
+      ownerId: userIds[i % userIds.length],
+      price: eventItem.priceRanges ? eventItem.priceRanges[0].min : await Event.generateRandPrice(),
+    });
+  }
+  console.log(`*********************************** ${sportEvents.length} Sport Events Seeded`);
+
+  for (const [i, eventItem] of musicEvents.entries()) {
     // ticketmaster data doesnt have end time
     let end = new Date(eventItem.dates.start.dateTime);
     end.setHours(end.getHours() + 2);
@@ -74,40 +118,10 @@ async function seed() {
       venueLongitude: eventItem._embedded.venues[0].location.longitude,
       venueLatitude: eventItem._embedded.venues[0].location.latitude,
       ownerId: userIds[i % userIds.length],
+      price: eventItem.priceRanges ? eventItem.priceRanges[0].min : await Event.generateRandPrice(),
     });
-    i++;
   }
-
-  i = 0;
-
-  for (const eventItem of musicEvents) {
-    // ticketmaster data doesnt have end time
-    let end = new Date(eventItem.dates.start.dateTime);
-    end.setHours(end.getHours() + 2);
-    end = end.toISOString();
-
-    await Event.create({
-      name: eventItem.name,
-      start: eventItem.dates.start.dateTime,
-      end: end,
-      category: eventItem.classifications[0].segment.name,
-      images: eventItem.images,
-      description: "",
-      venueName: eventItem._embedded.venues[0].name,
-      venueLocale: eventItem._embedded.venues[0].locale,
-      venuePostCode: eventItem._embedded.venues[0].postalCode * 1,
-      venueCity: eventItem._embedded.venues[0].city.name,
-      venueState: eventItem._embedded.venues[0].state.name,
-      venueStateCode: eventItem._embedded.venues[0].state.stateCode,
-      venueCountry: eventItem._embedded.venues[0].country.name,
-      venueCountryCode: eventItem._embedded.venues[0].country.countryCode,
-      venueAddress: eventItem._embedded.venues[0].address.line1,
-      venueLongitude: eventItem._embedded.venues[0].location.longitude,
-      venueLatitude: eventItem._embedded.venues[0].location.latitude,
-      ownerId: userIds[i % userIds.length],
-    });
-    i++;
-  }
+  console.log(`*********************************** ${musicEvents.length} Sport Events Seeded`);
 
   console.log(`seeded successfully`);
 }

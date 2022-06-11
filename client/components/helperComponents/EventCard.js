@@ -11,8 +11,12 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import IosShareIcon from "@mui/icons-material/IosShare";
 import React from "react";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { subscribeToEvent } from "../../store/eventSubscription";
 
 const EventCard = ({ event }) => {
+  const dispatch = useDispatch()
+  const heartEvent = () => dispatch(subscribeToEvent(event.id))
   const date = new Date(event.start);
   const formatedDate =
     (date.getMonth() > 8 ? date.getMonth() + 1 : "0" + (date.getMonth() + 1)) +
@@ -25,7 +29,7 @@ const EventCard = ({ event }) => {
     <Grid item xxs={12} xs={12} sm={6} md={4} lg={3} sx={{ width: "100%" }}>
       <Card
         id="event-card"
-        sx={{ maxWidth: 305, height: "378px", margin: "0 auto" }}
+        sx={{ maxWidth: 405, height: "385px", margin: "0 auto" }}
       >
         <CardMedia
           id="event-card-img"
@@ -53,7 +57,7 @@ const EventCard = ({ event }) => {
             <IconButton color="lightPurple" sx={{ marginRight: ".5rem" }}>
               <IosShareIcon />
             </IconButton>
-            <IconButton color="lightPurple">
+            <IconButton color="lightPurple" onClick={heartEvent}>
               <FavoriteIcon />
             </IconButton>
           </Box>

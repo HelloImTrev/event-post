@@ -6,6 +6,7 @@ import { withRouter, Route, Switch, Redirect } from "react-router-dom";
 // redux
 import { connect } from "react-redux";
 import { me } from "./store";
+import { getEvents } from "./store/events";
 
 // child components
 import Home from "./components/pages/Home";
@@ -30,6 +31,7 @@ class Routes extends Component {
           <Switch>
             <Route path="/" exact component={Home} />
             <Route path="/home" component={Home} />
+            <Route path="/explore/filter/:filter?" component={Explore} />
             <Route path="/explore" component={Explore} />
             <Route path="/myevents" component={Myevents} />
             <Redirect to="/home" />
@@ -38,6 +40,7 @@ class Routes extends Component {
           <Switch>
             <Route path="/" exact component={Home} />
             <Route path="/home" component={Home} />
+            <Route path="/explore/filter/:filter?" component={Explore} />
             <Route path="/explore" component={Explore} />
             <Route path="/login" component={LoginSignup} />
             <Route path="/events/:id" component={SingleEvent} />
@@ -64,6 +67,7 @@ const mapDispatch = (dispatch) => {
   return {
     loadInitialData() {
       dispatch(me());
+      dispatch(getEvents());
     },
   };
 };
