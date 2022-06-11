@@ -22,7 +22,7 @@ const AuthForm = (props) => {
         Sign In
       </Typography>
       <br />
-      <Typography variant="roboto" sx={{ fontSize: "1.5vw" }}>
+      <Typography variant="roboto" sx={{    fontSize:{xxs: "10px", xs: "15px", sm: "18px", md: "20px", lg: "20px"} }}>
         Enter your username and password to get started.
       </Typography>
       <form onSubmit={handleSubmit} name="login">
@@ -229,6 +229,7 @@ const AuthForm = (props) => {
               md: "60%",
               lg: "50%",
             },
+            fontSize:{xxs: "15px", sm: "18px", md: "20px", lg: "20px"},
             margin: "1vw auto",
           }}
         >
