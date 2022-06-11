@@ -15,7 +15,7 @@ const Event = db.define("event", {
     allowNull: false,
   },
   category: {
-    type: Sequelize.ENUM(['Sports', 'Music', 'Arts & Theatre', 'Film']),
+    type: Sequelize.ENUM(["Sports", "Music", "Arts & Theatre", "Film"]),
     allowNull: false,
   },
   images: {
@@ -58,7 +58,7 @@ const Event = db.define("event", {
     allowNull: false,
   },
   venueCountryCode: {
-    type: Sequelize.STRING
+    type: Sequelize.STRING,
   },
   venueAddress: {
     type: Sequelize.STRING,
@@ -72,6 +72,18 @@ const Event = db.define("event", {
     type: Sequelize.STRING,
     allowNull: false,
   },
+  price: {
+    type: Sequelize.DECIMAL(10, 2),
+    allowNull: false,
+    validate: {
+      notEmpty: true,
+      min: 0.0,
+    },
+  },
 });
+
+Event.generateRandPrice = () => {
+  return parseFloat((Math.random() * 100).toFixed(2)) + 30;
+};
 
 module.exports = Event;
