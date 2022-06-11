@@ -28,8 +28,8 @@ const Explore = () => {
   const [filteredEvents, setFilteredEvents] = useState(null); // too slow for page to render /explore
   const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions());
   const [loading, setLoading] = useState(true);
-  console.log("event", events);
-  console.log("filtered", filteredEvents);
+  //console.log("event", events);
+  //console.log("filtered", filteredEvents);
   useEffect((props) => {
     setLoading(false);
 
