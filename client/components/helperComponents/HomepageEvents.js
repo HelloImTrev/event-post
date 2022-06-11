@@ -1,19 +1,44 @@
 import { Box, Grid, Typography } from "@mui/material";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getEvents } from "../../store/events";
+//import { checkEventSubscription } from "../../store/events";
+import axios from "axios";
+
 import EventCard from "./EventCard";
 
+// const checkEventSubscription1 = async (eventIds) => {
+//   const ids = (
+//     await axios.post("/user/me/subscribed", eventIds, {
+//       headers: {
+//         authorization: window.localStorage.getItem("token"),
+//       },
+//     })
+//   ).data;
+//   return ids;
+// };
+
 const HomepageEvents = ({ location = "Los Angeles" }) => {
+  const [subscription, setSubscription] = useState(null);
+
   const events = useSelector((state) => state.events);
   //const events = useSelector((state) => state.events.filter((event) => event.venueCity === location));
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getEvents());
+    //console.log(events);
+    //stupidfun();
   }, []);
 
-  // console.log(events);
+  //let stupidfun = () => {
+    //console.log("in stupid func");
+    //console.log(events);
+  //};
+  //console.log(events);
+  //console.log(subscription);
+
+  //console.log(events);
   if (events) {
     return (
       <Box sx={{ margin: "1.5rem 1rem 1rem 1rem" }}>
@@ -29,11 +54,20 @@ const HomepageEvents = ({ location = "Los Angeles" }) => {
               },
             }}
           >
-            Things to do in, <Box sx={{ display: "inline-block", color: "#d83f87" }}>{location}</Box>
+            Things to do in,{" "}
+            <Box sx={{ display: "inline-block", color: "#d83f87" }}>
+              {location}
+            </Box>
           </Typography>
         </Box>
         <Box sx={{ margin: "1rem" }}>
-          <Grid container direction="row" justifyContent="center" alignItems="center" spacing={{ xxs: 2, md: 3 }}>
+          <Grid
+            container
+            direction="row"
+            justifyContent="center"
+            alignItems="center"
+            spacing={{ xxs: 2, md: 3 }}
+          >
             {events.map((event) => {
               return <EventCard key={event.id} event={event} />;
             })}

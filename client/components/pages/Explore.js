@@ -9,7 +9,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { getEvents } from "../../store/events";
 
 //MUI
-import { Box, Grid, Paper, Button, Alert, CircularProgress, Divider, Typography } from "@mui/material";
+import {
+  Box,
+  Grid,
+  Paper,
+  Button,
+  Alert,
+  CircularProgress,
+  Divider,
+  Typography,
+} from "@mui/material";
 
 // child components
 import SearchBar from "../helperComponents/SearchBar";
@@ -25,7 +34,9 @@ const getWindowDimensions = () => {
 
 const Explore = ({ history, match }) => {
   const error = useSelector(({ error }) => error);
-  const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions());
+  const [windowDimensions, setWindowDimensions] = useState(
+    getWindowDimensions()
+  );
   const [loading, setLoading] = useState(true);
 
   let categories = ["Sports", "Music"];
@@ -34,8 +45,10 @@ const Explore = ({ history, match }) => {
   filter = filter || {};
 
   const events = useSelector(({ events }) => {
-    if (filter.sort && filter.sort === "price_low") events.sort((a, b) => a.price - b.price);
-    if (filter.sort && filter.sort === "price_high") events.sort((a, b) => b.price - a.price);
+    if (filter.sort && filter.sort === "price_low")
+      events.sort((a, b) => a.price - b.price);
+    if (filter.sort && filter.sort === "price_high")
+      events.sort((a, b) => b.price - a.price);
     return events.filter((evt) => {
       return !filter.category || filter.category === evt.category;
     });
@@ -69,10 +82,17 @@ const Explore = ({ history, match }) => {
         direction="row"
         justifyContent="center"
         alignItems="flex-start"
-        sx={{ margin: { xxs: "60px auto 0 auto", xs: "69px auto 0 auto" }, width: "90%", paddingTop: "10px" }}
+        sx={{
+          margin: { xxs: "60px auto 0 auto", xs: "69px auto 0 auto" },
+          width: "90%",
+          paddingTop: "10px",
+        }}
       >
         <Grid item md={2} sx={{ width: "100%" }}>
-          <SearchBar filterCategory={filterCategory} windowDimensions={windowDimensions} />
+          <SearchBar
+            filterCategory={filterCategory}
+            windowDimensions={windowDimensions}
+          />
         </Grid>
         <Grid item md={6} sx={{ width: "100%" }}>
           <Typography
