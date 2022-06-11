@@ -1,6 +1,7 @@
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import IosShareIcon from "@mui/icons-material/IosShare";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
+import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 
 import {
   Button,
@@ -11,11 +12,18 @@ import {
   Paper,
   Skeleton,
   Typography,
+  Box,
 } from "@mui/material";
-import { Box } from "@mui/system";
+//import { Box } from "@mui/system";
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getEvents } from "../../store";
+import {
+  formatDate,
+  formatAddress,
+  dayOfWeek,
+  getMonth,
+} from "../helperFunctions/dateFormat";
 
 const SingleEvent = (props) => {
   const event = useSelector(({ events }) =>
@@ -28,34 +36,17 @@ const SingleEvent = (props) => {
     dispatch(getEvents());
   }, []);
 
-  const formatDate = (date) => {
-    return (
-      (date.getMonth() > 8
-        ? date.getMonth() + 1
-        : "0" + (date.getMonth() + 1)) +
-      "/" +
-      (date.getDate() > 9 ? date.getDate() : "0" + date.getDate()) +
-      "/" +
-      date.getFullYear()
-    );
-  };
-
-  const formatAddress = (event) => {
-    if (event.venueName) {
-      const venue = event.venueName.split(" ").join("+");
-      const city = event.venueCity.split(" ").join("+");
-      return `${venue},${city},${event.venueStateCode}`;
-    } else {
-      return null;
-    }
-  };
-
   console.log(event);
 
   if (event) {
-    const date = new Date(event.start);
-    const formatedDate = formatDate(date);
+    const start = new Date(event.start);
+    const formatedDate = formatDate(start);
     const formatedAddress = formatAddress(event);
+    const startWeekDay = dayOfWeek(start);
+    const startMonth = getMonth(start);
+    const startDate = start.getDate();
+
+    console.log("DATE:::", start);
 
     return (
       <div id="single-event-page">
@@ -102,10 +93,22 @@ const SingleEvent = (props) => {
                   >
                     {event.name}
                   </Typography>
-                  <Typography>{`${event.venueName}`}</Typography>
-                  <Typography>{`${event.venueCity} - ${event.venueStateCode}`}</Typography>
-                  <Typography>{formatedDate}</Typography>
-                  <Typography>Organizer: *Username here*</Typography>
+
+                  <Box sx={{ display: "flex", alignItems: "center" }}>
+                    <Typography fontSize="20px">
+                      <CalendarMonthIcon />
+                    </Typography>
+                    <Typography fontSize="20px" sx={{ marginLeft: ".3rem" }}>
+                      {startWeekDay}, {startMonth.month} {startDate}
+                    </Typography>
+                  </Box>
+                  <Box sx={{ marginTop: ".5rem" }}>
+                    <Typography>{`${event.venueName}`}</Typography>
+                    <Typography>{`${event.venueCity}, ${event.venueStateCode}`}</Typography>
+                  </Box>
+                  <Box sx={{ marginTop: "3rem" }}>
+                    <Typography>Organizer: *Username here*</Typography>
+                  </Box>
                 </Box>
                 <Box
                   sx={{
@@ -203,7 +206,8 @@ const SingleEvent = (props) => {
                     <Typography>
                       {event.venueAddress}
                       <br />
-                      {event.venueCity}, {event.venueStateCode}, {event.venuePostCode}
+                      {event.venueCity}, {event.venueStateCode},{" "}
+                      {event.venuePostCode}
                     </Typography>
                   </Box>
                 </Box>
@@ -214,11 +218,11 @@ const SingleEvent = (props) => {
                     frameBorder="0"
                     style={{ border: "0" }}
                     referrerPolicy="no-referrer-when-downgrade"
-                    src={`https://www.google.com/maps/embed/v1/place?key=AIzaSyCDowwJ-MLTiSqk1wBu0EsaJ9Ch2dEgYfI&q=${formatedAddress}`}
+                    src={`https://www.google.com/maps/embed/v1/place?key=${process.env.GOOGLE_API_KEY}&q=${formatedAddress}`}
                     allowFullScreen
                   />
                 </Box>
-                <Box>
+                <Box sx={{marginTop: "1.5rem"}}>
                   <Typography
                     variant="promptTitle"
                     sx={{
@@ -233,6 +237,14 @@ const SingleEvent = (props) => {
                   >
                     Date and time
                   </Typography>
+                </Box>
+                <Box sx={{marginTop: "1rem", marginBottom:"1.5rem"}}>
+                    <Typography>
+                      Date
+                    </Typography>
+                    <Typography>
+                      Start time
+                    </Typography>
                 </Box>
               </Box>
             </Box>
