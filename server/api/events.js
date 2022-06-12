@@ -131,10 +131,9 @@ router.get("/user/me", async (req, res, next) => {
 //   }
 // });
 
-// user subscribes to an event with this route (event is added to myEvents redux slice of state)
+// user subscribes to an event with this route (event is added to eventSubscription redux slice of state)
 // test with curl -X POST localhost:8080/api/events/subscribe/1 -H "Authorization: <token>"
 router.post("/subscribe/:id", async (req, res, next) => {
-  // /user/me/subscribe/:id????
   try {
     const user = await User.findByToken(req.headers.authorization);
     const duplicate = await EventSubscription.findOne({
