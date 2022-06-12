@@ -36,8 +36,6 @@ module.exports = router;
 router.get("/", async (req, res, next) => {
   try {
     const events = await Event.findAll({});
-    //console.log(events);
-    //events = getSubscribedEvents(events, req.headers.authorization);
     res.json(events);
   } catch (err) {
     next(err);
@@ -105,31 +103,18 @@ router.get("/user/me", async (req, res, next) => {
   }
 });
 
-// router.post("/user/me/subscribed", async (req, res, next) => {
-//   try {
-//     // get user id
-//     const user = await User.findByToken(req.headers.authorization);
-//     const eventIds = req.body.eventIds;
-//     // first assume not subscribed to any events
-//     const response = eventIds.reduce((acc, id) => {
-//       acc[id] = false;
-//       return acc;
-//     }, {});
-//     // find all event subscription
-//     const subscribedEvents = await EventSubscription.findAll({
-//       where: { userId: user.id, eventId: { [Op.in]: eventIds } },
-//     }).then(function (events) {
-//       return events.map((event) => {
-//         // mark events user is subscribed to
-//         response[event.eventId] = true;
-//       });
-//     });
-
-//     res.send(response);
-//   } catch (err) {
-//     next(err);
-//   }
-// });
+// this route will return all the events that a user is subscribed to
+router.get("/subscribe/me", async(req, res, next) => {
+  try {
+    const user = await User.findByToken(req.headers.authorization);
+    const subscribedEvents = await EventSubscription.findAll({
+      where: { userId: user.id }
+    })
+    res.send(subscribedEvents)
+  } catch (err) {
+    next(err)
+  }
+})
 
 // user subscribes to an event with this route (event is added to eventSubscription redux slice of state)
 // test with curl -X POST localhost:8080/api/events/subscribe/1 -H "Authorization: <token>"
