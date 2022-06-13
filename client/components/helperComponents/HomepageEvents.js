@@ -1,8 +1,6 @@
 import { Box, Grid, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getEvents } from "../../store/events";
-import { loadSubscribedEvents } from "../../store/eventSubscription";
 import EventCard from "./EventCard";
 
 const HomepageEvents = ({ location = "Los Angeles" }) => {
@@ -10,12 +8,12 @@ const HomepageEvents = ({ location = "Los Angeles" }) => {
   const subscribedEvents = useSelector((state) => state.eventSubscription);
   const subscribedEventIds = subscribedEvents.map((event) => event.eventId);
   //const events = useSelector((state) => state.events.filter((event) => event.venueCity === location));
-  const dispatch = useDispatch();
+  //const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(getEvents());
-    dispatch(loadSubscribedEvents());
-  }, []);
+  // useEffect(() => {
+  //   dispatch(getEvents());
+  //   dispatch(loadSubscribedEvents());
+  // }, []);
 
   if (events) {
     return (

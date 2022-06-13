@@ -140,8 +140,8 @@ router.post("/subscribe/:id", async (req, res, next) => {
   }
 });
 
-// with this rute a user unsubscribes from an event
-router.put("/unsubscribe/:id", async (req, res, next) => {
+// with this route a user unsubscribes from an event (eventSubscription redux)
+router.delete("/unsubscribe/:id", async (req, res, next) => {
   try {
     const user = await User.findByToken(req.headers.authorization);
     const event = await EventSubscription.findOne({
@@ -150,6 +150,7 @@ router.put("/unsubscribe/:id", async (req, res, next) => {
         eventId: req.params.id,
       },
     });
+    //console.log(event, 'this is the event in unsubscribe route')
     if (event) {
       await event.destroy();
     }

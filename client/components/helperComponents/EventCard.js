@@ -12,16 +12,23 @@ import IosShareIcon from "@mui/icons-material/IosShare";
 import React from "react";
 import { Link, useHistory } from "react-router-dom";
 import { useDispatch, connect } from "react-redux";
-import { subscribeToEvent } from "../../store/eventSubscription";
+import { subscribeToEvent, unsubscribeFromEvent } from "../../store/eventSubscription";
 
 const EventCard = ({ event, isLoggedIn, subscribed }) => {
   let history = useHistory();
   const dispatch = useDispatch();
-  const subscribe = () => {
-    return dispatch(subscribeToEvent(event.id));
-  };
 
-  const heartEvent = () => (isLoggedIn ? subscribe() : history.push("/login"));
+  const subscribeOrUnsubscribe = () => {
+    subscribed ? dispatch(unsubscribeFromEvent(event.id)) : dispatch(subscribeToEvent(event.id))
+  }
+
+  // const subscribe = () => {
+  //   return dispatch(subscribeToEvent(event.id));
+  // };
+
+  const heartEvent = () => (isLoggedIn ? subscribeOrUnsubscribe() : history.push("/login"));
+
+  //const heartEvent = () => (isLoggedIn ? subscribe() : history.push("/login"));
   const date = new Date(event.start);
   const formatedDate =
     (date.getMonth() > 8 ? date.getMonth() + 1 : "0" + (date.getMonth() + 1)) +

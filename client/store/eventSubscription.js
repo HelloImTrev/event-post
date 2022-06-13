@@ -3,7 +3,7 @@ import axios from "axios";
 //Action Types\\
 const LOAD_SUBSCRIBED_EVENTS = "LOAD_SUBSCRIBED_EVENTS";
 const SUBSCRIBE_TO_EVENT = "SUBSCRIBE_TO_EVENT";
-const CHECK_SUBSCRIPTION = "CHECK_SUBSCRIPTION";
+const UNSUBSCRIBE_FROM_EVENT = "UNSUBSCRIBE_FROM_EVENT";
 
 //Action Creators\\
 
@@ -21,12 +21,12 @@ const _subscribeToEvent = (newSubscription) => {
   };
 };
 
-// const _checkEventSubscription = (eventIds) => {
-//   return {
-//     type: CHECK_SUBSCRIPTION,
-//     eventIds,
-//   };
-// };
+const _unsubscribeFromEvent = (eventToUnsubscribe) => {
+  return {
+    type: UNSUBSCRIBE_FROM_EVENT,
+    eventToUnsubscribe,
+  };
+};
 
 // Thunks
 export const subscribeToEvent = (eventId) => {
@@ -43,7 +43,6 @@ export const subscribeToEvent = (eventId) => {
       )
     ).data;
     dispatch(_subscribeToEvent(newSubscription));
-    //await dispatch(loadSubscribedEvents())
   };
 };
 
@@ -60,19 +59,16 @@ export const loadSubscribedEvents = () => {
   };
 };
 
-// export const checkEventSubscription = (eventIds) => {
-//   return async (dispatch) => {
-//     const ids = (
-//       await axios.post("/user/me/subscribed", eventIds, {
-//         headers: {
-//           authorization: window.localStorage.getItem("token"),
-//         },
-//       })
-//     ).data;
-//     console.log(ids);
-//     dispatch(_checkEventSubscription(ids));
-//   };
-// };
+export const unsubscribeFromEvent = (eventId) => {
+  return async (dispatch) => {
+    await axios.delete(`/api/events/unsubscribe/${eventId}`, {
+      headers: {
+        authorization: window.localStorage.getItem("token"),
+      },
+    });
+    dispatch(_unsubscribeFromEvent(eventId));
+  };
+};
 
 //Reducer\\
 export default function (state = [], action) {
@@ -81,8 +77,10 @@ export default function (state = [], action) {
       return action.subscriptions;
     case SUBSCRIBE_TO_EVENT:
       return [...state, action.newSubscription];
-    //case CHECK_SUBSCRIPTION:
-    // return action.eventIds;
+    case UNSUBSCRIBE_FROM_EVENT:
+      return state.filter(
+        (subscription) => subscription.eventId !== action.eventToUnsubscribe
+      );
     default:
       return state;
   }
