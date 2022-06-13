@@ -14,18 +14,14 @@ import { Link, useHistory } from "react-router-dom";
 import { useDispatch, connect } from "react-redux";
 import { subscribeToEvent } from "../../store/eventSubscription";
 
-const EventCard = ({ event, isLoggedIn }) => {
-  let heartNotClicked = true
+const EventCard = ({ event, isLoggedIn, subscribed }) => {
   let history = useHistory();
   const dispatch = useDispatch();
-
   const subscribe = () => {
-    heartNotClicked = false
-    return dispatch(subscribeToEvent(event.id))
-  }
+    return dispatch(subscribeToEvent(event.id));
+  };
 
-  const heartEvent = () =>
-    isLoggedIn ? subscribe() : history.push("/login");
+  const heartEvent = () => (isLoggedIn ? subscribe() : history.push("/login"));
   const date = new Date(event.start);
   const formatedDate =
     (date.getMonth() > 8 ? date.getMonth() + 1 : "0" + (date.getMonth() + 1)) +
@@ -66,7 +62,11 @@ const EventCard = ({ event, isLoggedIn }) => {
             <IconButton color="lightPurple" sx={{ marginRight: ".5rem" }}>
               <IosShareIcon />
             </IconButton>
-            <IconButton color={"lightPurple"} onClick={heartEvent}>
+            <IconButton
+              style={subscribed ? { color: "red" } : { color: "lightPurple" }}
+              color="lightPurple"
+              onClick={heartEvent}
+            >
               <FavoriteIcon />
             </IconButton>
           </Box>
