@@ -6,8 +6,7 @@ import { withRouter, Route, Switch, Redirect } from "react-router-dom";
 // redux
 import { connect } from "react-redux";
 import { me } from "./store";
-import { getEvents } from "./store/events";
-import { loadSubscribedEvents } from "./store";
+import { getEvents, loadSubscribedEvents } from "./store";
 
 // child components
 import Home from "./components/pages/Home";
@@ -72,6 +71,9 @@ const mapDispatch = (dispatch) => {
       dispatch(getEvents());
       dispatch(loadSubscribedEvents());
     },
+    // clearEventSubscriptions: () => {
+    //   return dispatch(clearEventSubscriptions())
+    // }
   };
 };
 

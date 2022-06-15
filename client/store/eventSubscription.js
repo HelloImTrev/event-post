@@ -4,6 +4,7 @@ import axios from "axios";
 const LOAD_SUBSCRIBED_EVENTS = "LOAD_SUBSCRIBED_EVENTS";
 const SUBSCRIBE_TO_EVENT = "SUBSCRIBE_TO_EVENT";
 const UNSUBSCRIBE_FROM_EVENT = "UNSUBSCRIBE_FROM_EVENT";
+const CLEAR_EVENT_SUBSCRIPTIONS = "CLEAR_EVENT_SUBSCRIPTIONS";
 
 //Action Creators\\
 
@@ -25,6 +26,13 @@ const _unsubscribeFromEvent = (eventToUnsubscribe) => {
   return {
     type: UNSUBSCRIBE_FROM_EVENT,
     eventToUnsubscribe,
+  };
+};
+
+const _clearEventSubscriptions = (subscriptions) => {
+  return {
+    type: CLEAR_EVENT_SUBSCRIPTIONS,
+    subscriptions,
   };
 };
 
@@ -70,6 +78,17 @@ export const unsubscribeFromEvent = (eventId) => {
   };
 };
 
+export const clearEventSubscriptions = () => {
+  return async (dispatch) => {
+    const subscribedEvents = (
+      await axios.get("/api/events/unsubscribe", {
+        // data in request?
+      })
+    ).data;
+    dispatch(_clearEventSubscriptions(subscribedEvents));
+  };
+};
+
 //Reducer\\
 export default function (state = [], action) {
   switch (action.type) {
@@ -81,6 +100,8 @@ export default function (state = [], action) {
       return state.filter(
         (subscription) => subscription.eventId !== action.eventToUnsubscribe
       );
+    case CLEAR_EVENT_SUBSCRIPTIONS:
+      return [];
     default:
       return state;
   }
