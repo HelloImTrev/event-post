@@ -23,6 +23,12 @@ class Routes extends Component {
     this.props.loadInitialData();
   }
 
+  componentDidUpdate(prevProps) {
+    if (!prevProps.isLoggedIn && this.props.isLoggedIn) {
+      this.props.isLoggedIn ? this.props.loadSubscribedEvents() : null;
+    }
+  }
+
   render() {
     const { isLoggedIn } = this.props;
     return (
@@ -69,11 +75,10 @@ const mapDispatch = (dispatch) => {
     loadInitialData() {
       dispatch(me());
       dispatch(getEvents());
+    },
+    loadSubscribedEvents() {
       dispatch(loadSubscribedEvents());
     },
-    // clearEventSubscriptions: () => {
-    //   return dispatch(clearEventSubscriptions())
-    // }
   };
 };
 
