@@ -15,10 +15,12 @@ import MenuIcon from "@mui/icons-material/Menu";
 
 // child comp
 import NavDrawer from "./NavDrawer";
+import { formatName } from "../helperFunctions/dateFormat";
 
 const Navbar = ({ isLoggedIn, handleLogout }) => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.auth);
+  
 
   // For user dropdown popup
   const [open, setOpen] = React.useState(false);
@@ -116,7 +118,7 @@ const Navbar = ({ isLoggedIn, handleLogout }) => {
                 }}
               >
                 <Typography id="navtitle" variant="karlaWhite">
-                  EXPLORE
+                  Explore
                 </Typography>
               </MenuItem>
               <MenuItem
@@ -132,7 +134,7 @@ const Navbar = ({ isLoggedIn, handleLogout }) => {
                 }}
               >
                 <Typography id="navtitle" variant="karlaWhite">
-                  POST EVENT
+                  Post Event
                 </Typography>
               </MenuItem>
               <MenuItem
@@ -151,7 +153,7 @@ const Navbar = ({ isLoggedIn, handleLogout }) => {
                 }}
               >
                 <Typography id="navtitle" variant="karlaWhite">
-                  Hello, {user.username}
+                  Hello, {formatName(user.username)}
                 </Typography>
               </MenuItem>
               <Popper open={open} anchorEl={anchorRef.current} role={undefined} placement="bottom-start" transition disablePortal>
@@ -234,7 +236,7 @@ const Navbar = ({ isLoggedIn, handleLogout }) => {
                 }}
               >
                 <Typography id="navtitle" variant="karlaWhite">
-                  EXPLORE
+                  Explore
                 </Typography>
               </MenuItem>
               <MenuItem
@@ -250,7 +252,7 @@ const Navbar = ({ isLoggedIn, handleLogout }) => {
                 }}
               >
                 <Typography id="navtitle" variant="karlaWhite">
-                  POST EVENT
+                  Post Event
                 </Typography>
               </MenuItem>
               <MenuItem
