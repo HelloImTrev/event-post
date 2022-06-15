@@ -30,11 +30,11 @@ const SingleEvent = (props) => {
     events.find((event) => event.id === props.match.params.id * 1)
   );
 
-  const dispatch = useDispatch();
+  //const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(getEvents());
-  }, []);
+  // useEffect(() => {
+  //   dispatch(getEvents());
+  // }, []);
 
   console.log(event);
 
