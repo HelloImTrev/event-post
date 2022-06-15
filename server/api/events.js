@@ -159,3 +159,15 @@ router.delete("/unsubscribe/:id", async (req, res, next) => {
     next(err);
   }
 });
+
+
+// with this route we clear all event subscriptions when the user loggs out (eventSubscription redux)
+router.put("/unsubscribe", async (req, res, next) => {
+  try {
+    const subscribedEvents = await EventSubscription.findAll()
+    await subscribedEvents.destroy()
+    res.sendStatus(204)
+  } catch (err) {
+    next(err)
+  }
+});

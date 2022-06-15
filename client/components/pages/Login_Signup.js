@@ -3,6 +3,7 @@ import React, { useState } from "react";
 // redux
 import { connect } from "react-redux";
 import { authenticate } from "../../store";
+import { clearEventSubscriptions } from "../../store";
 
 // mui
 import { TextField, Button, Alert, Typography, Box } from "@mui/material";

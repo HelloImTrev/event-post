@@ -9,26 +9,31 @@ import {
 } from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import IosShareIcon from "@mui/icons-material/IosShare";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { useDispatch, connect } from "react-redux";
-import { subscribeToEvent, unsubscribeFromEvent } from "../../store/eventSubscription";
+import {
+  subscribeToEvent,
+  unsubscribeFromEvent,
+} from "../../store/eventSubscription";
 
 const EventCard = ({ event, isLoggedIn, subscribed }) => {
   let history = useHistory();
   const dispatch = useDispatch();
 
   const subscribeOrUnsubscribe = () => {
-    subscribed ? dispatch(unsubscribeFromEvent(event.id)) : dispatch(subscribeToEvent(event.id))
+    subscribed
+      ? dispatch(unsubscribeFromEvent(event.id))
+      : dispatch(subscribeToEvent(event.id));
+  };
+
+  const notLoggedIn = () => {
+    !isLoggedIn ? dispatch(clearEventSubscriptions()) : null
   }
 
-  // const subscribe = () => {
-  //   return dispatch(subscribeToEvent(event.id));
-  // };
+  const heartEvent = () =>
+    isLoggedIn ? subscribeOrUnsubscribe() : history.push("/login");
 
-  const heartEvent = () => (isLoggedIn ? subscribeOrUnsubscribe() : history.push("/login"));
-
-  //const heartEvent = () => (isLoggedIn ? subscribe() : history.push("/login"));
   const date = new Date(event.start);
   const formatedDate =
     (date.getMonth() > 8 ? date.getMonth() + 1 : "0" + (date.getMonth() + 1)) +
@@ -70,8 +75,7 @@ const EventCard = ({ event, isLoggedIn, subscribed }) => {
               <IosShareIcon />
             </IconButton>
             <IconButton
-              style={subscribed ? { color: "red" } : { color: "lightPurple" }}
-              color="lightPurple"
+              style={subscribed ? { color: "red" } : { color: "mediumpurple" }}
               onClick={heartEvent}
             >
               <FavoriteIcon />
