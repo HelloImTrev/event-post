@@ -7,32 +7,6 @@ const {
 } = require("../db");
 module.exports = router;
 
-// const getSubscribedEvents = async (token, events) => {
-//   const eventIds = events.reduce((acc, event) => {
-//     return acc.concat(event.id);
-//   }, []);
-//   const subscribed = eventIds.reduce((acc, id) => {
-//     acc[id] = false;
-//     return acc;
-//   }, {});
-//   // find all event subscription
-//   if (token) {
-//     const user = await User.findByToken(token);
-//     await EventSubscription.findAll({
-//       where: { userId: user.id, eventId: { [Op.in]: eventIds } },
-//     }).then(function (events) {
-//       return events.map((event) => {
-//         // mark events user is subscribed to
-//         subscribed[event.eventId] = true;
-//       });
-//     });
-//   }
-//   return events.map((event) => {
-//     event["subscribed"] = subscribed[event.id];
-//     return event;
-//   });
-// };
-
 router.get("/", async (req, res, next) => {
   try {
     const events = await Event.findAll({});
@@ -104,17 +78,17 @@ router.get("/user/me", async (req, res, next) => {
 });
 
 // this route will return all the events that a user is subscribed to
-router.get("/subscribe/me", async(req, res, next) => {
+router.get("/subscribe/me", async (req, res, next) => {
   try {
     const user = await User.findByToken(req.headers.authorization);
     const subscribedEvents = await EventSubscription.findAll({
-      where: { userId: user.id }
-    })
-    res.send(subscribedEvents)
+      where: { userId: user.id },
+    });
+    res.send(subscribedEvents);
   } catch (err) {
-    next(err)
+    next(err);
   }
-})
+});
 
 // user subscribes to an event with this route (event is added to eventSubscription redux slice of state)
 // test with curl -X POST localhost:8080/api/events/subscribe/1 -H "Authorization: <token>"
@@ -150,7 +124,6 @@ router.delete("/unsubscribe/:id", async (req, res, next) => {
         eventId: req.params.id,
       },
     });
-    //console.log(event, 'this is the event in unsubscribe route')
     if (event) {
       await event.destroy();
     }
@@ -160,14 +133,15 @@ router.delete("/unsubscribe/:id", async (req, res, next) => {
   }
 });
 
-
-// with this route we clear all event subscriptions when the user loggs out (eventSubscription redux)
+// this route could be possibly used in the future, its not used right now
 router.put("/unsubscribe", async (req, res, next) => {
   try {
-    const subscribedEvents = await EventSubscription.findAll()
-    await subscribedEvents.destroy()
-    res.sendStatus(204)
+    const subscribedEvents = await EventSubscription.findAll();
+    for (const subscription of subscribedEvents) {
+      await subscription.destroy();
+    }
+    res.sendStatus(204);
   } catch (err) {
-    next(err)
+    next(err);
   }
 });

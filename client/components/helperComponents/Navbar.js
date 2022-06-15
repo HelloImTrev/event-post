@@ -4,7 +4,7 @@ import history from "../../history";
 // redux
 import { connect, useSelector, useDispatch } from "react-redux";
 import { logout } from "../../store/auth";
-import { getEvents } from "../../store/events";
+import { clearEventSubscriptions } from "../../store/eventSubscription";
 
 // router
 import { Link } from "react-router-dom";
@@ -16,7 +16,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 // child comp
 import NavDrawer from "./NavDrawer";
 
-const Navbar = ({ isLoggedIn, handleLogout }) => {
+const Navbar = ({ isLoggedIn, handleLogout, clearEventSubscriptions }) => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.auth);
 
@@ -172,6 +172,7 @@ const Navbar = ({ isLoggedIn, handleLogout }) => {
                             onClick={(e) => {
                               handleClose(e);
                               handleLogout();
+                              clearEventSubscriptions()
                             }}
                           >
                             Logout
@@ -291,6 +292,9 @@ const mapDispatch = (dispatch) => {
     handleLogout() {
       dispatch(logout());
     },
+    clearEventSubscriptions() {
+      dispatch(clearEventSubscriptions())
+    }
   };
 };
 

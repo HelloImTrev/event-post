@@ -29,13 +29,6 @@ const _unsubscribeFromEvent = (eventToUnsubscribe) => {
   };
 };
 
-const _clearEventSubscriptions = (subscriptions) => {
-  return {
-    type: CLEAR_EVENT_SUBSCRIPTIONS,
-    subscriptions,
-  };
-};
-
 // Thunks
 export const subscribeToEvent = (eventId) => {
   return async (dispatch) => {
@@ -79,13 +72,9 @@ export const unsubscribeFromEvent = (eventId) => {
 };
 
 export const clearEventSubscriptions = () => {
-  return async (dispatch) => {
-    const subscribedEvents = (
-      await axios.get("/api/events/unsubscribe", {
-        // data in request?
-      })
-    ).data;
-    dispatch(_clearEventSubscriptions(subscribedEvents));
+  return {
+    type: CLEAR_EVENT_SUBSCRIPTIONS,
+    subscriptions: [],
   };
 };
 
@@ -101,7 +90,7 @@ export default function (state = [], action) {
         (subscription) => subscription.eventId !== action.eventToUnsubscribe
       );
     case CLEAR_EVENT_SUBSCRIPTIONS:
-      return [];
+      return action.subscriptions;
     default:
       return state;
   }
