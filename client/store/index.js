@@ -6,12 +6,11 @@ import auth from "./auth";
 import events from "./events";
 import eventSubscription from "./eventSubscription";
 import error from "./error";
+import searchObj from "./searchObj";
 
-const reducer = combineReducers({ auth, events, eventSubscription, error });
+const reducer = combineReducers({ auth, events, eventSubscription, error, searchObj });
 
-const middleware = composeWithDevTools(
-  applyMiddleware(thunkMiddleware, createLogger({ collapsed: true }))
-);
+const middleware = composeWithDevTools(applyMiddleware(thunkMiddleware, createLogger({ collapsed: true })));
 const store = createStore(reducer, middleware);
 
 export default store;

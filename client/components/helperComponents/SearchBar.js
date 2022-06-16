@@ -32,15 +32,16 @@ import {
 } from "@mui/material";
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
 
-const SearchBar = ({ filterCategory, windowDimensions }) => {
+const SearchBar = ({ filterCategory, windowDimensions, match, filter }) => {
   const dispatch = useDispatch();
   const { width, height } = windowDimensions;
 
   const [open, setOpen] = useState(width <= 930 ? false : true);
   const [categoryOpen, setCategoryOpen] = useState(width <= 930 ? false : true);
   const [sortClickOpen, setSortClickOpen] = useState(width <= 930 ? false : true);
-  const [category, setCategory] = useState("");
-  const [sort, setSort] = useState("");
+  // useState is not being waited.
+  let category = filter.category ? filter.category : "";
+  let sort = filter.sort ? filter.sort : "";
 
   const handleClick = () => {
     setOpen(!open);
@@ -56,20 +57,24 @@ const SearchBar = ({ filterCategory, windowDimensions }) => {
 
   const handleCategory = (e) => {
     if (e.target.value === category) {
-      setCategory("");
+      // setCategory("");
+      category = "";
       filterCategory("category_null");
     } else {
-      setCategory(e.target.value);
+      // setCategory(e.target.value);
+      category = e.target.value;
       filterCategory(e.target.value);
     }
   };
 
   const handleSort = (e) => {
     if (e.target.value === sort) {
-      setSort("");
+      // setSort("");
+      sort = "";
       filterCategory("price_null");
     } else {
-      setSort(e.target.value);
+      // setSort(e.target.value);
+      sort = e.target.value;
       filterCategory(e.target.value);
     }
   };
@@ -87,7 +92,7 @@ const SearchBar = ({ filterCategory, windowDimensions }) => {
         }
       >
         <Box sx={{ textAlign: "center", flexDirection: "column", justifyContent: "center", alignItems: "center", width: "100%", marginBottom: "20px" }}>
-          <SearchEngine explore={true} />
+          <SearchEngine explore={true} match={match} />
         </Box>
         <ListItemButton onClick={handleCategoryClick}>
           <Typography variant="promptTitle" color="#d83f87" sx={{ fontSize: "1rem", fontWeight: "300" }}>

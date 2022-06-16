@@ -2,8 +2,9 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 
 // Redux
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { searchKeyword } from "../../store/events";
+import { dispatchSearchObj } from "../../store/searchObj";
 
 //MUI
 import { Box, TextField, Button, Alert } from "@mui/material";
@@ -12,12 +13,17 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 
-const SearchEngine = ({ explore }) => {
+const SearchEngine = ({ explore, match }) => {
   const dispatch = useDispatch();
   let location = {};
-
+  const searchHistory = useSelector(({ searchObj }) => searchObj);
+  console.log("test", !searchHistory.location, match);
   // For search bar
-  const [searchObj, setSearchObj] = useState({ name: "", location: location.city ? location.city : "New York", date: new Date() });
+  const [searchObj, setSearchObj] = useState({
+    name: searchHistory.name ? searchHistory.name : "",
+    location: searchHistory.location ? searchHistory.location : location.city && !searchHistory.location ? location.city : "New York",
+    date: searchHistory.date ? searchHistory.date : new Date(),
+  });
 
   // For geolocation of user
   const [error, setError] = useState(null);
@@ -43,7 +49,6 @@ const SearchEngine = ({ explore }) => {
             )
           ).data;
 
-          setSearchObj({ ...searchObj, location: data.city });
           location["city"] = data.city;
           window.localStorage.setItem("userLocation", JSON.stringify(location));
         },
@@ -63,6 +68,7 @@ const SearchEngine = ({ explore }) => {
   const handleEnter = (e) => {
     if (e.key === "Enter") {
       dispatch(searchKeyword(searchObj));
+      dispatch(dispatchSearchObj(searchObj));
     }
   };
 
@@ -194,6 +200,8 @@ const SearchEngine = ({ explore }) => {
         }}
         onClick={() => {
           dispatch(searchKeyword(searchObj));
+          dispatch(dispatchSearchObj(searchObj));
+          if (explore) match.params.filter = JSON.stringify({});
         }}
       >
         Go
