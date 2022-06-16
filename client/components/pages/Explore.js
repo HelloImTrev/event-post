@@ -28,7 +28,7 @@ const Explore = ({ history, match }) => {
   const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions());
   const [loading, setLoading] = useState(true);
 
-  let categories = ["Sports", "Music"];
+  let categories = ["Sports", "Music", "Film", "Arts & Theatre"];
   let filter = match.params.filter;
   if (filter) filter = JSON.parse(filter);
   filter = filter || {};
