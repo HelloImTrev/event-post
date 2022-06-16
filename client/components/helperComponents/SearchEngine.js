@@ -20,10 +20,10 @@ const SearchEngine = ({ explore, match }) => {
   const searchHistory = useSelector(({ searchObj }) => searchObj);
 
   // For search bar
-  const [location, setLocation] = useState({ city: "New York" });
+  const [location, setLocation] = useState({ state: "New York" });
   const [searchObj, setSearchObj] = useState({
     name: searchHistory.name ? searchHistory.name : "",
-    location: searchHistory.location ? searchHistory.location : location.city && !searchHistory.location ? location.city : "New York",
+    location: searchHistory.location ? searchHistory.location : location.state && !searchHistory.location ? location.state : "New York",
     date: searchHistory.date ? searchHistory.date : new Date(),
   });
 
@@ -36,7 +36,7 @@ const SearchEngine = ({ explore, match }) => {
   }, []);
 
   useEffect(() => {
-    if (location.city && !searchHistory.location) setSearchObj({ ...searchObj, location: location.city });
+    if (location.state && !searchHistory.location) setSearchObj({ ...searchObj, location: location.state });
   }, [location]);
 
   const getLocation = () => {
@@ -55,7 +55,7 @@ const SearchEngine = ({ explore, match }) => {
             )
           ).data;
 
-          setLocation({ city: data.principalSubdivision });
+          setLocation({ state: data.principalSubdivision });
           dispatch(dispatchSearchObj({ ...searchObj, location: data.principalSubdivision }));
         },
         () => {
