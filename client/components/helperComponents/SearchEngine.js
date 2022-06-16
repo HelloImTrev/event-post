@@ -16,11 +16,11 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 
 const SearchEngine = ({ explore, match }) => {
   const dispatch = useDispatch();
-  let location = {};
   const resultError = useSelector(({ error }) => error);
   const searchHistory = useSelector(({ searchObj }) => searchObj);
 
   // For search bar
+  const [location, setLocation] = useState({ city: "New York" });
   const [searchObj, setSearchObj] = useState({
     name: searchHistory.name ? searchHistory.name : "",
     location: searchHistory.location ? searchHistory.location : location.city && !searchHistory.location ? location.city : "New York",
@@ -34,6 +34,10 @@ const SearchEngine = ({ explore, match }) => {
     getLocation();
     window.scrollTo(0, 0);
   }, []);
+
+  useEffect(() => {
+    if (location.city && !searchHistory.location) setSearchObj({ ...searchObj, location: location.city });
+  }, [location]);
 
   const getLocation = () => {
     if (!navigator.geolocation) {
@@ -51,7 +55,7 @@ const SearchEngine = ({ explore, match }) => {
             )
           ).data;
 
-          location["city"] = data.city;
+          setLocation({ city: data.city });
           window.localStorage.setItem("userLocation", JSON.stringify(location));
         },
         () => {

@@ -5,6 +5,7 @@ import history from "../../history";
 import { connect, useSelector, useDispatch } from "react-redux";
 import { logout } from "../../store/auth";
 import { clearEventSubscriptions } from "../../store/eventSubscription";
+import { removeSearchObj } from "../../store/searchObj";
 
 // router
 import { Link } from "react-router-dom";
@@ -72,7 +73,12 @@ const Navbar = ({ isLoggedIn, handleLogout, clearEventSubscriptions }) => {
         <div>
           <AppBar position="fixed" sx={{ bgcolor: "#2a1b3d" }}>
             <Toolbar sx={{ borderBottom: "solid 1px #2a1b3d" }}>
-              <MenuItem component={Link} to={"/home"} sx={{ "&:hover": { bgcolor: "transparent" }, padding: "0", height: { xxs: "60px", xs: "69px" } }}>
+              <MenuItem
+                component={Link}
+                to={"/home"}
+                onClick={dispatch(removeSearchObj())}
+                sx={{ "&:hover": { bgcolor: "transparent" }, padding: "0", height: { xxs: "60px", xs: "69px" } }}
+              >
                 <img src="/images/logo_test.svg" style={{ height: "70px", margin: "3px 5px", padding: "3px 0" }} />
               </MenuItem>
 
@@ -191,7 +197,12 @@ const Navbar = ({ isLoggedIn, handleLogout, clearEventSubscriptions }) => {
         <div>
           <AppBar position="fixed" sx={{ bgcolor: "#2a1b3d" }}>
             <Toolbar sx={{ borderBottom: "solid 1px #2a1b3d" }}>
-              <MenuItem component={Link} to={"/home"} sx={{ "&:hover": { bgcolor: "transparent" }, padding: "0", height: { xxs: "60px", xs: "69px" } }}>
+              <MenuItem
+                component={Link}
+                to={"/home"}
+                onClick={dispatch(removeSearchObj())}
+                sx={{ "&:hover": { bgcolor: "transparent" }, padding: "0", height: { xxs: "60px", xs: "69px" } }}
+              >
                 <img src="/images/logo_test.svg" style={{ height: "70px", margin: "3px 5px", padding: "3px 0" }} />
               </MenuItem>
 
