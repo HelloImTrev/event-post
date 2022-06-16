@@ -24,7 +24,6 @@ const getWindowDimensions = () => {
 };
 
 const Explore = ({ history, match }) => {
-  console.log("rendering explore");
   const error = useSelector(({ error }) => error);
   const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions());
   const [loading, setLoading] = useState(true);

@@ -5,6 +5,7 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { searchKeyword } from "../../store/events";
 import { dispatchSearchObj } from "../../store/searchObj";
+import { removeError } from "../../store/error";
 
 //MUI
 import { Box, TextField, Button, Alert } from "@mui/material";
@@ -16,8 +17,9 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 const SearchEngine = ({ explore, match }) => {
   const dispatch = useDispatch();
   let location = {};
+  const resultError = useSelector(({ error }) => error);
   const searchHistory = useSelector(({ searchObj }) => searchObj);
-  console.log("test", !searchHistory.location, match);
+
   // For search bar
   const [searchObj, setSearchObj] = useState({
     name: searchHistory.name ? searchHistory.name : "",
@@ -202,6 +204,7 @@ const SearchEngine = ({ explore, match }) => {
           dispatch(searchKeyword(searchObj));
           dispatch(dispatchSearchObj(searchObj));
           if (explore) match.params.filter = JSON.stringify({});
+          if (resultError.error) dispatch(removeError());
         }}
       >
         Go

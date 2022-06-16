@@ -39,9 +39,13 @@ const SearchBar = ({ filterCategory, windowDimensions, match, filter }) => {
   const [open, setOpen] = useState(width <= 930 ? false : true);
   const [categoryOpen, setCategoryOpen] = useState(width <= 930 ? false : true);
   const [sortClickOpen, setSortClickOpen] = useState(width <= 930 ? false : true);
-  // useState is not being waited.
-  let category = filter.category ? filter.category : "";
-  let sort = filter.sort ? filter.sort : "";
+  const [category, setCategory] = useState("");
+  const [sort, setSort] = useState("");
+
+  useEffect(() => {
+    if (!filter.category) setCategory("");
+    if (!filter.sort) setSort("");
+  }, [filter]);
 
   const handleClick = () => {
     setOpen(!open);
@@ -57,24 +61,20 @@ const SearchBar = ({ filterCategory, windowDimensions, match, filter }) => {
 
   const handleCategory = (e) => {
     if (e.target.value === category) {
-      // setCategory("");
-      category = "";
+      setCategory("");
       filterCategory("category_null");
     } else {
-      // setCategory(e.target.value);
-      category = e.target.value;
+      setCategory(e.target.value);
       filterCategory(e.target.value);
     }
   };
 
   const handleSort = (e) => {
     if (e.target.value === sort) {
-      // setSort("");
-      sort = "";
+      setSort("");
       filterCategory("price_null");
     } else {
-      // setSort(e.target.value);
-      sort = e.target.value;
+      setSort(e.target.value);
       filterCategory(e.target.value);
     }
   };
