@@ -55,11 +55,10 @@ const SearchEngine = ({ explore, match }) => {
             )
           ).data;
 
-          setLocation({ city: data.city });
-          window.localStorage.setItem("userLocation", JSON.stringify(location));
+          setLocation({ city: data.principalSubdivision });
+          dispatch(dispatchSearchObj({ ...searchObj, location: data.principalSubdivision }));
         },
         () => {
-          window.localStorage.removeItem("userLocation");
           setError("Unable to retrieve your location.");
         }
       );

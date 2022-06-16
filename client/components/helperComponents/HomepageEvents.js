@@ -4,13 +4,14 @@ import { useDispatch, useSelector } from "react-redux";
 import EventCard from "./EventCard";
 import { getEvents } from "../../store/events";
 
-const HomepageEvents = ({ location = "Los Angeles" }) => {
+const HomepageEvents = () => {
   const dispatch = useDispatch();
+  const location = useSelector(({ searchObj }) => searchObj.location);
   const events = useSelector((state) => state.events);
-  const sports = events.filter((evt) => evt.category === "Sports").splice(0, 4);
-  const music = events.filter((evt) => evt.category === "Music").splice(0, 4);
-  const film = events.filter((evt) => evt.category === "Film").splice(0, 4);
-  const art = events.filter((evt) => evt.category === "Arts & Theatre").splice(0, 4);
+  const sports = events.filter((evt) => evt.category === "Sports" && evt.venueState === location).splice(0, 4);
+  const music = events.filter((evt) => evt.category === "Music" && evt.venueState === location).splice(0, 4);
+  const film = events.filter((evt) => evt.category === "Film" && evt.venueState === location).splice(0, 4);
+  const art = events.filter((evt) => evt.category === "Arts & Theatre" && evt.venueState === location).splice(0, 4);
 
   const subscribedEvents = useSelector((state) => state.eventSubscription);
   const subscribedEventIds = subscribedEvents.map((event) => event.eventId);
@@ -36,7 +37,7 @@ const HomepageEvents = ({ location = "Los Angeles" }) => {
               },
             }}
           >
-            Things to do in, <Box sx={{ display: "inline-block", color: "#d83f87" }}>{location}</Box>
+            Things to do in, <Box sx={{ display: "inline-block", color: "#d83f87" }}>{location ? location : "New York"}</Box>
           </Typography>
         </Box>
         <Box sx={{ margin: "1rem" }}>
