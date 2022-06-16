@@ -76,7 +76,9 @@ const Navbar = ({ isLoggedIn, handleLogout, clearEventSubscriptions }) => {
               <MenuItem
                 component={Link}
                 to={"/home"}
-                onClick={dispatch(removeSearchObj())}
+                onClick={() => {
+                  dispatch(removeSearchObj());
+                }}
                 sx={{ "&:hover": { bgcolor: "transparent" }, padding: "0", height: { xxs: "60px", xs: "69px" } }}
               >
                 <img src="/images/logo_test.svg" style={{ height: "70px", margin: "3px 5px", padding: "3px 0" }} />
@@ -200,7 +202,9 @@ const Navbar = ({ isLoggedIn, handleLogout, clearEventSubscriptions }) => {
               <MenuItem
                 component={Link}
                 to={"/home"}
-                onClick={dispatch(removeSearchObj())}
+                onClick={() => {
+                  dispatch(removeSearchObj());
+                }}
                 sx={{ "&:hover": { bgcolor: "transparent" }, padding: "0", height: { xxs: "60px", xs: "69px" } }}
               >
                 <img src="/images/logo_test.svg" style={{ height: "70px", margin: "3px 5px", padding: "3px 0" }} />
