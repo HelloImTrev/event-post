@@ -6,7 +6,7 @@ import { getEvents } from "../../store/events";
 
 const HomepageEvents = () => {
   const dispatch = useDispatch();
-  const location = useSelector(({ searchObj }) => (searchObj.location ? searchObj.location : "New York"));
+  const location = useSelector(({ userLocation }) => (userLocation.state ? userLocation.state : "New York"));
   const events = useSelector((state) => state.events);
   const sports = events.filter((evt) => evt.category === "Sports" && evt.venueState === location).splice(0, 4);
   const music = events.filter((evt) => evt.category === "Music" && evt.venueState === location).splice(0, 4);

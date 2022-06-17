@@ -7,8 +7,9 @@ import events from "./events";
 import eventSubscription from "./eventSubscription";
 import error from "./error";
 import searchObj from "./searchObj";
+import userLocation from "./userLocation";
 
-const reducer = combineReducers({ auth, events, eventSubscription, error, searchObj });
+const reducer = combineReducers({ auth, events, eventSubscription, error, searchObj, userLocation });
 
 const middleware = composeWithDevTools(applyMiddleware(thunkMiddleware, createLogger({ collapsed: true })));
 const store = createStore(reducer, middleware);

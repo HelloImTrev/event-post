@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { searchKeyword } from "../../store/events";
 import { dispatchSearchObj } from "../../store/searchObj";
 import { removeError } from "../../store/error";
+import { loadUserLocation } from "../../store/userLocation";
 
 //MUI
 import { Box, TextField, Button, Alert } from "@mui/material";
@@ -20,7 +21,7 @@ const SearchEngine = ({ explore, match }) => {
   const searchHistory = useSelector(({ searchObj }) => searchObj);
 
   // For search bar
-  const [location, setLocation] = useState({ state: "New York" });
+  const [location, setLocation] = useState({ state: "New York", latitude: "", longitude: "" });
   const [searchObj, setSearchObj] = useState({
     name: searchHistory.name ? searchHistory.name : "",
     location: searchHistory.location ? searchHistory.location : location.state && !searchHistory.location ? location.state : "New York",
@@ -37,6 +38,8 @@ const SearchEngine = ({ explore, match }) => {
 
   useEffect(() => {
     if (location.state && !searchHistory.location) setSearchObj({ ...searchObj, location: location.state });
+    console.log(location);
+    dispatch(loadUserLocation(location));
   }, [location]);
 
   const getLocation = () => {
@@ -46,17 +49,13 @@ const SearchEngine = ({ explore, match }) => {
       navigator.geolocation.getCurrentPosition(
         async (position) => {
           setError(null);
-          location["latitude"] = position.coords.latitude;
-          location["longitude"] = position.coords.longitude;
-
           const data = (
             await axios.get(
-              `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${location.latitude}&longitude=${location.longitude}&localityLanguage=en`
+              `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${position.coords.latitude}&longitude=${position.coords.longitude}&localityLanguage=en`
             )
           ).data;
 
-          setLocation({ state: data.principalSubdivision });
-          dispatch(dispatchSearchObj({ ...searchObj, location: data.principalSubdivision }));
+          setLocation({ latitude: position.coords.latitude, longitude: position.coords.longitude, state: data.principalSubdivision });
         },
         () => {
           setError("Unable to retrieve your location.");
@@ -146,7 +145,6 @@ const SearchEngine = ({ explore, match }) => {
                   sm: "450px",
                 },
             margin: "0 auto",
-            backgroundColor: "transparent",
           }}
         >
           {error}

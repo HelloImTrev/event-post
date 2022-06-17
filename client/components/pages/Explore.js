@@ -14,6 +14,7 @@ import { Box, Grid, Paper, Button, Alert, CircularProgress, Divider, Typography 
 // child components
 import SearchBar from "../helperComponents/SearchBar";
 import EventList from "../helperComponents/EventList";
+import Map_wrapper from "../helperComponents/Map_wrapper";
 
 const getWindowDimensions = () => {
   const { innerWidth: width, innerHeight: height } = window;
@@ -98,7 +99,7 @@ const Explore = ({ history, match }) => {
           <EventList events={events} />
         </Grid>
         <Grid item md={4} sx={{ width: "100%" }}>
-          Map
+          <Map_wrapper />
         </Grid>
       </Grid>
     );
@@ -117,10 +118,3 @@ export default Explore;
 // } else {
 //   history.push(`/explore`);
 // }
-
-// if (category.length === 0) {
-//   filter = {};
-// } else {
-//   filter["category"] = category;
-// }
-// history.push(`/explore/filter/${JSON.stringify(filter)}`);
