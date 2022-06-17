@@ -5,6 +5,7 @@ import history from "../../history";
 import { connect, useSelector, useDispatch } from "react-redux";
 import { logout } from "../../store/auth";
 import { clearEventSubscriptions } from "../../store/eventSubscription";
+import { removeSearchObj } from "../../store/searchObj";
 
 // router
 import { Link } from "react-router-dom";
@@ -20,7 +21,6 @@ import { formatName } from "../helperFunctions/dateFormat";
 const Navbar = ({ isLoggedIn, handleLogout, clearEventSubscriptions }) => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.auth);
-  
 
   // For user dropdown popup
   const [open, setOpen] = React.useState(false);
@@ -73,7 +73,14 @@ const Navbar = ({ isLoggedIn, handleLogout, clearEventSubscriptions }) => {
         <div>
           <AppBar position="fixed" sx={{ bgcolor: "#2a1b3d" }}>
             <Toolbar sx={{ borderBottom: "solid 1px #2a1b3d" }}>
-              <MenuItem component={Link} to={"/home"} sx={{ "&:hover": { bgcolor: "transparent" }, padding: "0", height: { xxs: "60px", xs: "69px" } }}>
+              <MenuItem
+                component={Link}
+                to={"/home"}
+                onClick={() => {
+                  dispatch(removeSearchObj());
+                }}
+                sx={{ "&:hover": { bgcolor: "transparent" }, padding: "0", height: { xxs: "60px", xs: "69px" } }}
+              >
                 <img src="/images/logo_test.svg" style={{ height: "70px", margin: "3px 5px", padding: "3px 0" }} />
               </MenuItem>
 
@@ -100,7 +107,7 @@ const Navbar = ({ isLoggedIn, handleLogout, clearEventSubscriptions }) => {
 
               <MenuItem
                 onClick={() => {
-                  if (window.location.href.includes("/explore")) {
+                  if (window.location.href.includes("/explore/filter")) {
                     const filter = window.location.href.split("/");
                     history.push(`/explore/filter/${filter[filter.length - 1]}`);
                   } else {
@@ -174,7 +181,7 @@ const Navbar = ({ isLoggedIn, handleLogout, clearEventSubscriptions }) => {
                             onClick={(e) => {
                               handleClose(e);
                               handleLogout();
-                              clearEventSubscriptions()
+                              clearEventSubscriptions();
                             }}
                           >
                             Logout
@@ -192,7 +199,14 @@ const Navbar = ({ isLoggedIn, handleLogout, clearEventSubscriptions }) => {
         <div>
           <AppBar position="fixed" sx={{ bgcolor: "#2a1b3d" }}>
             <Toolbar sx={{ borderBottom: "solid 1px #2a1b3d" }}>
-              <MenuItem component={Link} to={"/home"} sx={{ "&:hover": { bgcolor: "transparent" }, padding: "0", height: { xxs: "60px", xs: "69px" } }}>
+              <MenuItem
+                component={Link}
+                to={"/home"}
+                onClick={() => {
+                  dispatch(removeSearchObj());
+                }}
+                sx={{ "&:hover": { bgcolor: "transparent" }, padding: "0", height: { xxs: "60px", xs: "69px" } }}
+              >
                 <img src="/images/logo_test.svg" style={{ height: "70px", margin: "3px 5px", padding: "3px 0" }} />
               </MenuItem>
 
@@ -219,7 +233,7 @@ const Navbar = ({ isLoggedIn, handleLogout, clearEventSubscriptions }) => {
 
               <MenuItem
                 onClick={() => {
-                  if (window.location.href.includes("/explore")) {
+                  if (window.location.href.includes("/explore/filter")) {
                     const filter = window.location.href.split("/");
                     history.push(`/explore/filter/${filter[filter.length - 1]}`);
                   } else {
@@ -295,8 +309,8 @@ const mapDispatch = (dispatch) => {
       dispatch(logout());
     },
     clearEventSubscriptions() {
-      dispatch(clearEventSubscriptions())
-    }
+      dispatch(clearEventSubscriptions());
+    },
   };
 };
 

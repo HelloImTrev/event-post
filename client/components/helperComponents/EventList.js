@@ -3,6 +3,10 @@ import React, { useState, useEffect } from "react";
 // router
 import { Link } from "react-router-dom";
 
+// redux
+import { useDispatch, useSelector } from "react-redux";
+import { subscribeToEvent, unsubscribeFromEvent } from "../../store/eventSubscription";
+
 //MUI
 import {
   Box,
@@ -23,9 +27,25 @@ import {
   IconButton,
 } from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import IosShareIcon from "@mui/icons-material/IosShare";
 
 const EventList = ({ events }) => {
+  const dispatch = useDispatch();
+  //subscription
+  const user = useSelector(({ auth }) => auth);
+  const subscribedEvents = useSelector((state) => state.eventSubscription);
+  const subscribedEventIds = subscribedEvents.map((event) => event.eventId);
+  const subscribeOrUnsubscribe = (event) => {
+    subscribedEventIds.includes(event.id) ? dispatch(unsubscribeFromEvent(event.id)) : dispatch(subscribeToEvent(event.id));
+  };
+
+  const notLoggedIn = () => {
+    !user.username ? dispatch(clearEventSubscriptions()) : null;
+  };
+
+  const heartEvent = (event) => (user.username ? subscribeOrUnsubscribe(event) : history.push("/login"));
+
   const getDate = (event) => {
     const date = new Date(event.start);
     const formatedDate =
@@ -44,13 +64,15 @@ const EventList = ({ events }) => {
           <ListItem disablePadding key={event.id}>
             <ListItemButton>
               <Card>
-                <CardActionArea component={Link} to={`/events/${event.id}`}>
-                  <Grid container direction="row" justifyContent="flex-start" alignItems="center">
-                    <Grid item xxs={12} sm={4} md={4}>
+                <Grid container direction="row" justifyContent="flex-start" alignItems="center">
+                  <Grid item xxs={12} sm={4} md={4}>
+                    <CardActionArea component={Link} to={`/events/${event.id}`}>
                       <CardMedia component="img" sx={{ width: "100%" }} image={event.images[0].url} />
-                    </Grid>
-                    <Grid item xxs={12} sm={8} md={8}>
-                      <CardContent>
+                    </CardActionArea>
+                  </Grid>
+                  <Grid item xxs={12} sm={8} md={8}>
+                    <CardContent>
+                      <CardActionArea component={Link} to={`/events/${event.id}`}>
                         <Typography variant="cardTitle" marginBottom="1rem" component="div">
                           {event.name}
                         </Typography>
@@ -60,24 +82,28 @@ const EventList = ({ events }) => {
                         <Typography variant="cardLocation">{`${event.venueName} - ${event.venueCity}, ${event.venueStateCode}`}</Typography>
                         <br />
                         <Typography variant="cardLocation">{`Ticket price: $${event.price}`}</Typography>
-                        <Box
-                          sx={{
-                            display: "flex",
-                            justifyContent: "flex-end",
-                            marginTop: ".5rem",
+                      </CardActionArea>
+                      <Box
+                        sx={{
+                          display: "flex",
+                          justifyContent: "flex-end",
+                          marginTop: ".5rem",
+                        }}
+                      >
+                        <IconButton color="lightPurple" sx={{ marginRight: ".5rem" }}>
+                          <IosShareIcon />
+                        </IconButton>
+                        <IconButton
+                          onClick={() => {
+                            heartEvent(event);
                           }}
                         >
-                          <IconButton color="lightPurple" sx={{ marginRight: ".5rem" }}>
-                            <IosShareIcon />
-                          </IconButton>
-                          <IconButton color="lightPurple">
-                            <FavoriteIcon />
-                          </IconButton>
-                        </Box>
-                      </CardContent>
-                    </Grid>
+                          {subscribedEventIds.includes(event.id) ? <FavoriteIcon style={{ color: "ff0000" }} /> : <FavoriteBorderIcon color="lightPurple" />}
+                        </IconButton>
+                      </Box>
+                    </CardContent>
                   </Grid>
-                </CardActionArea>
+                </Grid>
               </Card>
             </ListItemButton>
           </ListItem>

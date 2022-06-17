@@ -62,7 +62,7 @@ export const Home = (props) => {
           </Typography>
           <SearchEngine />
         </Box>
-        <HomepageEvents location={location.city} />
+        <HomepageEvents />
       </Box>
     </div>
   );

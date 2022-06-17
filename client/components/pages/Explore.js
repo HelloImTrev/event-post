@@ -9,16 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getEvents } from "../../store/events";
 
 //MUI
-import {
-  Box,
-  Grid,
-  Paper,
-  Button,
-  Alert,
-  CircularProgress,
-  Divider,
-  Typography,
-} from "@mui/material";
+import { Box, Grid, Paper, Button, Alert, CircularProgress, Divider, Typography } from "@mui/material";
 
 // child components
 import SearchBar from "../helperComponents/SearchBar";
@@ -34,21 +25,17 @@ const getWindowDimensions = () => {
 
 const Explore = ({ history, match }) => {
   const error = useSelector(({ error }) => error);
-  const [windowDimensions, setWindowDimensions] = useState(
-    getWindowDimensions()
-  );
+  const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions());
   const [loading, setLoading] = useState(true);
 
-  let categories = ["Sports", "Music"];
+  let categories = ["Sports", "Music", "Film", "Arts & Theatre"];
   let filter = match.params.filter;
   if (filter) filter = JSON.parse(filter);
   filter = filter || {};
 
   const events = useSelector(({ events }) => {
-    if (filter.sort && filter.sort === "price_low")
-      events.sort((a, b) => a.price - b.price);
-    if (filter.sort && filter.sort === "price_high")
-      events.sort((a, b) => b.price - a.price);
+    if (filter.sort && filter.sort === "price_low") events.sort((a, b) => a.price - b.price);
+    if (filter.sort && filter.sort === "price_high") events.sort((a, b) => b.price - a.price);
     return events.filter((evt) => {
       return !filter.category || filter.category === evt.category;
     });
@@ -89,10 +76,7 @@ const Explore = ({ history, match }) => {
         }}
       >
         <Grid item md={2} sx={{ width: "100%" }}>
-          <SearchBar
-            filterCategory={filterCategory}
-            windowDimensions={windowDimensions}
-          />
+          <SearchBar filterCategory={filterCategory} windowDimensions={windowDimensions} match={match} filter={filter} />
         </Grid>
         <Grid item md={6} sx={{ width: "100%" }}>
           <Typography

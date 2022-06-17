@@ -2,8 +2,10 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 
 // Redux
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { searchKeyword } from "../../store/events";
+import { dispatchSearchObj } from "../../store/searchObj";
+import { removeError } from "../../store/error";
 
 //MUI
 import { Box, TextField, Button, Alert } from "@mui/material";
@@ -12,12 +14,18 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 
-const SearchEngine = ({ explore }) => {
+const SearchEngine = ({ explore, match }) => {
   const dispatch = useDispatch();
-  let location = {};
+  const resultError = useSelector(({ error }) => error);
+  const searchHistory = useSelector(({ searchObj }) => searchObj);
 
   // For search bar
-  const [searchObj, setSearchObj] = useState({ name: "", location: location.city ? location.city : "New York", date: new Date() });
+  const [location, setLocation] = useState({ state: "New York" });
+  const [searchObj, setSearchObj] = useState({
+    name: searchHistory.name ? searchHistory.name : "",
+    location: searchHistory.location ? searchHistory.location : location.state && !searchHistory.location ? location.state : "New York",
+    date: searchHistory.date ? searchHistory.date : new Date(),
+  });
 
   // For geolocation of user
   const [error, setError] = useState(null);
@@ -26,6 +34,10 @@ const SearchEngine = ({ explore }) => {
     getLocation();
     window.scrollTo(0, 0);
   }, []);
+
+  useEffect(() => {
+    if (location.state && !searchHistory.location) setSearchObj({ ...searchObj, location: location.state });
+  }, [location]);
 
   const getLocation = () => {
     if (!navigator.geolocation) {
@@ -43,12 +55,10 @@ const SearchEngine = ({ explore }) => {
             )
           ).data;
 
-          setSearchObj({ ...searchObj, location: data.city });
-          location["city"] = data.city;
-          window.localStorage.setItem("userLocation", JSON.stringify(location));
+          setLocation({ state: data.principalSubdivision });
+          dispatch(dispatchSearchObj({ ...searchObj, location: data.principalSubdivision }));
         },
         () => {
-          window.localStorage.removeItem("userLocation");
           setError("Unable to retrieve your location.");
         }
       );
@@ -63,6 +73,7 @@ const SearchEngine = ({ explore }) => {
   const handleEnter = (e) => {
     if (e.key === "Enter") {
       dispatch(searchKeyword(searchObj));
+      dispatch(dispatchSearchObj(searchObj));
     }
   };
 
@@ -194,6 +205,9 @@ const SearchEngine = ({ explore }) => {
         }}
         onClick={() => {
           dispatch(searchKeyword(searchObj));
+          dispatch(dispatchSearchObj(searchObj));
+          if (explore) match.params.filter = JSON.stringify({});
+          if (resultError.error) dispatch(removeError());
         }}
       >
         Go

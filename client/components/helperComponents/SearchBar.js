@@ -32,7 +32,7 @@ import {
 } from "@mui/material";
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
 
-const SearchBar = ({ filterCategory, windowDimensions }) => {
+const SearchBar = ({ filterCategory, windowDimensions, match, filter }) => {
   const dispatch = useDispatch();
   const { width, height } = windowDimensions;
 
@@ -41,6 +41,11 @@ const SearchBar = ({ filterCategory, windowDimensions }) => {
   const [sortClickOpen, setSortClickOpen] = useState(width <= 930 ? false : true);
   const [category, setCategory] = useState("");
   const [sort, setSort] = useState("");
+
+  useEffect(() => {
+    if (!filter.category) setCategory("");
+    if (!filter.sort) setSort("");
+  }, [filter]);
 
   const handleClick = () => {
     setOpen(!open);
@@ -87,7 +92,7 @@ const SearchBar = ({ filterCategory, windowDimensions }) => {
         }
       >
         <Box sx={{ textAlign: "center", flexDirection: "column", justifyContent: "center", alignItems: "center", width: "100%", marginBottom: "20px" }}>
-          <SearchEngine explore={true} />
+          <SearchEngine explore={true} match={match} />
         </Box>
         <ListItemButton onClick={handleCategoryClick}>
           <Typography variant="promptTitle" color="#d83f87" sx={{ fontSize: "1rem", fontWeight: "300" }}>
@@ -133,6 +138,40 @@ const SearchBar = ({ filterCategory, windowDimensions }) => {
                       />
                     }
                     label="Music"
+                  />
+                  <FormControlLabel
+                    value="Film"
+                    control={
+                      <Radio
+                        onClick={(e) => {
+                          handleCategory(e);
+                          dispatch(removeError());
+                        }}
+                        sx={{
+                          "&.Mui-checked": {
+                            color: "#d83f87",
+                          },
+                        }}
+                      />
+                    }
+                    label="Film"
+                  />
+                  <FormControlLabel
+                    value="Arts & Theatre"
+                    control={
+                      <Radio
+                        onClick={(e) => {
+                          handleCategory(e);
+                          dispatch(removeError());
+                        }}
+                        sx={{
+                          "&.Mui-checked": {
+                            color: "#d83f87",
+                          },
+                        }}
+                      />
+                    }
+                    label="Arts & Theatre"
                   />
                 </RadioGroup>
               </FormControl>
@@ -244,6 +283,40 @@ const SearchBar = ({ filterCategory, windowDimensions }) => {
                           />
                         }
                         label="Music"
+                      />
+                      <FormControlLabel
+                        value="Film"
+                        control={
+                          <Radio
+                            onClick={(e) => {
+                              handleCategory(e);
+                              dispatch(removeError());
+                            }}
+                            sx={{
+                              "&.Mui-checked": {
+                                color: "#d83f87",
+                              },
+                            }}
+                          />
+                        }
+                        label="Film"
+                      />
+                      <FormControlLabel
+                        value="Arts & Theatre"
+                        control={
+                          <Radio
+                            onClick={(e) => {
+                              handleCategory(e);
+                              dispatch(removeError());
+                            }}
+                            sx={{
+                              "&.Mui-checked": {
+                                color: "#d83f87",
+                              },
+                            }}
+                          />
+                        }
+                        label="Arts & Theatre"
                       />
                     </RadioGroup>
                   </FormControl>
