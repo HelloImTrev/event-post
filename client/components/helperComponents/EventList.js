@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 // router
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 // redux
 import { useDispatch, useSelector } from "react-redux";
@@ -31,6 +31,7 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import IosShareIcon from "@mui/icons-material/IosShare";
 
 const EventList = ({ events }) => {
+  let history = useHistory()
   const dispatch = useDispatch();
   //subscription
   const user = useSelector(({ auth }) => auth);
@@ -38,10 +39,6 @@ const EventList = ({ events }) => {
   const subscribedEventIds = subscribedEvents.map((event) => event.eventId);
   const subscribeOrUnsubscribe = (event) => {
     subscribedEventIds.includes(event.id) ? dispatch(unsubscribeFromEvent(event.id)) : dispatch(subscribeToEvent(event.id));
-  };
-
-  const notLoggedIn = () => {
-    !user.username ? dispatch(clearEventSubscriptions()) : null;
   };
 
   const heartEvent = (event) => (user.username ? subscribeOrUnsubscribe(event) : history.push("/login"));

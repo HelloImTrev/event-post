@@ -14,10 +14,6 @@ const EventCard = ({ event, isLoggedIn, subscribed }) => {
     subscribed ? dispatch(unsubscribeFromEvent(event.id)) : dispatch(subscribeToEvent(event.id));
   };
 
-  const notLoggedIn = () => {
-    !isLoggedIn ? dispatch(clearEventSubscriptions()) : null;
-  };
-
   const heartEvent = () => (isLoggedIn ? subscribeOrUnsubscribe() : history.push("/login"));
 
   const date = new Date(event.start);
