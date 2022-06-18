@@ -42,6 +42,11 @@ router.get("/search", async (req, res, next) => {
               [Op.iLike]: "%" + location + "%",
             },
           },
+          {
+            venueStateCode: {
+              [Op.iLike]: "%" + location + "%",
+            },
+          },
         ],
         start: {
           [Op.gte]: fullDate,
