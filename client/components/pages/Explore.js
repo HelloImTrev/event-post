@@ -63,7 +63,16 @@ const Explore = ({ history, match }) => {
           evt.venueStateCode.toLowerCase() ===
             (searchHistory.location && searchHistory.location.toLowerCase())) ||
         (!filter.category && evt.venueState === location) ||
-        (filter.category === evt.category && evt.venueState === location)
+        (filter.category === evt.category && evt.venueState === location) ||
+        (filter.category === evt.category &&
+          evt.venueState.toLowerCase() ===
+            (searchHistory.location && searchHistory.location.toLowerCase())) ||
+        (filter.category === evt.category &&
+          evt.venueStateCode.toLowerCase() ===
+            (searchHistory.location && searchHistory.location.toLowerCase())) ||
+        (filter.category === evt.category &&
+          evt.venueCity.toLowerCase() ===
+            (searchHistory.location && searchHistory.location.toLowerCase()))
       );
     });
   });
