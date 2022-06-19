@@ -150,3 +150,43 @@ router.put("/unsubscribe", async (req, res, next) => {
     next(err);
   }
 });
+
+//**************************** POST EVENT ROUTES *********************************************** */
+// curl -X POST -d '{"ownerId":3,"name":"smartConcert"}' localhost:8080/api/events/user/me -H "Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjU1NTcwNjUxfQ.L7kM5FVtXVOdzoHcikc5MT8SLqW199aumiskeX8RrT8" -H "Content-Type: application/json"
+// this route will post an event to /api/events/user/me
+router.post("/user/me", async (req, res, next) => {
+  try {
+    const user = await User.findByToken(req.headers.authorization);
+    console.log(user);
+    const newEvent = await Event.createMyEvent(user.id, req.body);
+
+    res.status.apply(201).send(newEvent);
+  } catch (err) {
+    next(err);
+  }
+});
+
+// this route will let the user edit the event that they post
+// /api/events/user/me/:eventId
+router.put("/user/me/:eventId", async (req, res, next) => {
+  try {
+    const user = await User.findByToken(req.headers.authorization);
+
+    const event = await Event.findByPk(req.params.eventId);
+
+    if (!event) {
+      res.sendStatus(404);
+    }
+
+    if (user.id !== event.ownerId) {
+      res.sendStatus(401); // unauthorized
+    }
+
+    //await event.updateMyEvent(req.body);
+    await event.update({...event, ...req.body})
+
+    res.sendStatus(204);
+  } catch (err) {
+    next(err);
+  }
+});

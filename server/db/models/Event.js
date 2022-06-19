@@ -118,4 +118,81 @@ Event.getNearbyPlaces = async (lat, lng, keyword) => {
   return data;
 };
 
+Event.createMyEvent = async function (
+  // name,
+  // start,
+  // category,
+  // images,
+  // description,
+  // venueName,
+  // venueLocale,
+  // venuePostCode,
+  // venueCity,
+  // venueState,
+  // venueStateCode,
+  // venueCountry,
+  // venueCountryCode,
+  // venueAddress,
+  // venueLongitude,
+  // venueLatitude,
+  // ownerId,
+  // price,
+  ownerId,
+  body
+) {
+  try {
+    //console.log(body);
+    //console.log(body.name);
+    const duplicate = await Event.findOne({
+      where: {
+        name: body.name,
+        //start: body.start,
+        //vanueName: body.venueName,
+        ownerId: ownerId,
+      },
+    });
+    console.log(duplicate);
+    if (!duplicate) {
+      console.log("Creating");
+      await Event.create({
+        name: body.name,
+        // start: body.start,
+        // category: body.category,
+        // images: body.images,
+        // description: body.description,
+        // venueName: body.venueName,
+        // venueLocal: body.venueLocale,
+        // venuePostCode: body.venuePostCode,
+        // venueCity: body.venueCity,
+        // venueState: body.venueState,
+        // venueStateCode: body.venueStateCode,
+        // venueCountry: body.venueCountry,
+        // venueCountryCode: body.venueCountryCode,
+        // venueAddress: body.venueAddress,
+        // venueLongitude: body.venueLongitude,
+        // venueLatitude: body.venueLatitude,
+        ownerId: ownerId,
+        // price: body.price,
+      });
+    }
+  } catch (err) {
+    console.log(err);
+    const error = Error("error in Event.createMyEvent");
+    error.status = 500;
+    throw error;
+  }
+};
+
+Event.updateMyEvent = async function (body) {
+  try {
+    // req.body = {name: "new name", start: "new start"}, only update these two fields
+    await Event.update({ ...body });
+  } catch (err) {
+    const error = Error("error in Event.updateMyEvent");
+    console.log(error);
+    error.status = 500;
+    throw error;
+  }
+};
+
 module.exports = Event;
