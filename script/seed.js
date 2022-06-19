@@ -11,6 +11,7 @@ const artEvents = require("./artEvents");
 const LoremIpsum = require("lorem-ipsum").LoremIpsum;
 const axios = require("axios");
 require("dotenv").config();
+const locations = require("./locations");
 
 const lorem = new LoremIpsum({
   sentencesPerParagraph: {
@@ -167,17 +168,6 @@ async function seed() {
   }
   console.log(`*********************************** ${artEvents.length} Art/Theatre Events Seeded`);
 
-  const locations = [
-    {
-      stateCode: "NJ",
-      state: "New Jersey",
-      lat: "40.058300",
-      lng: "-74.405700",
-      postCode: "07302",
-    },
-    { stateCode: "TX", state: "Texas", lat: "32.7567716", lng: "-97.3351272", postCode: "75060" },
-  ];
-
   const someSportEvents = sportEvents.slice(0, 10);
   const someMusicEvents = musicEvents.slice(0, 10);
   const someArtEvents = artEvents.slice(0, 10);
@@ -192,13 +182,117 @@ async function seed() {
         const address = stadiumsOfTheState[i % 3].vicinity.split(", ");
 
         await Event.create({
-          name: "Janiee",
+          name: eventItem.name,
           start: await Event.generateStartDate(),
           end: await Event.generateEndDate(),
           category: eventItem.classifications[0].segment.name,
           images: eventItem.images,
           description: lorem.generateParagraphs(4),
           venueName: stadiumsOfTheState[i].name,
+          venueLocale: eventItem._embedded.venues[0].locale,
+          venuePostCode: state.postCode,
+          venueCity: address[address.length - 1],
+          venueState: state.state,
+          venueStateCode: state.stateCode,
+          venueCountry: eventItem._embedded.venues[0].country.name,
+          venueCountryCode: eventItem._embedded.venues[0].country.countryCode,
+          venueAddress: address[0],
+          venueLongitude: state.lng,
+          venueLatitude: state.lat,
+          ownerId: userIds[i % userIds.length],
+          price: eventItem.priceRanges
+            ? eventItem.priceRanges[0].min
+            : await Event.generateRandPrice(),
+        });
+      }
+    })
+  );
+
+  await Promise.all(
+    locations.map(async (state) => {
+      const hallsOfTheState = (await Event.getNearbyPlaces(state.lat, state.lng, "hall")).results;
+
+      for (const [i, eventItem] of someMusicEvents.entries()) {
+        const address = hallsOfTheState[0].vicinity.split(", ");
+
+        await Event.create({
+          name: eventItem.name,
+          start: await Event.generateStartDate(),
+          end: await Event.generateEndDate(),
+          category: eventItem.classifications[0].segment.name,
+          images: eventItem.images,
+          description: lorem.generateParagraphs(4),
+          venueName: hallsOfTheState[0].name,
+          venueLocale: eventItem._embedded.venues[0].locale,
+          venuePostCode: state.postCode,
+          venueCity: address[address.length - 1],
+          venueState: state.state,
+          venueStateCode: state.stateCode,
+          venueCountry: eventItem._embedded.venues[0].country.name,
+          venueCountryCode: eventItem._embedded.venues[0].country.countryCode,
+          venueAddress: address[0],
+          venueLongitude: state.lng,
+          venueLatitude: state.lat,
+          ownerId: userIds[i % userIds.length],
+          price: eventItem.priceRanges
+            ? eventItem.priceRanges[0].min
+            : await Event.generateRandPrice(),
+        });
+      }
+    })
+  );
+
+  await Promise.all(
+    locations.map(async (state) => {
+      const museumsOfTheState = (await Event.getNearbyPlaces(state.lat, state.lng, "museum"))
+        .results;
+
+      for (const [i, eventItem] of someArtEvents.entries()) {
+        const address = museumsOfTheState[0].vicinity.split(", ");
+
+        await Event.create({
+          name: eventItem.name,
+          start: await Event.generateStartDate(),
+          end: await Event.generateEndDate(),
+          category: eventItem.classifications[0].segment.name,
+          images: eventItem.images,
+          description: lorem.generateParagraphs(4),
+          venueName: museumsOfTheState[0].name,
+          venueLocale: eventItem._embedded.venues[0].locale,
+          venuePostCode: state.postCode,
+          venueCity: address[address.length - 1],
+          venueState: state.state,
+          venueStateCode: state.stateCode,
+          venueCountry: eventItem._embedded.venues[0].country.name,
+          venueCountryCode: eventItem._embedded.venues[0].country.countryCode,
+          venueAddress: address[0],
+          venueLongitude: state.lng,
+          venueLatitude: state.lat,
+          ownerId: userIds[i % userIds.length],
+          price: eventItem.priceRanges
+            ? eventItem.priceRanges[0].min
+            : await Event.generateRandPrice(),
+        });
+      }
+    })
+  );
+
+  await Promise.all(
+    locations.map(async (state) => {
+      const theatersOfTheState = (await Event.getNearbyPlaces(state.lat, state.lng, "movie"))
+        .results;
+
+      for (const [i, eventItem] of someFilmEvents.entries()) {
+        const address = theatersOfTheState[0].vicinity.split(", ");
+
+        await Event.create({
+          name: eventItem.name,
+          start: await Event.generateStartDate(),
+          end: await Event.generateEndDate(),
+          category: eventItem.classifications[0].segment.name,
+          images: eventItem.images,
+          description: lorem.generateParagraphs(4),
+          venueName: theatersOfTheState[0].name,
           venueLocale: eventItem._embedded.venues[0].locale,
           venuePostCode: state.postCode,
           venueCity: address[address.length - 1],
