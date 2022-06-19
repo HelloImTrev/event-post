@@ -50,7 +50,6 @@ export const getMyEvents = () => {
   };
 };
 
-
 // export const checkEventSubscription = (eventIds) => {
 //   return async (dispatch) => {
 //     const ids = (
@@ -70,10 +69,9 @@ export const searchKeyword =
   async (dispatch) => {
     try {
       const events = (
-        await axios.get(
-          `/api/events/search?keyword=${name}&location=${location}&date=${date}`
-        )
+        await axios.get(`/api/events/search?keyword=${name}&location=${location}&date=${date}`)
       ).data;
+      console.log("reduxxxxxxxxxx", events);
       if (events.length === 0) {
         dispatch(getError("Result not found."));
       } else {
@@ -93,7 +91,7 @@ export default function (state = [], action) {
     case GET_MY_EVENTS:
       return action.myEvents;
     //case CHECK_SUBSCRIPTION:
-      // return action.eventIds;
+    // return action.eventIds;
     default:
       return state;
   }

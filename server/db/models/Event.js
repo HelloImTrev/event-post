@@ -1,5 +1,7 @@
 const Sequelize = require("sequelize");
 const db = require("../db");
+const axios = require("axios");
+require("dotenv").config();
 
 const Event = db.define("event", {
   name: {
@@ -84,6 +86,36 @@ const Event = db.define("event", {
 
 Event.generateRandPrice = () => {
   return parseFloat((Math.random() * 100).toFixed(2)) + 30;
+};
+
+Event.generateStartDate = () => {
+  return new Date();
+};
+
+Event.generateEndDate = () => {
+  let today = new Date();
+  today.setHours(today.getHours() + 3);
+  return today.toISOString();
+};
+
+Event.getNearbyPlaces = async (lat, lng, keyword) => {
+  var config = {
+    method: "get",
+    url: `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${lat}%2C${lng}&radius=50000&keyword=${keyword}&key=${process.env.GOOGLE_API_KEY}`,
+    headers: {},
+  };
+
+  var data;
+  await axios(config)
+    .then(function (response) {
+      // console.log(response.data);
+      data = response.data;
+    })
+    .catch(function (error) {
+      console.log(err);
+    });
+
+  return data;
 };
 
 module.exports = Event;

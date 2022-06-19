@@ -24,7 +24,11 @@ const SearchEngine = ({ explore, match }) => {
   const [location, setLocation] = useState({ state: "New York", latitude: "", longitude: "" });
   const [searchObj, setSearchObj] = useState({
     name: searchHistory.name ? searchHistory.name : "",
-    location: searchHistory.location ? searchHistory.location : location.state && !searchHistory.location ? location.state : "New York",
+    location: searchHistory.location
+      ? searchHistory.location
+      : location.state && !searchHistory.location
+      ? location.state
+      : "New York",
     date: searchHistory.date ? searchHistory.date : new Date(),
   });
 
@@ -37,7 +41,8 @@ const SearchEngine = ({ explore, match }) => {
   }, []);
 
   useEffect(() => {
-    if (location.state && !searchHistory.location) setSearchObj({ ...searchObj, location: location.state });
+    if (location.state && !searchHistory.location)
+      setSearchObj({ ...searchObj, location: location.state });
     console.log(location);
     dispatch(loadUserLocation(location));
   }, [location]);
@@ -55,7 +60,11 @@ const SearchEngine = ({ explore, match }) => {
             )
           ).data;
 
-          setLocation({ latitude: position.coords.latitude, longitude: position.coords.longitude, state: data.principalSubdivision });
+          setLocation({
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
+            state: data.principalSubdivision,
+          });
         },
         () => {
           setError("Unable to retrieve your location.");
@@ -73,6 +82,8 @@ const SearchEngine = ({ explore, match }) => {
     if (e.key === "Enter") {
       dispatch(searchKeyword(searchObj));
       dispatch(dispatchSearchObj(searchObj));
+      if (explore) match.params.filter = JSON.stringify({});
+      if (resultError.error) dispatch(removeError());
     }
   };
 

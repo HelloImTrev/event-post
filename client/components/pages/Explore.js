@@ -9,7 +9,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { getEvents } from "../../store/events";
 
 //MUI
-import { Box, Grid, Paper, Button, Alert, CircularProgress, Divider, Typography } from "@mui/material";
+import {
+  Box,
+  Grid,
+  Paper,
+  Button,
+  Alert,
+  CircularProgress,
+  Divider,
+  Typography,
+} from "@mui/material";
 
 // child components
 import SearchBar from "../helperComponents/SearchBar";
@@ -26,6 +35,7 @@ const getWindowDimensions = () => {
 
 const Explore = ({ history, match }) => {
   const error = useSelector(({ error }) => error);
+  const searchHistory = useSelector(({ searchObj }) => searchObj);
   const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions());
   const [loading, setLoading] = useState(true);
 
@@ -34,11 +44,36 @@ const Explore = ({ history, match }) => {
   if (filter) filter = JSON.parse(filter);
   filter = filter || {};
 
+  const location = useSelector(({ userLocation }) =>
+    userLocation.state ? userLocation.state : "New York"
+  );
+
   const events = useSelector(({ events }) => {
     if (filter.sort && filter.sort === "price_low") events.sort((a, b) => a.price - b.price);
     if (filter.sort && filter.sort === "price_high") events.sort((a, b) => b.price - a.price);
     return events.filter((evt) => {
-      return !filter.category || filter.category === evt.category;
+      return (
+        (!filter.category &&
+          evt.venueCity.toLowerCase() ===
+            (searchHistory.location && searchHistory.location.toLowerCase())) ||
+        (!filter.category &&
+          evt.venueState.toLowerCase() ===
+            (searchHistory.location && searchHistory.location.toLowerCase())) ||
+        (!filter.category &&
+          evt.venueStateCode.toLowerCase() ===
+            (searchHistory.location && searchHistory.location.toLowerCase())) ||
+        (!filter.category && evt.venueState === location) ||
+        (filter.category === evt.category && evt.venueState === location) ||
+        (filter.category === evt.category &&
+          evt.venueState.toLowerCase() ===
+            (searchHistory.location && searchHistory.location.toLowerCase())) ||
+        (filter.category === evt.category &&
+          evt.venueStateCode.toLowerCase() ===
+            (searchHistory.location && searchHistory.location.toLowerCase())) ||
+        (filter.category === evt.category &&
+          evt.venueCity.toLowerCase() ===
+            (searchHistory.location && searchHistory.location.toLowerCase()))
+      );
     });
   });
 
@@ -77,7 +112,12 @@ const Explore = ({ history, match }) => {
         }}
       >
         <Grid item md={2} sx={{ width: "100%" }}>
-          <SearchBar filterCategory={filterCategory} windowDimensions={windowDimensions} match={match} filter={filter} />
+          <SearchBar
+            filterCategory={filterCategory}
+            windowDimensions={windowDimensions}
+            match={match}
+            filter={filter}
+          />
         </Grid>
         <Grid item md={6} sx={{ width: "100%" }}>
           <Typography
