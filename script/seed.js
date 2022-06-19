@@ -188,7 +188,7 @@ async function seed() {
           category: eventItem.classifications[0].segment.name,
           images: eventItem.images,
           description: lorem.generateParagraphs(4),
-          venueName: stadiumsOfTheState[i].name,
+          venueName: stadiumsOfTheState[i % 3].name,
           venueLocale: eventItem._embedded.venues[0].locale,
           venuePostCode: state.postCode,
           venueCity: address[address.length - 1],
@@ -213,7 +213,7 @@ async function seed() {
       const hallsOfTheState = (await Event.getNearbyPlaces(state.lat, state.lng, "hall")).results;
 
       for (const [i, eventItem] of someMusicEvents.entries()) {
-        const address = hallsOfTheState[0].vicinity.split(", ");
+        const address = hallsOfTheState[i % 3].vicinity.split(", ");
 
         await Event.create({
           name: eventItem.name,
@@ -222,7 +222,7 @@ async function seed() {
           category: eventItem.classifications[0].segment.name,
           images: eventItem.images,
           description: lorem.generateParagraphs(4),
-          venueName: hallsOfTheState[0].name,
+          venueName: hallsOfTheState[i % 3].name,
           venueLocale: eventItem._embedded.venues[0].locale,
           venuePostCode: state.postCode,
           venueCity: address[address.length - 1],
@@ -244,11 +244,10 @@ async function seed() {
 
   await Promise.all(
     locations.map(async (state) => {
-      const museumsOfTheState = (await Event.getNearbyPlaces(state.lat, state.lng, "museum"))
-        .results;
+      const museumsOfTheState = (await Event.getNearbyPlaces(state.lat, state.lng, "hall")).results;
 
       for (const [i, eventItem] of someArtEvents.entries()) {
-        const address = museumsOfTheState[0].vicinity.split(", ");
+        const address = museumsOfTheState[i % 3].vicinity.split(", ");
 
         await Event.create({
           name: eventItem.name,
@@ -257,7 +256,7 @@ async function seed() {
           category: eventItem.classifications[0].segment.name,
           images: eventItem.images,
           description: lorem.generateParagraphs(4),
-          venueName: museumsOfTheState[0].name,
+          venueName: museumsOfTheState[i % 3].name,
           venueLocale: eventItem._embedded.venues[0].locale,
           venuePostCode: state.postCode,
           venueCity: address[address.length - 1],
@@ -283,7 +282,7 @@ async function seed() {
         .results;
 
       for (const [i, eventItem] of someFilmEvents.entries()) {
-        const address = theatersOfTheState[0].vicinity.split(", ");
+        const address = theatersOfTheState[i % 3].vicinity.split(", ");
 
         await Event.create({
           name: eventItem.name,
@@ -292,7 +291,7 @@ async function seed() {
           category: eventItem.classifications[0].segment.name,
           images: eventItem.images,
           description: lorem.generateParagraphs(4),
-          venueName: theatersOfTheState[0].name,
+          venueName: theatersOfTheState[i % 3].name,
           venueLocale: eventItem._embedded.venues[0].locale,
           venuePostCode: state.postCode,
           venueCity: address[address.length - 1],
