@@ -35,6 +35,7 @@ const getWindowDimensions = () => {
 
 const Explore = ({ history, match }) => {
   const error = useSelector(({ error }) => error);
+  const searchHistory = useSelector(({ searchObj }) => searchObj);
   const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions());
   const [loading, setLoading] = useState(true);
 
@@ -52,6 +53,15 @@ const Explore = ({ history, match }) => {
     if (filter.sort && filter.sort === "price_high") events.sort((a, b) => b.price - a.price);
     return events.filter((evt) => {
       return (
+        (!filter.category &&
+          evt.venueCity.toLowerCase() ===
+            (searchHistory.location && searchHistory.location.toLowerCase())) ||
+        (!filter.category &&
+          evt.venueState.toLowerCase() ===
+            (searchHistory.location && searchHistory.location.toLowerCase())) ||
+        (!filter.category &&
+          evt.venueStateCode.toLowerCase() ===
+            (searchHistory.location && searchHistory.location.toLowerCase())) ||
         (!filter.category && evt.venueState === location) ||
         (filter.category === evt.category && evt.venueState === location)
       );

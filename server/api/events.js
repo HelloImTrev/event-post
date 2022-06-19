@@ -44,7 +44,7 @@ router.get("/search", async (req, res, next) => {
           },
           {
             venueStateCode: {
-              [Op.iLike]: "%" + location + "%",
+              [Op.eq]: location,
             },
           },
         ],
