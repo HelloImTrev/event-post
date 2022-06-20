@@ -69,10 +69,11 @@ async function seed() {
   //***********************************************************************Seeding events */
 
   for (const [i, eventItem] of sportEvents.entries()) {
+    let startDate = await Event.generateStartDate();
     await Event.create({
       name: eventItem.name,
-      start: await Event.generateStartDate(),
-      end: await Event.generateEndDate(),
+      start: startDate,
+      end: await Event.generateEndDate(startDate),
       category: eventItem.classifications[0].segment.name,
       images: eventItem.images,
       description: lorem.generateParagraphs(4),
@@ -88,16 +89,21 @@ async function seed() {
       venueLongitude: eventItem._embedded.venues[0].location.longitude,
       venueLatitude: eventItem._embedded.venues[0].location.latitude,
       ownerId: userIds[i % userIds.length],
-      price: eventItem.priceRanges ? eventItem.priceRanges[0].min : await Event.generateRandPrice(),
+      price: eventItem.priceRanges
+        ? eventItem.priceRanges[0].min
+        : await Event.generateRandPrice(),
     });
   }
-  console.log(`*********************************** ${sportEvents.length} Sport Events Seeded`);
+  console.log(
+    `*********************************** ${sportEvents.length} Sport Events Seeded`
+  );
 
   for (const [i, eventItem] of musicEvents.entries()) {
+    let startDate = await Event.generateStartDate();
     await Event.create({
       name: eventItem.name,
-      start: await Event.generateStartDate(),
-      end: await Event.generateEndDate(),
+      start: startDate,
+      end: await Event.generateEndDate(startDate),
       category: eventItem.classifications[0].segment.name,
       images: eventItem.images,
       description: lorem.generateParagraphs(4),
@@ -113,16 +119,21 @@ async function seed() {
       venueLongitude: eventItem._embedded.venues[0].location.longitude,
       venueLatitude: eventItem._embedded.venues[0].location.latitude,
       ownerId: userIds[i % userIds.length],
-      price: eventItem.priceRanges ? eventItem.priceRanges[0].min : await Event.generateRandPrice(),
+      price: eventItem.priceRanges
+        ? eventItem.priceRanges[0].min
+        : await Event.generateRandPrice(),
     });
   }
-  console.log(`*********************************** ${musicEvents.length} Music Events Seeded`);
+  console.log(
+    `*********************************** ${musicEvents.length} Music Events Seeded`
+  );
 
   for (const [i, eventItem] of filmEvents.entries()) {
+    let startDate = await Event.generateStartDate();
     await Event.create({
       name: eventItem.name,
-      start: await Event.generateStartDate(),
-      end: await Event.generateEndDate(),
+      start: startDate,
+      end: await Event.generateEndDate(startDate),
       category: eventItem.classifications[0].segment.name,
       images: eventItem.images,
       description: lorem.generateParagraphs(4),
@@ -138,16 +149,21 @@ async function seed() {
       venueLongitude: eventItem._embedded.venues[0].location.longitude,
       venueLatitude: eventItem._embedded.venues[0].location.latitude,
       ownerId: userIds[i % userIds.length],
-      price: eventItem.priceRanges ? eventItem.priceRanges[0].min : await Event.generateRandPrice(),
+      price: eventItem.priceRanges
+        ? eventItem.priceRanges[0].min
+        : await Event.generateRandPrice(),
     });
   }
-  console.log(`*********************************** ${filmEvents.length} Film Events Seeded`);
+  console.log(
+    `*********************************** ${filmEvents.length} Film Events Seeded`
+  );
 
   for (const [i, eventItem] of artEvents.entries()) {
+    let startDate = await Event.generateStartDate();
     await Event.create({
       name: eventItem.name,
-      start: await Event.generateStartDate(),
-      end: await Event.generateEndDate(),
+      start: startDate,
+      end: await Event.generateEndDate(startDate),
       category: eventItem.classifications[0].segment.name,
       images: eventItem.images,
       description: lorem.generateParagraphs(4),
@@ -163,10 +179,14 @@ async function seed() {
       venueLongitude: eventItem._embedded.venues[0].location.longitude,
       venueLatitude: eventItem._embedded.venues[0].location.latitude,
       ownerId: userIds[i % userIds.length],
-      price: eventItem.priceRanges ? eventItem.priceRanges[0].min : await Event.generateRandPrice(),
+      price: eventItem.priceRanges
+        ? eventItem.priceRanges[0].min
+        : await Event.generateRandPrice(),
     });
   }
-  console.log(`*********************************** ${artEvents.length} Art/Theatre Events Seeded`);
+  console.log(
+    `*********************************** ${artEvents.length} Art/Theatre Events Seeded`
+  );
 
   const someSportEvents = sportEvents.slice(0, 10);
   const someMusicEvents = musicEvents.slice(0, 10);
@@ -175,16 +195,18 @@ async function seed() {
 
   await Promise.all(
     locations.map(async (state) => {
-      const stadiumsOfTheState = (await Event.getNearbyPlaces(state.lat, state.lng, "stadium"))
-        .results;
+      const stadiumsOfTheState = (
+        await Event.getNearbyPlaces(state.lat, state.lng, "stadium")
+      ).results;
 
       for (const [i, eventItem] of someSportEvents.entries()) {
         const address = stadiumsOfTheState[i % 3].vicinity.split(", ");
 
+        let startDate = await Event.generateStartDate();
         await Event.create({
           name: eventItem.name,
-          start: await Event.generateStartDate(),
-          end: await Event.generateEndDate(),
+          start: startDate,
+          end: await Event.generateEndDate(startDate),
           category: eventItem.classifications[0].segment.name,
           images: eventItem.images,
           description: lorem.generateParagraphs(4),
@@ -210,15 +232,18 @@ async function seed() {
 
   await Promise.all(
     locations.map(async (state) => {
-      const hallsOfTheState = (await Event.getNearbyPlaces(state.lat, state.lng, "hall")).results;
+      const hallsOfTheState = (
+        await Event.getNearbyPlaces(state.lat, state.lng, "hall")
+      ).results;
 
       for (const [i, eventItem] of someMusicEvents.entries()) {
         const address = hallsOfTheState[i % 3].vicinity.split(", ");
 
+        let startDate = await Event.generateStartDate();
         await Event.create({
           name: eventItem.name,
-          start: await Event.generateStartDate(),
-          end: await Event.generateEndDate(),
+          start: startDate,
+          end: await Event.generateEndDate(startDate),
           category: eventItem.classifications[0].segment.name,
           images: eventItem.images,
           description: lorem.generateParagraphs(4),
@@ -244,15 +269,18 @@ async function seed() {
 
   await Promise.all(
     locations.map(async (state) => {
-      const museumsOfTheState = (await Event.getNearbyPlaces(state.lat, state.lng, "hall")).results;
+      const museumsOfTheState = (
+        await Event.getNearbyPlaces(state.lat, state.lng, "hall")
+      ).results;
 
       for (const [i, eventItem] of someArtEvents.entries()) {
         const address = museumsOfTheState[i % 3].vicinity.split(", ");
 
+        let startDate = await Event.generateStartDate();
         await Event.create({
           name: eventItem.name,
-          start: await Event.generateStartDate(),
-          end: await Event.generateEndDate(),
+          start: startDate,
+          end: await Event.generateEndDate(startDate),
           category: eventItem.classifications[0].segment.name,
           images: eventItem.images,
           description: lorem.generateParagraphs(4),
@@ -278,16 +306,18 @@ async function seed() {
 
   await Promise.all(
     locations.map(async (state) => {
-      const theatersOfTheState = (await Event.getNearbyPlaces(state.lat, state.lng, "movie"))
-        .results;
+      const theatersOfTheState = (
+        await Event.getNearbyPlaces(state.lat, state.lng, "movie")
+      ).results;
 
       for (const [i, eventItem] of someFilmEvents.entries()) {
         const address = theatersOfTheState[i % 3].vicinity.split(", ");
 
+        let startDate = await Event.generateStartDate();
         await Event.create({
           name: eventItem.name,
-          start: await Event.generateStartDate(),
-          end: await Event.generateEndDate(),
+          start: startDate,
+          end: await Event.generateEndDate(startDate),
           category: eventItem.classifications[0].segment.name,
           images: eventItem.images,
           description: lorem.generateParagraphs(4),

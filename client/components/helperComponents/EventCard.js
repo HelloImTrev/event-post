@@ -1,20 +1,34 @@
-import { Card, CardContent, CardMedia, Grid, Typography, IconButton, Box } from "@mui/material";
+import {
+  Card,
+  CardContent,
+  CardMedia,
+  Grid,
+  Typography,
+  IconButton,
+  Box,
+} from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import IosShareIcon from "@mui/icons-material/IosShare";
 import React, { useState, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { useDispatch, connect } from "react-redux";
-import { subscribeToEvent, unsubscribeFromEvent } from "../../store/eventSubscription";
+import {
+  subscribeToEvent,
+  unsubscribeFromEvent,
+} from "../../store/eventSubscription";
 
 const EventCard = ({ event, isLoggedIn, subscribed }) => {
   let history = useHistory();
   const dispatch = useDispatch();
 
   const subscribeOrUnsubscribe = () => {
-    subscribed ? dispatch(unsubscribeFromEvent(event.id)) : dispatch(subscribeToEvent(event.id));
+    subscribed
+      ? dispatch(unsubscribeFromEvent(event.id))
+      : dispatch(subscribeToEvent(event.id));
   };
 
-  const heartEvent = () => (isLoggedIn ? subscribeOrUnsubscribe() : history.push("/login"));
+  const heartEvent = () =>
+    isLoggedIn ? subscribeOrUnsubscribe() : history.push("/login");
 
   const date = new Date(event.start);
   const formatedDate =
@@ -26,8 +40,16 @@ const EventCard = ({ event, isLoggedIn, subscribed }) => {
 
   return (
     <Grid item xxs={12} xs={12} sm={6} md={6} lg={3} sx={{ width: "100%" }}>
-      <Card id="event-card" sx={{ maxWidth: 405, height: "385px", margin: "0 auto" }}>
-        <CardMedia id="event-card-img" component="img" sx={{ width: "100%", height: "205px" }} image={event.images[0].url} />
+      <Card
+        id="event-card"
+        sx={{ maxWidth: 405, height: "385px", margin: "0 auto" }}
+      >
+        <CardMedia
+          id="event-card-img"
+          component="img"
+          sx={{ width: "100%", height: "205px" }}
+          image={event.images[0].url}
+        />
         <CardContent sx={{ display: "flex", flexDirection: "column" }}>
           <Typography variant="cardTitle" marginBottom="1rem" component="div">
             <Link to={`/events/${event.id}`}>{event.name}</Link>
@@ -46,7 +68,10 @@ const EventCard = ({ event, isLoggedIn, subscribed }) => {
             <IconButton color="lightPurple" sx={{ marginRight: ".5rem" }}>
               <IosShareIcon />
             </IconButton>
-            <IconButton style={subscribed ? { color: "red" } : { color: "mediumpurple" }} onClick={heartEvent}>
+            <IconButton
+              style={subscribed ? { color: "red" } : { color: "mediumpurple" }}
+              onClick={heartEvent}
+            >
               <FavoriteIcon />
             </IconButton>
           </Box>

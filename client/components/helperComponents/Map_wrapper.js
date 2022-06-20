@@ -27,7 +27,7 @@ function MyMapComponent({ center, zoom }) {
 
 export default function Map_wrapper() {
   const userLocationObj = useSelector(({ userLocation }) => userLocation);
-  console.log("userLocationObj is: ", userLocationObj);
+  //console.log("userLocationObj is: ", userLocationObj);
 
   const [center, setCenter] = useState({
     lat:

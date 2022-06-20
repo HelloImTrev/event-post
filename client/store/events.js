@@ -5,7 +5,6 @@ import { getError } from "./error";
 //Action Types\\
 const GET_EVENTS = "GET_EVENTS";
 const GET_MY_EVENTS = "GET_MY_EVENTS";
-//const CHECK_SUBSCRIPTION = "CHECK_SUBSCRIPTION";
 
 //Action Creators\\
 const _getEvents = (events) => {
@@ -21,13 +20,6 @@ const _getMyEvents = (myEvents) => {
     myEvents,
   };
 };
-
-// const _checkEventSubscription = (eventIds) => {
-//   return {
-//     type: CHECK_SUBSCRIPTION,
-//     eventIds,
-//   };
-// };
 
 //Thunks\\
 export const getEvents = () => {
@@ -50,28 +42,16 @@ export const getMyEvents = () => {
   };
 };
 
-// export const checkEventSubscription = (eventIds) => {
-//   return async (dispatch) => {
-//     const ids = (
-//       await axios.post("/user/me/subscribed", eventIds, {
-//         headers: {
-//           authorization: window.localStorage.getItem("token"),
-//         },
-//       })
-//     ).data;
-//     console.log(ids);
-//     dispatch(_checkEventSubscription(ids));
-//   };
-// };
-
 export const searchKeyword =
   ({ name, location, date }) =>
   async (dispatch) => {
     try {
       const events = (
-        await axios.get(`/api/events/search?keyword=${name}&location=${location}&date=${date}`)
+        await axios.get(
+          `/api/events/search?keyword=${name}&location=${location}&date=${date}`
+        )
       ).data;
-      console.log("reduxxxxxxxxxx", events);
+      //console.log("reduxxxxxxxxxx", events);
       if (events.length === 0) {
         dispatch(getError("Result not found."));
       } else {
@@ -90,8 +70,6 @@ export default function (state = [], action) {
       return action.events;
     case GET_MY_EVENTS:
       return action.myEvents;
-    //case CHECK_SUBSCRIPTION:
-    // return action.eventIds;
     default:
       return state;
   }
