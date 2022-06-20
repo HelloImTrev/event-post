@@ -27,6 +27,16 @@ const EventCard = ({ event, isLoggedIn, subscribed }) => {
       : dispatch(subscribeToEvent(event.id));
   };
 
+  const shareEvent = () => {
+    window.open(
+      `mailto:?subject=Check out this event!&body=${event.name}%0A${new Date(
+        event.start
+      )}%0A${event.venueName}%0A${event.venueCity}%0A${
+        event.venueState
+      }%0A${`https://event-post.herokuapp.com/events/${event.id}`}`
+    );
+  };
+
   const heartEvent = () =>
     isLoggedIn ? subscribeOrUnsubscribe() : history.push("/login");
 
@@ -65,7 +75,11 @@ const EventCard = ({ event, isLoggedIn, subscribed }) => {
               marginTop: ".5rem",
             }}
           >
-            <IconButton color="lightPurple" sx={{ marginRight: ".5rem" }}>
+            <IconButton
+              color="lightPurple"
+              sx={{ marginRight: ".5rem" }}
+              onClick={shareEvent}
+            >
               <IosShareIcon />
             </IconButton>
             <IconButton
