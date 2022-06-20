@@ -43,7 +43,7 @@ const SearchEngine = ({ explore, match }) => {
   useEffect(() => {
     if (location.state && !searchHistory.location)
       setSearchObj({ ...searchObj, location: location.state });
-    console.log(location);
+    //console.log(location);
     dispatch(loadUserLocation(location));
   }, [location]);
 

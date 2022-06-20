@@ -89,13 +89,23 @@ Event.generateRandPrice = () => {
 };
 
 Event.generateStartDate = () => {
-  return new Date();
+  let today = new Date();
+  let laterDate = new Date();
+  laterDate.setMonth(laterDate.getMonth() + 3);
+  let newDate = new Date(+today + Math.random() * (laterDate - today));
+  newDate.setHours(10 + Math.floor(Math.random() * 12));
+  newDate.setMinutes(Math.random() < 0.5 ? 0 : 30);
+  newDate.setSeconds(0);
+  newDate.setMilliseconds(0);
+  return newDate;
 };
 
-Event.generateEndDate = () => {
-  let today = new Date();
-  today.setHours(today.getHours() + 3);
-  return today.toISOString();
+Event.generateEndDate = (startDate) => {
+  let endDate = new Date(startDate);
+  endDate.setMinutes(
+    endDate.getMinutes() + 60 + Math.floor(Math.random() * 5) * 30
+  );
+  return endDate.toISOString();
 };
 
 Event.getNearbyPlaces = async (lat, lng, keyword) => {

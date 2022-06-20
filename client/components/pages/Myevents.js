@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { connect, useDispatch } from "react-redux";
+import { connect, useDispatch, useSelector } from "react-redux";
 import { getMyEvents } from "../../store/events";
 import { Calendar, dateFnsLocalizer } from "react-big-calendar";
 import format from "date-fns/format";
@@ -43,6 +43,8 @@ export const Myevents = (props) => {
   const calenderEvents = convertEvents(events);
   const [selectedEvent, setSelectedEvent] = useState(null);
   const fetchMyEvents = () => dispatch(getMyEvents());
+  const subscribedEvents = useSelector((state) => state.eventSubscription);
+  const subscribedEventIds = subscribedEvents.map((event) => event.eventId);
 
   useEffect(() => {
     let mounted = true;
@@ -90,7 +92,7 @@ export const Myevents = (props) => {
         style={{ height: 500, margin: "50px" }}
         onSelectEvent={handleSelectEvent}
       />
-      {selectedEvent ? <EventCard event={selectedEvent} /> : ""}
+      {selectedEvent ? <EventCard event={selectedEvent} subscribed={subscribedEventIds.includes(selectedEvent.id) ? true : false}/> : ""}
     </div>
   );
 };
