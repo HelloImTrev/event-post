@@ -5,6 +5,9 @@ import { getError } from "./error";
 //Action Types\\
 const GET_EVENTS = "GET_EVENTS";
 const GET_MY_EVENTS = "GET_MY_EVENTS";
+const CREATE_EVENT = "CREATE_EVENT";
+const UPDATE_EVENT = "UPDATE_EVENT";
+const DELETE_EVENT = "DELETE_EVENT";
 
 //Action Creators\\
 const _getEvents = (events) => {
@@ -18,6 +21,27 @@ const _getMyEvents = (myEvents) => {
   return {
     type: GET_MY_EVENTS,
     myEvents,
+  };
+};
+
+const _createEvent = (event) => {
+  return {
+    type: CREATE_EVENT,
+    event,
+  };
+};
+
+const _updateEvent = (event) => {
+  return {
+    type: UPDATE_EVENT,
+    event,
+  };
+};
+
+const _deleteEvent = (event) => {
+  return {
+    type: DELETE_EVENT,
+    event,
   };
 };
 
@@ -39,6 +63,51 @@ export const getMyEvents = () => {
       })
     ).data;
     dispatch(_getMyEvents(myEvents));
+  };
+};
+
+export const createEvent = (event) => {
+  return async (dispatch) => {
+    const newEvent = (
+      await axios.post(
+        "/api/events/user/me",
+        { event },
+        {
+          headers: {
+            authorization: window.localStorage.getItem("token"),
+          },
+        }
+      )
+    ).data;
+    dispatch(_createEvent(newEvent));
+  };
+};
+
+// takes in eventId, id or event
+export const updateEvent = (eventId, newBody) => {
+  return async (dispatch) => {
+    const response = await axios.put(
+      `/api/events/user/me${eventId}`,
+      { newBody }, // update with the new properties
+      {
+        headers: {
+          authorization: window.localStorage.getItem("token"),
+        },
+      }
+    );
+    dispatch(_updateEvent(response.data));
+  };
+};
+
+// takes in event or eventId
+export const deleteEvent = (event) => {
+  return async (dispatch) => {
+    await axios.delete(`/api/events/user/me/${event.id}`, {
+      headers: {
+        authorization: window.localStorage.getItem("token"),
+      },
+    });
+    dispatch(_deleteEvent(event));
   };
 };
 
@@ -70,6 +139,14 @@ export default function (state = [], action) {
       return action.events;
     case GET_MY_EVENTS:
       return action.myEvents;
+    case CREATE_EVENT:
+      return [...state, action.event];
+    case UPDATE_EVENT:
+      return state.map((event) =>
+        event.id !== action.event.id ? event : action.event
+      );
+    case DELETE_EVENT:
+      return state.filter((event) => event.id !== action.event.id);
     default:
       return state;
   }

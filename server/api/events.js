@@ -157,7 +157,7 @@ router.put("/unsubscribe", async (req, res, next) => {
 router.post("/user/me", async (req, res, next) => {
   try {
     const user = await User.findByToken(req.headers.authorization);
-    console.log(user);
+    //console.log(user);
     const newEvent = await Event.createMyEvent(user.id, req.body);
 
     res.status.apply(201).send(newEvent);
@@ -172,19 +172,35 @@ router.put("/user/me/:eventId", async (req, res, next) => {
   try {
     const user = await User.findByToken(req.headers.authorization);
 
-    const event = await Event.findByPk(req.params.eventId);
-
-    if (!event) {
-      res.sendStatus(404);
-    }
+    // make sure event id is sent as id// req.body.id??
+    const event = await Event.updateMyEvent(
+      req.params.eventId,
+      req.body.newBody
+    );
 
     if (user.id !== event.ownerId) {
       res.sendStatus(401); // unauthorized
     }
 
-    //await event.updateMyEvent(req.body);
-    await event.update({...event, ...req.body})
+    res.sendStatus(204);
+  } catch (err) {
+    next(err);
+  }
+});
 
+router.delete("/user/me/:eventId", async (req, res, next) => {
+  try {
+    const user = await User.findByToken(req.headers.authorization);
+
+    const event = await Event.findByPk(req.params.id);
+
+    if (user.id !== event.ownerId) {
+      res.sendStatus(401); // unauthorized
+    }
+
+    if (event) {
+      await event.destroy();
+    }
     res.sendStatus(204);
   } catch (err) {
     next(err);

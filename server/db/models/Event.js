@@ -161,7 +161,7 @@ Event.createMyEvent = async function (
         ownerId: ownerId,
       },
     });
-    console.log(duplicate);
+    //console.log(duplicate);
     if (!duplicate) {
       console.log("Creating");
       await Event.create({
@@ -193,10 +193,21 @@ Event.createMyEvent = async function (
   }
 };
 
-Event.updateMyEvent = async function (body) {
+Event.updateMyEvent = async function (eventId, body) {
   try {
+    // event should be {}
+    const event = await Event.findByPk(eventId);
+
+    if (!event) {
+      res.sendStatus(404);
+    }
+
+    // update the current body of the event with the new body
+    if (event) {
+      await event.update({ ...event, ...body });
+    }
     // req.body = {name: "new name", start: "new start"}, only update these two fields
-    await Event.update({ ...body });
+    //await Event.update({ ...body });
   } catch (err) {
     const error = Error("error in Event.updateMyEvent");
     console.log(error);
