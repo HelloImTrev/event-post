@@ -130,7 +130,7 @@ const Navbar = ({ isLoggedIn, handleLogout, clearEventSubscriptions }) => {
               </MenuItem>
               <MenuItem
                 component={Link}
-                to={"/postevents"}
+                to={"/postevent"}
                 sx={{
                   "&:hover": { bgcolor: "transparent" },
                   display: {
@@ -256,7 +256,7 @@ const Navbar = ({ isLoggedIn, handleLogout, clearEventSubscriptions }) => {
               </MenuItem>
               <MenuItem
                 component={Link}
-                to={"/postevents"}
+                to={"/login"}
                 sx={{
                   "&:hover": { bgcolor: "transparent" },
                   display: {

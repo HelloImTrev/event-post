@@ -218,7 +218,7 @@ const SingleEvent = (props) => {
                     frameBorder="0"
                     style={{ border: "0" }}
                     referrerPolicy="no-referrer-when-downgrade"
-                    src={`https://www.google.com/maps/embed/v1/place?key=${process.env.GOOGLE_API_KEY}&q=${formatedAddress}`}
+                    src={`https://www.google.com/maps/embed/v1/place?key=AIzaSyCDowwJ-MLTiSqk1wBu0EsaJ9Ch2dEgYfI&q=${formatedAddress}`}
                     allowFullScreen
                   />
                 </Box>

@@ -14,6 +14,7 @@ import { LoginSignup } from "./components/pages/Login_Signup";
 import Myevents from "./components/pages/Myevents";
 import SingleEvent from "./components/pages/SingleEvent";
 import Explore from "./components/pages/Explore.js";
+import PostEvent from "./components/pages/PostEvent";
 
 // MUI
 import { Box } from "@mui/material";
@@ -39,6 +40,7 @@ class Routes extends Component {
             <Route path="/home" component={Home} />
             <Route path="/explore/filter/:filter?" component={Explore} />
             <Route path="/explore" component={Explore} />
+            <Route path="/postevent" component={PostEvent} />
             <Route path="/myevents" component={Myevents} />
             <Route path="/events/:id" component={SingleEvent} />
             <Redirect to="/home" />
@@ -49,6 +51,7 @@ class Routes extends Component {
             <Route path="/home" component={Home} />
             <Route path="/explore/filter/:filter?" component={Explore} />
             <Route path="/explore" component={Explore} />
+            <Route path="/postevent" component={PostEvent} />
             <Route path="/login" component={LoginSignup} />
             <Route path="/events/:id" component={SingleEvent} />
             <Redirect to="/home" />
