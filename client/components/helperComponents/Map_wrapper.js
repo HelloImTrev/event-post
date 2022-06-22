@@ -68,8 +68,6 @@ function Map({ center, zoom, events }) {
 
 export default function Map_wrapper({ events }) {
   const userLocationObj = useSelector(({ userLocation }) => userLocation);
-  console.log("userLocationObj is: ", userLocationObj);
-  console.log("eventssssss", events);
 
   const [center, setCenter] = useState({
     lat:
