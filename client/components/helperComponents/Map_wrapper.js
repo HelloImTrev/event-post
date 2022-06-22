@@ -20,7 +20,7 @@ function Map({ center, zoom, events }) {
   const ref = useRef();
 
   useEffect(() => {
-    const map = new window.google.maps.Map(ref.current, {
+    const map = new google.maps.Map(ref.current, {
       center,
       zoom,
     });
@@ -31,14 +31,12 @@ function Map({ center, zoom, events }) {
     });
 
     const markers = events.map((event, i) => {
-      const marker = new window.google.maps.Marker({
+      const marker = new google.maps.Marker({
         position: { lat: parseFloat(event.venueLatitude), lng: parseFloat(event.venueLongitude) },
         label: `${i + 1}`,
       });
 
       const start = new Date(event.start);
-      const formatedDate = formatDate(start);
-      const formatedAddress = formatAddress(event);
       const startWeekDay = dayOfWeek(start);
       const startMonth = getMonth(start);
       const startDate = start.getDate();
