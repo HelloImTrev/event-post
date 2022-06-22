@@ -21,7 +21,10 @@ function Map({ center, zoom, events }) {
 
   useEffect(() => {
     const map = new google.maps.Map(ref.current, {
-      center,
+      center: {
+        lat: events[0] ? parseFloat(events && events[0].venueLatitude) : center.lat,
+        lng: events[0] ? parseFloat(events && events[0].venueLongitude) : center.lng,
+      },
       zoom,
     });
 
@@ -66,7 +69,6 @@ function Map({ center, zoom, events }) {
 
 export default function Map_wrapper({ events }) {
   const userLocationObj = useSelector(({ userLocation }) => userLocation);
-
   const [center, setCenter] = useState({
     lat:
       userLocationObj.latitude && typeof userLocationObj.latitude === "number"
@@ -88,9 +90,7 @@ export default function Map_wrapper({ events }) {
 
   return (
     <Wrapper apiKey={process.env.GOOGLE_API_KEY} render={render}>
-      <Map center={center} zoom={zoom} events={events}>
-        {/* <Marker position={center} /> */}
-      </Map>
+      <Map center={center} zoom={zoom} events={events}></Map>
     </Wrapper>
   );
 }
