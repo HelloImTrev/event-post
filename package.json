@@ -22,6 +22,7 @@
   "dependencies": {
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.8.1",
+    "@googlemaps/markerclusterer": "^2.0.8",
     "@googlemaps/react-wrapper": "^1.1.34",
     "@googlemaps/typescript-guards": "^2.0.0",
     "@mui/icons-material": "^5.8.0",

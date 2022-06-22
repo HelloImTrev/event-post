@@ -80,22 +80,44 @@ const SearchBar = ({ filterCategory, windowDimensions, match, filter }) => {
   };
 
   return (
-    <Box sx={{ marginTop: "20px", width: "100%" }}>
+    <Box
+      sx={{
+        // marginTop: "20px",
+        width: "100%",
+      }}
+    >
       <List
         sx={{ width: "100%", bgcolor: "#f2f2f2", display: { xxs: "none", md: "block" } }}
         component="nav"
         aria-labelledby="nested-list-subheader"
-        subheader={
-          <ListSubheader component="div" id="nested-list-subheader" sx={{ bgcolor: "#f2f2f2" }}>
-            Filters
-          </ListSubheader>
-        }
       >
-        <Box sx={{ textAlign: "center", flexDirection: "column", justifyContent: "center", alignItems: "center", width: "100%", marginBottom: "20px" }}>
+        <ListItemText sx={{ padding: "8px 16px" }}>
+          <Typography
+            variant="promptTitle"
+            color="#d83f87"
+            sx={{ fontSize: "1rem", fontWeight: "300" }}
+          >
+            Filter
+          </Typography>
+        </ListItemText>
+        <Box
+          sx={{
+            textAlign: "center",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+            width: "100%",
+            marginBottom: "20px",
+          }}
+        >
           <SearchEngine explore={true} match={match} />
         </Box>
         <ListItemButton onClick={handleCategoryClick}>
-          <Typography variant="promptTitle" color="#d83f87" sx={{ fontSize: "1rem", fontWeight: "300" }}>
+          <Typography
+            variant="promptTitle"
+            color="#d83f87"
+            sx={{ fontSize: "1rem", fontWeight: "300" }}
+          >
             Categories
           </Typography>
           {categoryOpen ? <ExpandLess /> : <ExpandMore />}
@@ -179,7 +201,11 @@ const SearchBar = ({ filterCategory, windowDimensions, match, filter }) => {
           </List>
         </Collapse>
         <ListItemButton onClick={handleSortClick}>
-          <Typography variant="promptTitle" color="#d83f87" sx={{ fontSize: "1rem", fontWeight: "300" }}>
+          <Typography
+            variant="promptTitle"
+            color="#d83f87"
+            sx={{ fontSize: "1rem", fontWeight: "300" }}
+          >
             Sort by
           </Typography>
           {sortClickOpen ? <ExpandLess /> : <ExpandMore />}
@@ -229,18 +255,34 @@ const SearchBar = ({ filterCategory, windowDimensions, match, filter }) => {
           </List>
         </Collapse>
       </List>
-      <List sx={{ width: "100%", bgcolor: "#f2f2f2", display: { xxs: "block", md: "none" } }} component="nav" aria-labelledby="nested-list-subheader">
+      <List
+        sx={{ width: "100%", bgcolor: "#f2f2f2", display: { xxs: "block", md: "none" } }}
+        component="nav"
+        aria-labelledby="nested-list-subheader"
+      >
         <ListItemButton onClick={handleClick}>
           <ListItemText primary="Filter" />
           {open ? <ExpandLess /> : <ExpandMore />}
         </ListItemButton>
         <Collapse in={open} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
-            <Box sx={{ textAlign: "center", flexDirection: "column", justifyContent: "center", alignItems: "center", width: "100%" }}>
+            <Box
+              sx={{
+                textAlign: "center",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+                width: "100%",
+              }}
+            >
               <SearchEngine explore={true} />
             </Box>
             <ListItemButton onClick={handleCategoryClick}>
-              <Typography variant="promptTitle" color="#d83f87" sx={{ fontSize: "1rem", fontWeight: "300" }}>
+              <Typography
+                variant="promptTitle"
+                color="#d83f87"
+                sx={{ fontSize: "1rem", fontWeight: "300" }}
+              >
                 Categories
               </Typography>
               {categoryOpen ? <ExpandLess /> : <ExpandMore />}
@@ -324,7 +366,11 @@ const SearchBar = ({ filterCategory, windowDimensions, match, filter }) => {
               </List>
             </Collapse>
             <ListItemButton onClick={handleSortClick}>
-              <Typography variant="promptTitle" color="#d83f87" sx={{ fontSize: "1rem", fontWeight: "300" }}>
+              <Typography
+                variant="promptTitle"
+                color="#d83f87"
+                sx={{ fontSize: "1rem", fontWeight: "300" }}
+              >
                 Sort by
               </Typography>
               {sortClickOpen ? <ExpandLess /> : <ExpandMore />}

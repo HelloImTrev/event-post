@@ -89,14 +89,10 @@ async function seed() {
       venueLongitude: eventItem._embedded.venues[0].location.longitude,
       venueLatitude: eventItem._embedded.venues[0].location.latitude,
       ownerId: userIds[i % userIds.length],
-      price: eventItem.priceRanges
-        ? eventItem.priceRanges[0].min
-        : await Event.generateRandPrice(),
+      price: eventItem.priceRanges ? eventItem.priceRanges[0].min : await Event.generateRandPrice(),
     });
   }
-  console.log(
-    `*********************************** ${sportEvents.length} Sport Events Seeded`
-  );
+  console.log(`*********************************** ${sportEvents.length} Sport Events Seeded`);
 
   for (const [i, eventItem] of musicEvents.entries()) {
     let startDate = await Event.generateStartDate();
@@ -119,14 +115,10 @@ async function seed() {
       venueLongitude: eventItem._embedded.venues[0].location.longitude,
       venueLatitude: eventItem._embedded.venues[0].location.latitude,
       ownerId: userIds[i % userIds.length],
-      price: eventItem.priceRanges
-        ? eventItem.priceRanges[0].min
-        : await Event.generateRandPrice(),
+      price: eventItem.priceRanges ? eventItem.priceRanges[0].min : await Event.generateRandPrice(),
     });
   }
-  console.log(
-    `*********************************** ${musicEvents.length} Music Events Seeded`
-  );
+  console.log(`*********************************** ${musicEvents.length} Music Events Seeded`);
 
   for (const [i, eventItem] of filmEvents.entries()) {
     let startDate = await Event.generateStartDate();
@@ -149,14 +141,10 @@ async function seed() {
       venueLongitude: eventItem._embedded.venues[0].location.longitude,
       venueLatitude: eventItem._embedded.venues[0].location.latitude,
       ownerId: userIds[i % userIds.length],
-      price: eventItem.priceRanges
-        ? eventItem.priceRanges[0].min
-        : await Event.generateRandPrice(),
+      price: eventItem.priceRanges ? eventItem.priceRanges[0].min : await Event.generateRandPrice(),
     });
   }
-  console.log(
-    `*********************************** ${filmEvents.length} Film Events Seeded`
-  );
+  console.log(`*********************************** ${filmEvents.length} Film Events Seeded`);
 
   for (const [i, eventItem] of artEvents.entries()) {
     let startDate = await Event.generateStartDate();
@@ -179,14 +167,10 @@ async function seed() {
       venueLongitude: eventItem._embedded.venues[0].location.longitude,
       venueLatitude: eventItem._embedded.venues[0].location.latitude,
       ownerId: userIds[i % userIds.length],
-      price: eventItem.priceRanges
-        ? eventItem.priceRanges[0].min
-        : await Event.generateRandPrice(),
+      price: eventItem.priceRanges ? eventItem.priceRanges[0].min : await Event.generateRandPrice(),
     });
   }
-  console.log(
-    `*********************************** ${artEvents.length} Art/Theatre Events Seeded`
-  );
+  console.log(`*********************************** ${artEvents.length} Art/Theatre Events Seeded`);
 
   const someSportEvents = sportEvents.slice(0, 10);
   const someMusicEvents = musicEvents.slice(0, 10);
@@ -195,148 +179,157 @@ async function seed() {
 
   await Promise.all(
     locations.map(async (state) => {
-      const stadiumsOfTheState = (
-        await Event.getNearbyPlaces(state.lat, state.lng, "stadium")
-      ).results;
+      const stadiumsOfTheState = (await Event.getNearbyPlaces(state.lat, state.lng, "stadium"))
+        .results;
 
       for (const [i, eventItem] of someSportEvents.entries()) {
-        const address = stadiumsOfTheState[i % 3].vicinity.split(", ");
+        if (stadiumsOfTheState[i]) {
+          const address = stadiumsOfTheState[i].vicinity.split(", ");
+          let startDate = await Event.generateStartDate();
 
-        let startDate = await Event.generateStartDate();
-        await Event.create({
-          name: eventItem.name,
-          start: startDate,
-          end: await Event.generateEndDate(startDate),
-          category: eventItem.classifications[0].segment.name,
-          images: eventItem.images,
-          description: lorem.generateParagraphs(4),
-          venueName: stadiumsOfTheState[i % 3].name,
-          venueLocale: eventItem._embedded.venues[0].locale,
-          venuePostCode: state.postCode,
-          venueCity: address[address.length - 1],
-          venueState: state.state,
-          venueStateCode: state.stateCode,
-          venueCountry: eventItem._embedded.venues[0].country.name,
-          venueCountryCode: eventItem._embedded.venues[0].country.countryCode,
-          venueAddress: address[0],
-          venueLongitude: state.lng,
-          venueLatitude: state.lat,
-          ownerId: userIds[i % userIds.length],
-          price: eventItem.priceRanges
-            ? eventItem.priceRanges[0].min
-            : await Event.generateRandPrice(),
-        });
+          await Event.create({
+            name: eventItem.name,
+            start: startDate,
+            end: await Event.generateEndDate(startDate),
+            category: eventItem.classifications[0].segment.name,
+            images: eventItem.images,
+            description: lorem.generateParagraphs(4),
+            venueName: stadiumsOfTheState[i].name,
+            venueLocale: eventItem._embedded.venues[0].locale,
+            venuePostCode: state.postCode,
+            venueCity: address[address.length - 1],
+            venueState: state.state,
+            venueStateCode: state.stateCode,
+            venueCountry: eventItem._embedded.venues[0].country.name,
+            venueCountryCode: eventItem._embedded.venues[0].country.countryCode,
+            venueAddress: address[0],
+            venueLongitude: stadiumsOfTheState[i].geometry.location.lng,
+            venueLatitude: stadiumsOfTheState[i].geometry.location.lat,
+            ownerId: userIds[i % userIds.length],
+            price: eventItem.priceRanges
+              ? eventItem.priceRanges[0].min
+              : await Event.generateRandPrice(),
+          });
+        }
       }
     })
   );
 
   await Promise.all(
     locations.map(async (state) => {
-      const hallsOfTheState = (
-        await Event.getNearbyPlaces(state.lat, state.lng, "hall")
-      ).results;
+      const stadiumsOfTheState = (await Event.getNearbyPlaces(state.lat, state.lng, "stadium"))
+        .results;
+    })
+  );
+
+  await Promise.all(
+    locations.map(async (state) => {
+      const hallsOfTheState = (await Event.getNearbyPlaces(state.lat, state.lng, "hall")).results;
 
       for (const [i, eventItem] of someMusicEvents.entries()) {
-        const address = hallsOfTheState[i % 3].vicinity.split(", ");
+        if (hallsOfTheState[i]) {
+          const address = hallsOfTheState[i].vicinity.split(", ");
+          let startDate = await Event.generateStartDate();
 
-        let startDate = await Event.generateStartDate();
-        await Event.create({
-          name: eventItem.name,
-          start: startDate,
-          end: await Event.generateEndDate(startDate),
-          category: eventItem.classifications[0].segment.name,
-          images: eventItem.images,
-          description: lorem.generateParagraphs(4),
-          venueName: hallsOfTheState[i % 3].name,
-          venueLocale: eventItem._embedded.venues[0].locale,
-          venuePostCode: state.postCode,
-          venueCity: address[address.length - 1],
-          venueState: state.state,
-          venueStateCode: state.stateCode,
-          venueCountry: eventItem._embedded.venues[0].country.name,
-          venueCountryCode: eventItem._embedded.venues[0].country.countryCode,
-          venueAddress: address[0],
-          venueLongitude: state.lng,
-          venueLatitude: state.lat,
-          ownerId: userIds[i % userIds.length],
-          price: eventItem.priceRanges
-            ? eventItem.priceRanges[0].min
-            : await Event.generateRandPrice(),
-        });
+          await Event.create({
+            name: eventItem.name,
+            start: startDate,
+            end: await Event.generateEndDate(startDate),
+            category: eventItem.classifications[0].segment.name,
+            images: eventItem.images,
+            description: lorem.generateParagraphs(4),
+            venueName: hallsOfTheState[i].name,
+            venueLocale: eventItem._embedded.venues[0].locale,
+            venuePostCode: state.postCode,
+            venueCity: address[address.length - 1],
+            venueState: state.state,
+            venueStateCode: state.stateCode,
+            venueCountry: eventItem._embedded.venues[0].country.name,
+            venueCountryCode: eventItem._embedded.venues[0].country.countryCode,
+            venueAddress: address[0],
+            venueLongitude: hallsOfTheState[i].geometry.location.lng,
+            venueLatitude: hallsOfTheState[i].geometry.location.lat,
+            ownerId: userIds[i % userIds.length],
+            price: eventItem.priceRanges
+              ? eventItem.priceRanges[0].min
+              : await Event.generateRandPrice(),
+          });
+        }
       }
     })
   );
 
   await Promise.all(
     locations.map(async (state) => {
-      const museumsOfTheState = (
-        await Event.getNearbyPlaces(state.lat, state.lng, "hall")
-      ).results;
+      const museumsOfTheState = (await Event.getNearbyPlaces(state.lat, state.lng, "hall")).results;
 
       for (const [i, eventItem] of someArtEvents.entries()) {
-        const address = museumsOfTheState[i % 3].vicinity.split(", ");
+        if (museumsOfTheState[i]) {
+          const address = museumsOfTheState[i].vicinity.split(", ");
+          let startDate = await Event.generateStartDate();
 
-        let startDate = await Event.generateStartDate();
-        await Event.create({
-          name: eventItem.name,
-          start: startDate,
-          end: await Event.generateEndDate(startDate),
-          category: eventItem.classifications[0].segment.name,
-          images: eventItem.images,
-          description: lorem.generateParagraphs(4),
-          venueName: museumsOfTheState[i % 3].name,
-          venueLocale: eventItem._embedded.venues[0].locale,
-          venuePostCode: state.postCode,
-          venueCity: address[address.length - 1],
-          venueState: state.state,
-          venueStateCode: state.stateCode,
-          venueCountry: eventItem._embedded.venues[0].country.name,
-          venueCountryCode: eventItem._embedded.venues[0].country.countryCode,
-          venueAddress: address[0],
-          venueLongitude: state.lng,
-          venueLatitude: state.lat,
-          ownerId: userIds[i % userIds.length],
-          price: eventItem.priceRanges
-            ? eventItem.priceRanges[0].min
-            : await Event.generateRandPrice(),
-        });
+          await Event.create({
+            name: eventItem.name,
+            start: startDate,
+            end: await Event.generateEndDate(startDate),
+            category: eventItem.classifications[0].segment.name,
+            images: eventItem.images,
+            description: lorem.generateParagraphs(4),
+            venueName: museumsOfTheState[i].name,
+            venueLocale: eventItem._embedded.venues[0].locale,
+            venuePostCode: state.postCode,
+            venueCity: address[address.length - 1],
+            venueState: state.state,
+            venueStateCode: state.stateCode,
+            venueCountry: eventItem._embedded.venues[0].country.name,
+            venueCountryCode: eventItem._embedded.venues[0].country.countryCode,
+            venueAddress: address[0],
+            venueLongitude: museumsOfTheState[i].geometry.location.lng,
+            venueLatitude: museumsOfTheState[i].geometry.location.lat,
+            ownerId: userIds[i % userIds.length],
+            price: eventItem.priceRanges
+              ? eventItem.priceRanges[0].min
+              : await Event.generateRandPrice(),
+          });
+        }
       }
     })
   );
 
   await Promise.all(
     locations.map(async (state) => {
-      const theatersOfTheState = (
-        await Event.getNearbyPlaces(state.lat, state.lng, "movie")
-      ).results;
+      const theatersOfTheState = (await Event.getNearbyPlaces(state.lat, state.lng, "movie"))
+        .results;
 
       for (const [i, eventItem] of someFilmEvents.entries()) {
-        const address = theatersOfTheState[i % 3].vicinity.split(", ");
+        if (theatersOfTheState[i]) {
+          const address = theatersOfTheState[i].vicinity.split(", ");
+          let startDate = await Event.generateStartDate();
 
-        let startDate = await Event.generateStartDate();
-        await Event.create({
-          name: eventItem.name,
-          start: startDate,
-          end: await Event.generateEndDate(startDate),
-          category: eventItem.classifications[0].segment.name,
-          images: eventItem.images,
-          description: lorem.generateParagraphs(4),
-          venueName: theatersOfTheState[i % 3].name,
-          venueLocale: eventItem._embedded.venues[0].locale,
-          venuePostCode: state.postCode,
-          venueCity: address[address.length - 1],
-          venueState: state.state,
-          venueStateCode: state.stateCode,
-          venueCountry: eventItem._embedded.venues[0].country.name,
-          venueCountryCode: eventItem._embedded.venues[0].country.countryCode,
-          venueAddress: address[0],
-          venueLongitude: state.lng,
-          venueLatitude: state.lat,
-          ownerId: userIds[i % userIds.length],
-          price: eventItem.priceRanges
-            ? eventItem.priceRanges[0].min
-            : await Event.generateRandPrice(),
-        });
+          await Event.create({
+            name: eventItem.name,
+            start: startDate,
+            end: await Event.generateEndDate(startDate),
+            category: eventItem.classifications[0].segment.name,
+            images: eventItem.images,
+            description: lorem.generateParagraphs(4),
+            venueName: theatersOfTheState[i].name,
+            venueLocale: eventItem._embedded.venues[0].locale,
+            venuePostCode: state.postCode,
+            venueCity: address[address.length - 1],
+            venueState: state.state,
+            venueStateCode: state.stateCode,
+            venueCountry: eventItem._embedded.venues[0].country.name,
+            venueCountryCode: eventItem._embedded.venues[0].country.countryCode,
+            venueAddress: address[0],
+            venueLongitude: theatersOfTheState[i].geometry.location.lng,
+            venueLatitude: theatersOfTheState[i].geometry.location.lat,
+            ownerId: userIds[i % userIds.length],
+            price: eventItem.priceRanges
+              ? eventItem.priceRanges[0].min
+              : await Event.generateRandPrice(),
+          });
+        }
       }
     })
   );

@@ -112,14 +112,48 @@ const Explore = ({ history, match }) => {
         }}
       >
         <Grid item md={2} sx={{ width: "100%" }}>
-          <SearchBar
-            filterCategory={filterCategory}
-            windowDimensions={windowDimensions}
-            match={match}
-            filter={filter}
-          />
+          <Box
+            sx={{
+              position: {
+                xxs: "fixed",
+                md: "fixed",
+              },
+              width: {
+                xxs: "90%",
+                md: " 15%",
+              },
+              zIndex: "2",
+            }}
+          >
+            <SearchBar
+              filterCategory={filterCategory}
+              windowDimensions={windowDimensions}
+              match={match}
+              filter={filter}
+            />
+          </Box>
         </Grid>
-        <Grid item md={6} sx={{ width: "100%" }}>
+        <Grid
+          item
+          md={6}
+          sx={{
+            width: "100%",
+          }}
+        >
+          <Box
+            sx={{
+              width: "100%",
+              height: "300px",
+              display: {
+                xxs: "block",
+                md: "none",
+              },
+              overflow: "hidden",
+              marginTop: "80px",
+            }}
+          >
+            <Map_wrapper events={events} />
+          </Box>
           <Typography
             variant="promptTitle"
             sx={{
@@ -139,7 +173,28 @@ const Explore = ({ history, match }) => {
           <EventList events={events} />
         </Grid>
         <Grid item md={4} sx={{ width: "100%" }}>
-          <Map_wrapper />
+          <Box
+            sx={{
+              position: {
+                xxs: "none",
+                md: "fixed",
+              },
+              top: {
+                xxs: "60px",
+                xs: "75px",
+              },
+              width: {
+                xxs: "100%",
+                md: " 30%",
+              },
+              display: {
+                xxs: "none",
+                md: "block",
+              },
+            }}
+          >
+            <Map_wrapper events={events} />
+          </Box>
         </Grid>
       </Grid>
     );
