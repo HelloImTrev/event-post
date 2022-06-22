@@ -17,6 +17,7 @@ import {
 //import { Box } from "@mui/system";
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { Link, useHistory } from "react-router-dom";
 import { getEvents } from "../../store";
 import {
   formatDate,
@@ -26,6 +27,7 @@ import {
 } from "../helperFunctions/dateFormat";
 
 const SingleEvent = (props) => {
+  const history = useHistory()
   const event = useSelector(({ events }) =>
     events.find((event) => event.id === props.match.params.id * 1)
   );
@@ -36,7 +38,7 @@ const SingleEvent = (props) => {
   //   dispatch(getEvents());
   // }, []);
 
-  console.log(event);
+  //console.log(event);
 
   if (event) {
     const start = new Date(event.start);
@@ -122,6 +124,7 @@ const SingleEvent = (props) => {
                     color="pink"
                     sx={{ width: "200px" }}
                     disableElevation
+                    onClick={() => history.push(`/gettickets/${event.id}`)}
                   >
                     Get Tickets
                   </Button>
