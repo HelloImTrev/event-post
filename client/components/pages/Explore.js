@@ -138,12 +138,22 @@ const Explore = ({ history, match }) => {
           md={6}
           sx={{
             width: "100%",
-            marginTop: {
-              xxs: "80px",
-              md: "0",
-            },
           }}
         >
+          <Box
+            sx={{
+              width: "100%",
+              height: "300px",
+              display: {
+                xxs: "block",
+                md: "none",
+              },
+              overflow: "hidden",
+              marginTop: "80px",
+            }}
+          >
+            <Map_wrapper events={events} />
+          </Box>
           <Typography
             variant="promptTitle"
             sx={{
