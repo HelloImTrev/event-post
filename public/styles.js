@@ -93,7 +93,7 @@ export const theme = createTheme({
       contrastText: "#000000",
     },
     lightPurple: {
-      main: "#8265a7"
+      main: "#8265a7",
     },
     purple: {
       light: "#ca9cf7",
@@ -103,7 +103,7 @@ export const theme = createTheme({
     },
     eggplant: {
       main: "#2a1b3d",
-      contrastText: "#ffffff"
+      contrastText: "#ffffff",
     },
     white: {
       main: "#ffffff",

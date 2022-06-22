@@ -2,9 +2,13 @@ import React, { useEffect, useRef, useState } from "react";
 
 // Google Map
 import { Wrapper, Status } from "@googlemaps/react-wrapper";
+import { MarkerClusterer } from "@googlemaps/markerclusterer";
 
 // Redux
 import { useDispatch, useSelector } from "react-redux";
+
+// helper func
+import { formatDate, formatAddress, dayOfWeek, getMonth } from "../helperFunctions/dateFormat";
 
 const render = (status) => {
   if (status === Status.LOADING) return <h3>{status} ..</h3>;
@@ -12,32 +16,70 @@ const render = (status) => {
   return null;
 };
 
-function MyMapComponent({ center, zoom }) {
+function Map({ center, zoom, events }) {
   const ref = useRef();
 
   useEffect(() => {
-    new window.google.maps.Map(ref.current, {
+    const map = new window.google.maps.Map(ref.current, {
       center,
       zoom,
     });
+
+    const infoWindow = new google.maps.InfoWindow({
+      content: "",
+      disableAutoPan: true,
+    });
+
+    const markers = events.map((event, i) => {
+      const marker = new window.google.maps.Marker({
+        position: { lat: parseFloat(event.venueLatitude), lng: parseFloat(event.venueLongitude) },
+        label: `${i + 1}`,
+      });
+
+      const start = new Date(event.start);
+      const formatedDate = formatDate(start);
+      const formatedAddress = formatAddress(event);
+      const startWeekDay = dayOfWeek(start);
+      const startMonth = getMonth(start);
+      const startDate = start.getDate();
+
+      const content = `
+      <div>
+      <div>
+        <a href="/events/${event.id}"><img src=${event.images[0].url} width="200" height="100"/></a>
+      </div>
+      <h3> <a href="/events/${event.id}">${event.name}</a></h3>
+      <p>${startWeekDay}, ${startMonth.month} ${startDate}</p>
+      <p>${event.venueName} - ${event.venueCity}, ${event.venueStateCode}</p>
+      
+      </div>`;
+      marker.addListener("click", () => {
+        infoWindow.setContent(content);
+        infoWindow.open(map, marker);
+      });
+      return marker;
+    });
+
+    new MarkerClusterer({ markers, map });
   });
 
   return <div ref={ref} id="map" style={{ width: "100%", height: 800 }} />;
 }
 
-export default function Map_wrapper() {
+export default function Map_wrapper({ events }) {
   const userLocationObj = useSelector(({ userLocation }) => userLocation);
-  //console.log("userLocationObj is: ", userLocationObj);
+  console.log("userLocationObj is: ", userLocationObj);
+  console.log("eventssssss", events);
 
   const [center, setCenter] = useState({
     lat:
       userLocationObj.latitude && typeof userLocationObj.latitude === "number"
         ? userLocationObj.latitude
-        : 40.7128,
+        : 40.7489281,
     lng:
       userLocationObj.longitude && typeof userLocationObj.longitude === "number"
         ? userLocationObj.longitude
-        : 74.006,
+        : -73.9857222,
   });
 
   useEffect(() => {
@@ -46,37 +88,16 @@ export default function Map_wrapper() {
     }
   }, [userLocationObj]);
 
-  const zoom = 6;
+  const zoom = 10;
 
   return (
     <Wrapper apiKey={process.env.GOOGLE_API_KEY} render={render}>
-      <MyMapComponent center={center} zoom={zoom}>
-        {/* <Marker key={i} position={latLng} /> */}
-      </MyMapComponent>
+      <Map center={center} zoom={zoom} events={events}>
+        {/* <Marker position={center} /> */}
+      </Map>
     </Wrapper>
   );
 }
 
-// const center = { lat: 40.7128, lng: 74.006 };
-// const center = { lat: -34.397, lng: 150.644 };
-
-// useEffect(() => {
-//   console.log("typeeeee", typeof userLocation.latitude, userLocation);
-//   setCenter({ lat: userLocation.latitude, lng: userLocation.longitude });
-// }, []);
-
-// const [center, setCenter] = useState({
-//   lat:
-//     userLocationObj.latitude && userLocationObj.latitude !== ""
-//       ? userLocationObj.latitude
-//       : 40.7128,
-//   lng:
-//     userLocationObj.longitude && userLocationObj.longitude !== ""
-//       ? userLocationObj.longitude
-//       : 74.006,
-// });
-
-// const [center, setCenter] = useState({
-//   lat: 40.7128,
-//   lng: 74.006,
-// });
+// NEW YORK ESB 40.748928164800205, -73.98572227624132
+// BOSTON 42.32867080627094, -71.07551417270527;

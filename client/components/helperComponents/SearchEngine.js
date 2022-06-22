@@ -203,7 +203,12 @@ const SearchEngine = ({ explore, match }) => {
         color="pink"
         variant="contained"
         sx={{
-          width: "150px",
+          width: {
+            xxs: "150px",
+            md: "90%",
+            lg: "150px",
+            mdlg: "150px",
+          },
           marginTop: {
             xxs: "3vw",
             xs: "3vw",
