@@ -8,10 +8,7 @@ import { authenticate } from "../../store";
 import { TextField, Button, Alert, Typography, Box } from "@mui/material";
 
 //SOCIAL BTNS
-import {
-  FacebookLoginButton,
-  GoogleLoginButton,
-} from "react-social-login-buttons";
+import { FacebookLoginButton, GoogleLoginButton } from "react-social-login-buttons";
 
 const AuthForm = (props) => {
   const { name, displayName, handleSubmit, error, signupError } = props;
@@ -51,7 +48,7 @@ const AuthForm = (props) => {
         variant="roboto"
         sx={{
           fontSize: {
-            xxs: "10px",
+            xxs: "15px",
             xs: "15px",
             sm: "18px",
             md: "20px",
@@ -113,7 +110,12 @@ const AuthForm = (props) => {
         <Button
           onClick={() =>
             handleSubmit({
-              target: { name: "login", username: "murphy", password: "123" },
+              target: {
+                name: "login",
+                username: "murphy",
+                password: "123",
+                email: "murph@gmail.com",
+              },
             })
           }
           color="pink"
@@ -140,12 +142,27 @@ const AuthForm = (props) => {
             margin: "1vw auto",
           }}
         >
-          {error && error.response && (
-            <Alert severity="error">{error.response.data}</Alert>
-          )}
+          {error && error.response && <Alert severity="error">{error.response.data}</Alert>}
         </Box>
-
-        {
+        <Button
+          onClick={() => (window.location.href = "/googleOauth")}
+          variant="contained"
+          color="white"
+          sx={{
+            width: {
+              xxs: "95%",
+              md: "60%",
+              lg: "50%",
+            },
+            fontSize: { xxs: "13px", sm: "18px", md: "20px", lg: "20px" },
+            color: "#000000",
+            lineHeight: "13px",
+          }}
+        >
+          <img src="/images/google_logo.png" style={{ height: "30px", marginRight: "15px" }} />
+          CONTINUE WITH GOOGLE
+        </Button>
+        {/* {
           <GoogleLoginButton
             onClick={() => (window.location.href = "/googleOauth")}
             className="ggbttn"
@@ -162,7 +179,7 @@ const AuthForm = (props) => {
           >
             CONTINUE WITH GOOGLE
           </GoogleLoginButton>
-        }
+        } */}
       </form>
 
       <Box
@@ -172,7 +189,7 @@ const AuthForm = (props) => {
           flexDirection: "column",
           justifyContent: "center",
           alignItems: "center",
-          height: "1px",
+          height: "2px",
           width: {
             xxs: "95%",
             md: "60%",
@@ -180,6 +197,7 @@ const AuthForm = (props) => {
           },
           backgroundColor: "#5e5e5e",
           margin: "3vw auto",
+          marginTop: "30px",
         }}
       >
         <Box
@@ -195,11 +213,7 @@ const AuthForm = (props) => {
           }}
         >
           <Typography
-            style={{
-              padding: "0 5px",
-              backgroundColor: "white",
-              margin: "0 auto",
-            }}
+            variant="notAUser"
             sx={{
               width: {
                 xxs: "95%",
@@ -207,11 +221,14 @@ const AuthForm = (props) => {
                 lg: "20%",
               },
               fontSize: {
-                xxs: "10px",
+                xxs: "15px",
                 xs: "15px",
                 sm: "18px",
                 md: "20px",
                 lg: "20px",
+              },
+              padding: {
+                sm: "0 15px",
               },
             }}
           >
@@ -294,7 +311,11 @@ const AuthForm = (props) => {
         />
         <br />
         <Button
-        disabled={!signupInput.password.length || !signupInput.username.length || !signupInput.email.length}
+          disabled={
+            !signupInput.password.length ||
+            !signupInput.username.length ||
+            !signupInput.email.length
+          }
           onClick={() => {
             handleSubmit({ target: { ...signupInput, name: "signup" } });
           }}
@@ -338,8 +359,7 @@ const mapLogin = (state) => {
         ? state.auth.error
         : null,
     signupError:
-      state.auth.error &&
-      state.auth.error.response.data.includes("already exists")
+      state.auth.error && state.auth.error.response.data.includes("already exists")
         ? state.auth.error
         : null,
   };
@@ -352,9 +372,8 @@ const mapDispatch = (dispatch) => {
         evt.preventDefault();
         const formName = evt.target.name;
         const username = evt.target.username.value;
-        const email = evt.target.email.value;
         const password = evt.target.password.value;
-        dispatch(authenticate(username, password, formName, email));
+        dispatch(authenticate(username, password, formName));
       } else {
         console.log("log", evt.target);
         const formName = evt.target.name;

@@ -78,6 +78,10 @@ export const theme = createTheme({
       fontSize: "15px",
       color: "#8265a7",
     },
+    notAUser: {
+      backgroundColor: "#f8f7fa",
+      fontFamily: "'Roboto', sans-serif",
+    },
   },
   palette: {
     black: {
