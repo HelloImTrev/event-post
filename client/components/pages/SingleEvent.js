@@ -18,7 +18,7 @@ import {
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
-//import { getEvents } from "../../store";
+
 import {
   formatDate,
   formatAddress,
@@ -274,8 +274,8 @@ const SingleEvent = (props) => {
                   </Typography>
                 </Box>
                 <Box sx={{ marginTop: "1rem", marginBottom: "1.5rem" }}>
-                  <Typography>Date</Typography>
-                  <Typography>Start time</Typography>
+                  <Typography>{formatedDate}</Typography>
+                  <Typography>{start.toLocaleTimeString('en-US')}</Typography>
                 </Box>
               </Box>
             </Box>
