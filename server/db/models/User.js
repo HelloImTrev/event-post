@@ -16,8 +16,8 @@ const User = db.define("user", {
     type: Sequelize.STRING,
   },
   email: {
-    type: Sequelize.STRING
-  }
+    type: Sequelize.STRING,
+  },
 });
 
 module.exports = User;

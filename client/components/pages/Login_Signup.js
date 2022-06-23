@@ -3,7 +3,6 @@ import React, { useState } from "react";
 // redux
 import { connect } from "react-redux";
 import { authenticate } from "../../store";
-import { clearEventSubscriptions } from "../../store";
 
 // mui
 import { TextField, Button, Alert, Typography, Box } from "@mui/material";
@@ -19,7 +18,7 @@ const AuthForm = (props) => {
   const [signupInput, setSignupInput] = useState({
     username: "",
     password: "",
-    email: ''
+    email: "",
   });
   const handleCreateAccountInputFields = (e) => {
     setSignupInput({ ...signupInput, [e.target.name]: e.target.value });
@@ -48,7 +47,18 @@ const AuthForm = (props) => {
         Sign In
       </Typography>
       <br />
-      <Typography variant="roboto" sx={{    fontSize:{xxs: "10px", xs: "15px", sm: "18px", md: "20px", lg: "20px"} }}>
+      <Typography
+        variant="roboto"
+        sx={{
+          fontSize: {
+            xxs: "10px",
+            xs: "15px",
+            sm: "18px",
+            md: "20px",
+            lg: "20px",
+          },
+        }}
+      >
         Enter your username and password to get started.
       </Typography>
       <form onSubmit={handleSubmit} name="login">
@@ -134,8 +144,7 @@ const AuthForm = (props) => {
             <Alert severity="error">{error.response.data}</Alert>
           )}
         </Box>
- 
-    
+
         {
           <GoogleLoginButton
             onClick={() => (window.location.href = "/googleOauth")}
@@ -249,6 +258,24 @@ const AuthForm = (props) => {
         />
         <br />
         <TextField
+          id="outlined-basic"
+          label="Email"
+          variant="outlined"
+          name="email"
+          type="text"
+          color="pink"
+          sx={{
+            width: {
+              xxs: "95%",
+              md: "60%",
+              lg: "50%",
+            },
+          }}
+          value={signupInput.email}
+          onChange={handleCreateAccountInputFields}
+        />
+        <br />
+        <TextField
           id="outlined-password-input"
           label="Password"
           variant="outlined"
@@ -267,6 +294,7 @@ const AuthForm = (props) => {
         />
         <br />
         <Button
+        disabled={!signupInput.password.length || !signupInput.username.length || !signupInput.email.length}
           onClick={() => {
             handleSubmit({ target: { ...signupInput, name: "signup" } });
           }}
@@ -290,7 +318,7 @@ const AuthForm = (props) => {
               md: "60%",
               lg: "50%",
             },
-            fontSize:{xxs: "15px", sm: "18px", md: "20px", lg: "20px"},
+            fontSize: { xxs: "15px", sm: "18px", md: "20px", lg: "20px" },
             margin: "1vw auto",
           }}
         >
@@ -324,14 +352,16 @@ const mapDispatch = (dispatch) => {
         evt.preventDefault();
         const formName = evt.target.name;
         const username = evt.target.username.value;
+        const email = evt.target.email.value;
         const password = evt.target.password.value;
-        dispatch(authenticate(username, password, formName));
+        dispatch(authenticate(username, password, formName, email));
       } else {
         console.log("log", evt.target);
         const formName = evt.target.name;
         const username = evt.target.username;
+        const email = evt.target.email;
         const password = evt.target.password;
-        dispatch(authenticate(username, password, formName));
+        dispatch(authenticate(username, password, formName, email));
       }
     },
   };
