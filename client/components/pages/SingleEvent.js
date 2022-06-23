@@ -2,7 +2,7 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import IosShareIcon from "@mui/icons-material/IosShare";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
-
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import {
   Button,
   Card,
@@ -17,7 +17,8 @@ import {
 //import { Box } from "@mui/system";
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getEvents } from "../../store";
+import { Link, useHistory } from "react-router-dom";
+//import { getEvents } from "../../store";
 import {
   formatDate,
   formatAddress,
@@ -25,18 +26,39 @@ import {
   getMonth,
 } from "../helperFunctions/dateFormat";
 
+import {
+  subscribeToEvent,
+  unsubscribeFromEvent,
+} from "../../store/eventSubscription";
+
 const SingleEvent = (props) => {
+  const history = useHistory();
   const event = useSelector(({ events }) =>
     events.find((event) => event.id === props.match.params.id * 1)
   );
+  const dispatch = useDispatch();
+  //subscription
+  const user = useSelector(({ auth }) => auth);
+  const subscribedEvents = useSelector((state) => state.eventSubscription);
+  const subscribedEventIds = subscribedEvents.map((event) => event.eventId);
+  const subscribeOrUnsubscribe = (event) => {
+    subscribedEventIds.includes(event.id)
+      ? dispatch(unsubscribeFromEvent(event.id))
+      : dispatch(subscribeToEvent(event.id));
+  };
 
-  //const dispatch = useDispatch();
+  const heartEvent = (event) =>
+    user.username ? subscribeOrUnsubscribe(event) : history.push("/login");
 
-  // useEffect(() => {
-  //   dispatch(getEvents());
-  // }, []);
-
-  console.log(event);
+  const shareEvent = (event) => {
+    window.open(
+      `mailto:?subject=Check out this event!&body=${event.name}%0A${new Date(
+        event.start
+      )}%0A${event.venueName}%0A${event.venueCity}%0A${
+        event.venueState
+      }%0A${`https://event-post.herokuapp.com/events/${event.id}`}`
+    );
+  };
 
   if (event) {
     const start = new Date(event.start);
@@ -46,7 +68,7 @@ const SingleEvent = (props) => {
     const startMonth = getMonth(start);
     const startDate = start.getDate();
 
-    console.log("DATE:::", start);
+    //console.log("DATE:::", start);
 
     return (
       <div id="single-event-page">
@@ -122,6 +144,11 @@ const SingleEvent = (props) => {
                     color="pink"
                     sx={{ width: "200px" }}
                     disableElevation
+                    onClick={() => {
+                      user.username
+                        ? history.push(`/gettickets/${event.id}`)
+                        : history.push("/login");
+                    }}
                   >
                     Get Tickets
                   </Button>
@@ -129,10 +156,18 @@ const SingleEvent = (props) => {
                     <IconButton
                       color="lightPurple"
                       sx={{ marginRight: ".5rem" }}
+                      onClick={() => heartEvent(event)}
                     >
-                      <FavoriteIcon />
+                      {subscribedEventIds.includes(event.id) ? (
+                        <FavoriteIcon style={{ color: "ff0000" }} />
+                      ) : (
+                        <FavoriteBorderIcon color="lightPurple" />
+                      )}
                     </IconButton>
-                    <IconButton color="lightPurple">
+                    <IconButton
+                      color="lightPurple"
+                      onClick={() => shareEvent(event)}
+                    >
                       <IosShareIcon />
                     </IconButton>
                   </Box>
@@ -222,7 +257,7 @@ const SingleEvent = (props) => {
                     allowFullScreen
                   />
                 </Box>
-                <Box sx={{marginTop: "1.5rem"}}>
+                <Box sx={{ marginTop: "1.5rem" }}>
                   <Typography
                     variant="promptTitle"
                     sx={{
@@ -238,13 +273,9 @@ const SingleEvent = (props) => {
                     Date and time
                   </Typography>
                 </Box>
-                <Box sx={{marginTop: "1rem", marginBottom:"1.5rem"}}>
-                    <Typography>
-                      Date
-                    </Typography>
-                    <Typography>
-                      Start time
-                    </Typography>
+                <Box sx={{ marginTop: "1rem", marginBottom: "1.5rem" }}>
+                  <Typography>Date</Typography>
+                  <Typography>Start time</Typography>
                 </Box>
               </Box>
             </Box>

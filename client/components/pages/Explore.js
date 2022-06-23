@@ -6,7 +6,6 @@ import { Link } from "react-router-dom";
 
 // redux
 import { useDispatch, useSelector } from "react-redux";
-import { getEvents } from "../../store/events";
 
 //MUI
 import {
