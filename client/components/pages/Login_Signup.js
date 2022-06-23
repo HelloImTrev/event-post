@@ -19,6 +19,7 @@ const AuthForm = (props) => {
   const [signupInput, setSignupInput] = useState({
     username: "",
     password: "",
+    email: ''
   });
   const handleCreateAccountInputFields = (e) => {
     setSignupInput({ ...signupInput, [e.target.name]: e.target.value });

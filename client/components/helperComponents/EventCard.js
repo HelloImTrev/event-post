@@ -39,7 +39,7 @@ const EventCard = ({ event, isLoggedIn, subscribed }) => {
 
   const heartEvent = () =>
     isLoggedIn ? subscribeOrUnsubscribe() : history.push("/login");
-
+  
   const date = new Date(event.start);
   const formatedDate =
     (date.getMonth() > 8 ? date.getMonth() + 1 : "0" + (date.getMonth() + 1)) +
