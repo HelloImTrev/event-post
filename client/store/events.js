@@ -116,11 +116,8 @@ export const searchKeyword =
   async (dispatch) => {
     try {
       const events = (
-        await axios.get(
-          `/api/events/search?keyword=${name}&location=${location}&date=${date}`
-        )
+        await axios.get(`/api/events/search?keyword=${name}&location=${location}&date=${date}`)
       ).data;
-      //console.log("reduxxxxxxxxxx", events);
       if (events.length === 0) {
         dispatch(getError("Result not found."));
       } else {
@@ -142,9 +139,7 @@ export default function (state = [], action) {
     case CREATE_EVENT:
       return [...state, action.event];
     case UPDATE_EVENT:
-      return state.map((event) =>
-        event.id !== action.event.id ? event : action.event
-      );
+      return state.map((event) => (event.id !== action.event.id ? event : action.event));
     case DELETE_EVENT:
       return state.filter((event) => event.id !== action.event.id);
     default:

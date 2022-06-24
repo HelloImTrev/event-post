@@ -1,24 +1,64 @@
-import { Paper, Typography, TextField, Button } from "@mui/material";
+import React, { useState, useEffect } from "react";
+
+// mui
+import { Paper, Typography, TextField, Button, TextareaAutosize } from "@mui/material";
 import { Box } from "@mui/system";
 import { DesktopDatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
-import React, { useState } from "react";
 
+//redux
+import { useDispatch, useSelector } from "react-redux";
+
+//child component
 import Places_autocomplete from "../helperComponents/Places_autocomplete";
+import locations from "../../../script/locations";
 
 const PostEvent = () => {
-  const [startDate, setStartDate] = useState(new Date());
-  const [endDate, setEndDate] = useState(new Date());
-
+  const googleData = useSelector(({ googleData }) => googleData);
+  const [returnedData, setReturnedData] = useState(null);
   const [eventInput, setEventInput] = useState({
     name: "",
-    start: "",
-    end: "",
+    start: new Date(),
+    end: new Date(),
     category: "",
     images: "",
     description: "",
     venueName: "",
+    venueLocale: "en-us",
+    venuePostCode: 0,
+    venueCity: "",
+    venueState: "",
+    venueStateCode: "",
+    venueCountry: "",
+    venueCountryCode: "US",
+    venueAddress: "",
+    venueLongitude: "",
+    venueLatitude: "",
+    price: 0,
   });
+
+  useEffect(() => {
+    setReturnedData(googleData);
+    if (googleData.formatted_address) {
+      const [venueCity, stateCodeZipCode, venueCountry] = googleData.formatted_address
+        .split(", ")
+        .slice(-3);
+      const [venueStateCode, venuePostCode] = stateCodeZipCode.split(" ");
+      const venueState = locations.find((stateObj) => stateObj.stateCode === stateCode).state;
+      setEventInput({
+        ...eventInput,
+        venueName: googleData.name,
+        venuePostCode,
+        venueCity,
+        venueState,
+        venueStateCode,
+        venueCountry,
+        venueAddress: googleData.vicinity,
+        venueLatitude: googleData.geometry.location.lat,
+        venueLongitude: googleData.geometry.location.lng,
+      });
+    }
+  }, [googleData]);
 
   const handleInputFields = (e) => {
     console.log(e);
@@ -26,30 +66,14 @@ const PostEvent = () => {
   };
 
   const handleStartDate = (newValue) => {
-    const start = {
-      target: {
-        name: "start",
-        value: newValue,
-      },
-    };
-
-    setStartDate(newValue);
-    handleInputFields(start);
+    setEventInput({ ...eventInput, start: newValue });
   };
 
   const handleEndDate = (newValue) => {
-    const end = {
-      target: {
-        name: "end",
-        value: newValue,
-      },
-    };
-
-    setEndDate(newValue);
-    handleInputFields(end);
+    setEventInput({ ...eventInput, end: newValue });
   };
 
-  console.log(eventInput);
+  console.log("current input", eventInput);
 
   return (
     <Box>
@@ -72,6 +96,7 @@ const PostEvent = () => {
           marginBottom: "2rem",
           marginLeft: "auto",
           marginRight: "auto",
+          padding: "20px",
         }}
       >
         <Box>
@@ -96,6 +121,11 @@ const PostEvent = () => {
           <Box sx={{ textAlign: "center", marginTop: "1rem" }}>
             <Box>
               <form onSubmit={console.log("Event Posted")} name="event">
+                <br />
+                <Typography variant="promptTitle" sx={{ fontSize: "20px" }}>
+                  Event Name
+                </Typography>
+                <br />
                 <TextField
                   id="outlined-basic"
                   label="Event Name"
@@ -114,13 +144,17 @@ const PostEvent = () => {
                 />
                 <Places_autocomplete />
                 <br />
+                <Typography variant="promptTitle" sx={{ fontSize: "20px" }}>
+                  Event Date
+                </Typography>
+                <br />
                 <LocalizationProvider dateAdapter={AdapterDateFns}>
                   <Box sx={{ width: { xxs: "95%", md: "60%", lg: "50%" }, margin: "0 auto" }}>
                     <DesktopDatePicker
                       label="Start Date"
                       inputFormat="MM/dd/yyyy"
                       name="start"
-                      value={startDate}
+                      value={eventInput.start}
                       onChange={handleStartDate}
                       renderInput={(params) => {
                         return (
@@ -142,7 +176,7 @@ const PostEvent = () => {
                       label="End Date"
                       inputFormat="MM/dd/yyyy"
                       name="end"
-                      value={endDate}
+                      value={eventInput.end}
                       onChange={handleEndDate}
                       renderInput={(params) => {
                         return (
@@ -160,103 +194,30 @@ const PostEvent = () => {
                   </Box>
                 </LocalizationProvider>
                 <br />
-
-                <TextField
-                  id="outlined-password-input"
-                  label="Description"
-                  variant="outlined"
-                  name="description"
-                  type="text"
-                  color="pink"
-                  sx={{
-                    width: {
-                      xxs: "95%",
-                      md: "60%",
-                      lg: "50%",
-                    },
-                  }}
-                  onChange={handleInputFields}
-                />
+                <Typography variant="promptTitle" sx={{ fontSize: "20px" }}>
+                  Event Description
+                </Typography>
                 <br />
-                <TextField
-                  id="outlined-password-input"
-                  label="Place Holder"
-                  variant="outlined"
-                  name="placeHolder"
-                  type="text"
-                  color="pink"
+                <Box
                   sx={{
                     width: {
                       xxs: "95%",
                       md: "60%",
                       lg: "50%",
                     },
+                    margin: "0 auto",
                   }}
-                />
-                <br />
-                <TextField
-                  id="outlined-password-input"
-                  label="Place Holder"
-                  variant="outlined"
-                  name="placeHolder"
-                  type="text"
-                  color="pink"
-                  sx={{
-                    width: {
-                      xxs: "95%",
-                      md: "60%",
-                      lg: "50%",
-                    },
-                  }}
-                />
-                <br />
-                <TextField
-                  id="outlined-password-input"
-                  label="Place Holder"
-                  variant="outlined"
-                  name="placeHolder"
-                  type="text"
-                  color="pink"
-                  sx={{
-                    width: {
-                      xxs: "95%",
-                      md: "60%",
-                      lg: "50%",
-                    },
-                  }}
-                />
-                <br />
-                <TextField
-                  id="outlined-password-input"
-                  label="Place Holder"
-                  variant="outlined"
-                  name="placeHolder"
-                  type="text"
-                  color="pink"
-                  sx={{
-                    width: {
-                      xxs: "95%",
-                      md: "60%",
-                      lg: "50%",
-                    },
-                  }}
-                />
-                <br />
-                <TextField
-                  id="outlined-password-input"
-                  label="Place Holder"
-                  variant="outlined"
-                  name="placeHolder"
-                  type="text"
-                  color="pink"
-                  sx={{
-                    width: {
-                      xxs: "95%",
-                      md: "60%",
-                      lg: "50%",
-                    },
-                  }}
-                />
+                >
+                  <TextareaAutosize
+                    aria-label="minimum height"
+                    minRows={5}
+                    placeholder="Descriptions about your event."
+                    name="description"
+                    style={{ width: "100%" }}
+                    color="pink"
+                    onChange={handleInputFields}
+                  />
+                </Box>
                 <br />
                 <Button
                   type="submit"
