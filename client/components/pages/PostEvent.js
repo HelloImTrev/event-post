@@ -5,6 +5,9 @@ import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import React, { useState } from "react";
 
 const PostEvent = () => {
+  const [startDate, setStartDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(new Date());
+
   const [eventInput, setEventInput] = useState({
     name: "",
     start: "",
@@ -16,7 +19,32 @@ const PostEvent = () => {
   });
 
   const handleInputFields = (e) => {
+    console.log(e);
     setEventInput({ ...eventInput, [e.target.name]: e.target.value });
+  };
+
+  const handleStartDate = (newValue) => {
+    const start = {
+      target: {
+        name: "start",
+        value: newValue,
+      },
+    };
+
+    setStartDate(newValue);
+    handleInputFields(start);
+  };
+
+  const handleEndDate = (newValue) => {
+    const end = {
+      target: {
+        name: "end",
+        value: newValue,
+      },
+    };
+
+    setEndDate(newValue);
+    handleInputFields(end);
   };
 
   console.log(eventInput);
@@ -84,21 +112,27 @@ const PostEvent = () => {
                 />
                 <br />
                 <LocalizationProvider dateAdapter={AdapterDateFns}>
-                  <DesktopDatePicker
-                    label="Start Date"
-                    inputFormat="MM/dd/yyyy"
-                    name="start"
-                    onChange={handleInputFields}
-                    renderInput={(params) => <TextField {...params} />}
-                  />
+                  <Box>
+                    <DesktopDatePicker
+                      label="Start Date"
+                      inputFormat="MM/dd/yyyy"
+                      name="start"
+                      value={startDate}
+                      onChange={handleStartDate}
+                      renderInput={(params) => <TextField {...params} />}
+                    />
+                  </Box>
 
-                  <DesktopDatePicker
-                    label="End Date"
-                    inputFormat="MM/dd/yyyy"
-                    name="start"
-                    onChange={handleInputFields}
-                    renderInput={(params) => <TextField {...params} />}
-                  />
+                  <Box>
+                    <DesktopDatePicker
+                      label="End Date"
+                      inputFormat="MM/dd/yyyy"
+                      name="end"
+                      value={endDate}
+                      onChange={handleEndDate}
+                      renderInput={(params) => <TextField {...params} />}
+                    />
+                  </Box>
                 </LocalizationProvider>
                 <br />
 
