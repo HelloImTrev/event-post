@@ -159,27 +159,9 @@ const AuthForm = (props) => {
             lineHeight: "13px",
           }}
         >
-          <img src="/images/google_logo.png" style={{ height: "30px", marginRight: "15px" }} />
+          <img src="/images/google_logo.png" style={{ height: "25px", marginRight: ".5rem"}} />
           CONTINUE WITH GOOGLE
         </Button>
-        {/* {
-          <GoogleLoginButton
-            onClick={() => (window.location.href = "/googleOauth")}
-            className="ggbttn"
-            align="center"
-            variant="contained"
-            sx={{
-              width: {
-                xxs: "95%",
-                md: "60%",
-                lg: "50%",
-              },
-              marginTop: "1vw",
-            }}
-          >
-            CONTINUE WITH GOOGLE
-          </GoogleLoginButton>
-        } */}
       </form>
 
       <Box
@@ -215,6 +197,7 @@ const AuthForm = (props) => {
           <Typography
             variant="notAUser"
             sx={{
+              backgroundColor: "#f8f7fa",
               width: {
                 xxs: "95%",
                 md: "50%",
