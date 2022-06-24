@@ -8,10 +8,21 @@ import eventSubscription from "./eventSubscription";
 import error from "./error";
 import searchObj from "./searchObj";
 import userLocation from "./userLocation";
+import googleData from "./google_Data";
 
-const reducer = combineReducers({ auth, events, eventSubscription, error, searchObj, userLocation });
+const reducer = combineReducers({
+  auth,
+  events,
+  eventSubscription,
+  error,
+  searchObj,
+  userLocation,
+  googleData,
+});
 
-const middleware = composeWithDevTools(applyMiddleware(thunkMiddleware, createLogger({ collapsed: true })));
+const middleware = composeWithDevTools(
+  applyMiddleware(thunkMiddleware, createLogger({ collapsed: true }))
+);
 const store = createStore(reducer, middleware);
 
 export default store;

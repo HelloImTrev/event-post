@@ -4,6 +4,8 @@ import { DesktopDatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import React, { useState } from "react";
 
+import Places_autocomplete from "../helperComponents/Places_autocomplete";
+
 const PostEvent = () => {
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
@@ -110,27 +112,50 @@ const PostEvent = () => {
                   }}
                   onChange={handleInputFields}
                 />
+                <Places_autocomplete />
                 <br />
                 <LocalizationProvider dateAdapter={AdapterDateFns}>
-                  <Box>
+                  <Box sx={{ width: { xxs: "95%", md: "60%", lg: "50%" }, margin: "0 auto" }}>
                     <DesktopDatePicker
                       label="Start Date"
                       inputFormat="MM/dd/yyyy"
                       name="start"
                       value={startDate}
                       onChange={handleStartDate}
-                      renderInput={(params) => <TextField {...params} />}
+                      renderInput={(params) => {
+                        return (
+                          <TextField
+                            {...params}
+                            color="pink"
+                            sx={{
+                              width: "100%",
+                              marginTop: "1vw",
+                            }}
+                          />
+                        );
+                      }}
                     />
                   </Box>
 
-                  <Box>
+                  <Box sx={{ width: { xxs: "95%", md: "60%", lg: "50%" }, margin: "0 auto" }}>
                     <DesktopDatePicker
                       label="End Date"
                       inputFormat="MM/dd/yyyy"
                       name="end"
                       value={endDate}
                       onChange={handleEndDate}
-                      renderInput={(params) => <TextField {...params} />}
+                      renderInput={(params) => {
+                        return (
+                          <TextField
+                            {...params}
+                            color="pink"
+                            sx={{
+                              width: "100%",
+                              marginTop: "1vw",
+                            }}
+                          />
+                        );
+                      }}
                     />
                   </Box>
                 </LocalizationProvider>

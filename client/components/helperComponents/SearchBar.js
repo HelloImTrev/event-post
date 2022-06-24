@@ -82,8 +82,15 @@ const SearchBar = ({ filterCategory, windowDimensions, match, filter }) => {
   return (
     <Box
       sx={{
-        // marginTop: "20px",
         width: "100%",
+        height: {
+          xxs: "80%",
+          md: "auto",
+        },
+        overflow: {
+          xxs: "scroll",
+          md: "visible",
+        },
       }}
     >
       <List
@@ -275,7 +282,7 @@ const SearchBar = ({ filterCategory, windowDimensions, match, filter }) => {
                 width: "100%",
               }}
             >
-              <SearchEngine explore={true} />
+              <SearchEngine explore={true} match={match} />
             </Box>
             <ListItemButton onClick={handleCategoryClick}>
               <Typography
