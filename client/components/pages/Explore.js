@@ -110,7 +110,7 @@ const Explore = ({ history, match }) => {
           paddingTop: "10px",
         }}
       >
-        <Grid item md={2} sx={{ width: "100%" }}>
+        <Grid item md={2} sx={{ width: "100%", height: "90%" }}>
           <Box
             sx={{
               position: {
@@ -122,6 +122,7 @@ const Explore = ({ history, match }) => {
                 md: " 15%",
               },
               zIndex: "2",
+              height: "90%",
             }}
           >
             <SearchBar
@@ -190,6 +191,7 @@ const Explore = ({ history, match }) => {
                 xxs: "none",
                 md: "block",
               },
+              height: "90%",
             }}
           >
             <Map_wrapper events={events} />

@@ -2,6 +2,9 @@ import { Paper, Typography, TextField } from "@mui/material";
 import { Box } from "@mui/system";
 import React from "react";
 
+// child component
+import Places_autocomplete from "../helperComponents/Places_autocomplete";
+
 const PostEvent = () => {
   return (
     <Paper
@@ -33,7 +36,7 @@ const PostEvent = () => {
             Lets get the party started!
           </Typography>
         </Box>
-        <Box sx={{marginLeft: "2rem", marginTop: "1rem"}}>
+        <Box sx={{ marginLeft: "2rem", marginTop: "1rem" }}>
           <Box>
             <TextField
               id="outlined-basic"
@@ -50,6 +53,7 @@ const PostEvent = () => {
                 },
               }}
             />
+            <Places_autocomplete />
           </Box>
         </Box>
       </Box>

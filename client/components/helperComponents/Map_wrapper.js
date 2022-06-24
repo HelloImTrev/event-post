@@ -64,7 +64,7 @@ function Map({ center, zoom, events }) {
     new MarkerClusterer({ markers, map });
   });
 
-  return <div ref={ref} id="map" style={{ width: "100%", height: 800 }} />;
+  return <div ref={ref} id="map" style={{ width: "100%", height: "100%" }} />;
 }
 
 export default function Map_wrapper({ events }) {

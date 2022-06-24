@@ -57,7 +57,8 @@ export const Myevents = (props) => {
   }, []);
 
   const handleSelectEvent = (calendarEvent) => {
-    setSelectedEvent(events.find((event) => event.id === calendarEvent.id));
+    // setSelectedEvent(events.find((event) => event.id === calendarEvent.id));
+    setSelectedEvent(subscribedEvents.find((event) => event.id === calendarEvent.id));
   };
 
   return (
@@ -92,7 +93,14 @@ export const Myevents = (props) => {
         style={{ height: 500, margin: "50px" }}
         onSelectEvent={handleSelectEvent}
       />
-      {selectedEvent ? <EventCard event={selectedEvent} subscribed={subscribedEventIds.includes(selectedEvent.id) ? true : false}/> : ""}
+      {selectedEvent ? (
+        <EventCard
+          event={selectedEvent}
+          subscribed={subscribedEventIds.includes(selectedEvent.id) ? true : false}
+        />
+      ) : (
+        ""
+      )}
     </div>
   );
 };

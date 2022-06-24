@@ -15,7 +15,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 
-const SearchEngine = ({ explore, match }) => {
+const SearchEngine = ({ explore, match, setSearchLocation }) => {
   const dispatch = useDispatch();
   const resultError = useSelector(({ error }) => error);
   const searchHistory = useSelector(({ searchObj }) => searchObj);
@@ -38,12 +38,19 @@ const SearchEngine = ({ explore, match }) => {
   useEffect(() => {
     getLocation();
     window.scrollTo(0, 0);
+    return () => {
+      setLocation({});
+      setError(null);
+    };
   }, []);
 
   useEffect(() => {
     if (location.state && !searchHistory.location)
       setSearchObj({ ...searchObj, location: location.state });
     dispatch(loadUserLocation(location));
+    return () => {
+      setSearchObj({});
+    };
   }, [location]);
 
   const getLocation = () => {
@@ -81,7 +88,8 @@ const SearchEngine = ({ explore, match }) => {
     if (e.key === "Enter") {
       dispatch(searchKeyword(searchObj));
       dispatch(dispatchSearchObj(searchObj));
-      if (explore) match.params.filter = JSON.stringify({});
+      // if (explore) match.params.filter = JSON.stringify({});
+      if (match) match.params.filter = JSON.stringify({});
       if (resultError.error) dispatch(removeError());
     }
   };
@@ -198,33 +206,62 @@ const SearchEngine = ({ explore, match }) => {
         />
       </LocalizationProvider>
       <br />
-      <Button
-        color="pink"
-        variant="contained"
-        sx={{
-          width: {
-            xxs: "150px",
-            md: "90%",
-            lg: "150px",
-            mdlg: "150px",
-          },
-          marginTop: {
-            xxs: "3vw",
-            xs: "3vw",
-            sm: "1vw",
-          },
-          borderRadius: "3rem",
-          fontSize: "20px",
-        }}
-        onClick={() => {
-          dispatch(searchKeyword(searchObj));
-          dispatch(dispatchSearchObj(searchObj));
-          if (explore) match.params.filter = JSON.stringify({});
-          if (resultError.error) dispatch(removeError());
-        }}
-      >
-        Go
-      </Button>
+      {explore ? (
+        <Button
+          color="pink"
+          variant="contained"
+          sx={{
+            width: {
+              xxs: "150px",
+              md: "90%",
+              lg: "150px",
+              mdlg: "150px",
+            },
+            marginTop: {
+              xxs: "3vw",
+              xs: "3vw",
+              sm: "1vw",
+            },
+            borderRadius: "3rem",
+            fontSize: "20px",
+          }}
+          onClick={() => {
+            dispatch(searchKeyword(searchObj));
+            dispatch(dispatchSearchObj(searchObj));
+            if (match) match.params.filter = JSON.stringify({});
+            if (resultError.error) dispatch(removeError());
+          }}
+        >
+          Go
+        </Button>
+      ) : (
+        <Button
+          color="pink"
+          variant="contained"
+          sx={{
+            width: {
+              xxs: "150px",
+              lg: "150px",
+              mdlg: "150px",
+            },
+            marginTop: {
+              xxs: "3vw",
+              xs: "3vw",
+              sm: "1vw",
+            },
+            borderRadius: "3rem",
+            fontSize: "20px",
+          }}
+          onClick={() => {
+            dispatch(searchKeyword(searchObj));
+            dispatch(dispatchSearchObj(searchObj));
+            if (match) match.params.filter = JSON.stringify({});
+            if (resultError.error) dispatch(removeError());
+          }}
+        >
+          Go
+        </Button>
+      )}
     </Box>
   );
 };
