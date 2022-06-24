@@ -48,6 +48,8 @@
     "pg": "^8.5.1",
     "react-big-calendar": "^0.40.1",
     "react-datepicker": "^4.8.0",
+    "react-google-autocomplete": "^2.7.0",
+    "react-google-places-autocomplete": "^3.3.4",
     "react-material-ui-carousel": "^3.4.2",
     "react-social-login-buttons": "^3.6.0",
     "sequelize": "^6.3.5",

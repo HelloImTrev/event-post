@@ -102,9 +102,7 @@ Event.generateStartDate = () => {
 
 Event.generateEndDate = (startDate) => {
   let endDate = new Date(startDate);
-  endDate.setMinutes(
-    endDate.getMinutes() + 60 + Math.floor(Math.random() * 5) * 30
-  );
+  endDate.setMinutes(endDate.getMinutes() + 60 + Math.floor(Math.random() * 5) * 30);
   return endDate.toISOString();
 };
 

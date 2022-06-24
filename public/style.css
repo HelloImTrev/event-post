@@ -13,22 +13,21 @@ a {
   color: unset;
 }
 
-
 #navtitle:hover {
-  color:  #D83F87;
+  color: #d83f87;
 }
 
 #event-card-img {
   opacity: 100%;
-  transition: .3s ease-in-out;
+  transition: 0.3s ease-in-out;
 }
 
 #event-card {
-  transition: .3s ease-in-out;
+  transition: 0.3s ease-in-out;
 }
 
 #event-card:hover #event-card-img {
-  transition: .3s ease-in-out;
+  transition: 0.3s ease-in-out;
   opacity: 85%;
 }
 
@@ -41,19 +40,23 @@ a {
   width: 100%;
 }
 
+.css-u25rwq-control:active {
+  border-color: #d83f87;
+  box-shadow: 0 0 0 1px #d83f87;
+}
 
 @media screen and (max-width: 350px) {
   #ggbtn {
     margin: "0 auto";
     width: 100%;
   }
-  }
+}
 
 @media screen and (max-width: 600px) {
-#ggbtn {
-  margin: "0 auto";
-  width: 100%;
-}
+  #ggbtn {
+    margin: "0 auto";
+    width: 100%;
+  }
 }
 
 @media screen and (max-width: 930px) {
@@ -61,18 +64,18 @@ a {
     margin: "0 auto";
     width: 100%;
   }
-  }
-  
-  @media screen and (max-width: 1340px) {
-    #ggbtn {
-      margin: "0 auto";
-      width: 100%;
-    }
-    }
+}
 
-    @media screen and (max-width: 1200px) {
-      #ggbtn {
-        margin: "0 auto";
-        width: 100%;
-      }
-      }
+@media screen and (max-width: 1340px) {
+  #ggbtn {
+    margin: "0 auto";
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  #ggbtn {
+    margin: "0 auto";
+    width: 100%;
+  }
+}
