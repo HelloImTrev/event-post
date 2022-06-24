@@ -66,12 +66,14 @@ export const getMyEvents = () => {
   };
 };
 
-export const createEvent = (event) => {
+export const createEvent = (name, category, venueName, description) => {
+  //console.log(name, category, venueName, description, 'this is the event from the thunk')
+ 
   return async (dispatch) => {
     const newEvent = (
       await axios.post(
         "/api/events/user/me",
-        { event },
+        { name, category, venueName, description },
         {
           headers: {
             authorization: window.localStorage.getItem("token"),

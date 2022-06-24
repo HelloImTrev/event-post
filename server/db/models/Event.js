@@ -10,11 +10,11 @@ const Event = db.define("event", {
   },
   start: {
     type: Sequelize.DATE,
-    allowNull: false,
+    //allowNull: false,
   },
   end: {
     type: Sequelize.DATE,
-    allowNull: false,
+    //allowNull: false,
   },
   category: {
     type: Sequelize.ENUM(["Sports", "Music", "Arts & Theatre", "Film"]),
@@ -34,53 +34,53 @@ const Event = db.define("event", {
   },
   venueName: {
     type: Sequelize.STRING,
-    allowNull: false,
+    //allowNull: false,
   },
   venueLocale: {
     type: Sequelize.STRING,
-    allowNull: false,
+    //allowNull: false,
   },
   venuePostCode: {
     type: Sequelize.INTEGER,
-    allowNull: false,
+    //allowNull: false,
   },
   venueCity: {
     type: Sequelize.STRING,
-    allowNull: false,
+    //allowNull: false,
   },
   venueState: {
     type: Sequelize.STRING,
-    allowNull: false,
+    //allowNull: false,
   },
   venueStateCode: {
     type: Sequelize.STRING,
   },
   venueCountry: {
     type: Sequelize.STRING,
-    allowNull: false,
+    //allowNull: false,
   },
   venueCountryCode: {
     type: Sequelize.STRING,
   },
   venueAddress: {
     type: Sequelize.STRING,
-    allowNull: false,
+    //allowNull: false,
   },
   venueLongitude: {
     type: Sequelize.STRING,
-    allowNull: false,
+    //allowNull: false,
   },
   venueLatitude: {
     type: Sequelize.STRING,
-    allowNull: false,
+    //allowNull: false,
   },
   price: {
     type: Sequelize.DECIMAL(10, 2),
-    allowNull: false,
-    validate: {
-      notEmpty: true,
-      min: 0.0,
-    },
+    //allowNull: false,
+    //validate: {
+      //notEmpty: true,
+      //min: 0.0,
+    //},
   },
 });
 
@@ -149,8 +149,9 @@ Event.createMyEvent = async function (
   body
 ) {
   try {
-    //console.log(body);
-    //console.log(body.name);
+    console.log(body, 'this is the event body');
+    console.log(body.name, 'this is the event name');
+    console.log('before duplicate checking')
     const duplicate = await Event.findOne({
       where: {
         name: body.name,
@@ -165,10 +166,10 @@ Event.createMyEvent = async function (
       await Event.create({
         name: body.name,
         // start: body.start,
-        // category: body.category,
+        category: body.category,
         // images: body.images,
-        // description: body.description,
-        // venueName: body.venueName,
+        venueName: body.venueName,
+        description: body.description,
         // venueLocal: body.venueLocale,
         // venuePostCode: body.venuePostCode,
         // venueCity: body.venueCity,

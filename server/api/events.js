@@ -158,6 +158,7 @@ router.post("/user/me", async (req, res, next) => {
   try {
     const user = await User.findByToken(req.headers.authorization);
     //console.log(user);
+    console.log(req.body, 'this is req.body')
     const newEvent = await Event.createMyEvent(user.id, req.body);
 
     res.status.apply(201).send(newEvent);

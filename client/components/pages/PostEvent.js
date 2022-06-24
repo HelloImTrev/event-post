@@ -1,7 +1,13 @@
 import React, { useState, useEffect } from "react";
 
 // mui
-import { Paper, Typography, TextField, Button, TextareaAutosize } from "@mui/material";
+import {
+  Paper,
+  Typography,
+  TextField,
+  Button,
+  TextareaAutosize,
+} from "@mui/material";
 import { Box } from "@mui/system";
 import { DesktopDatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
@@ -10,10 +16,13 @@ import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { useDispatch, useSelector } from "react-redux";
 
 //child component
+import React, { useState } from "react";
+import { connect } from "react-redux";
+import { createEvent } from "../../store/events";
 import Places_autocomplete from "../helperComponents/Places_autocomplete";
 import locations from "../../../script/locations";
 
-const PostEvent = () => {
+const PostEvent = ({ handleSubmit }) => {
   const googleData = useSelector(({ googleData }) => googleData);
   const [returnedData, setReturnedData] = useState(null);
   const [eventInput, setEventInput] = useState({
@@ -40,11 +49,12 @@ const PostEvent = () => {
   useEffect(() => {
     setReturnedData(googleData);
     if (googleData.formatted_address) {
-      const [venueCity, stateCodeZipCode, venueCountry] = googleData.formatted_address
-        .split(", ")
-        .slice(-3);
+      const [venueCity, stateCodeZipCode, venueCountry] =
+        googleData.formatted_address.split(", ").slice(-3);
       const [venueStateCode, venuePostCode] = stateCodeZipCode.split(" ");
-      const venueState = locations.find((stateObj) => stateObj.stateCode === venueStateCode).state;
+      const venueState = locations.find(
+        (stateObj) => stateObj.stateCode === venueStateCode
+      ).state;
       setEventInput({
         ...eventInput,
         venueName: googleData.name,
@@ -61,7 +71,7 @@ const PostEvent = () => {
   }, [googleData]);
 
   const handleInputFields = (e) => {
-    console.log(e);
+    //console.log(e);
     setEventInput({ ...eventInput, [e.target.name]: e.target.value });
   };
 
@@ -72,8 +82,6 @@ const PostEvent = () => {
   const handleEndDate = (newValue) => {
     setEventInput({ ...eventInput, end: newValue });
   };
-
-  console.log("current input", eventInput);
 
   return (
     <Box>
@@ -120,7 +128,7 @@ const PostEvent = () => {
           </Box>
           <Box sx={{ textAlign: "center", marginTop: "1rem" }}>
             <Box>
-              <form onSubmit={console.log("Event Posted")} name="event">
+              <form onSubmit={handleSubmit} name="event">
                 <br />
                 <Typography variant="promptTitle" sx={{ fontSize: "20px" }}>
                   Event Name
@@ -149,7 +157,12 @@ const PostEvent = () => {
                 </Typography>
                 <br />
                 <LocalizationProvider dateAdapter={AdapterDateFns}>
-                  <Box sx={{ width: { xxs: "95%", md: "60%", lg: "50%" }, margin: "0 auto" }}>
+                  <Box
+                    sx={{
+                      width: { xxs: "95%", md: "60%", lg: "50%" },
+                      margin: "0 auto",
+                    }}
+                  >
                     <DesktopDatePicker
                       label="Start Date"
                       inputFormat="MM/dd/yyyy"
@@ -171,7 +184,12 @@ const PostEvent = () => {
                     />
                   </Box>
 
-                  <Box sx={{ width: { xxs: "95%", md: "60%", lg: "50%" }, margin: "0 auto" }}>
+                  <Box
+                    sx={{
+                      width: { xxs: "95%", md: "60%", lg: "50%" },
+                      margin: "0 auto",
+                    }}
+                  >
                     <DesktopDatePicker
                       label="End Date"
                       inputFormat="MM/dd/yyyy"
@@ -248,4 +266,25 @@ const PostEvent = () => {
   );
 };
 
-export default PostEvent;
+const mapState = (state) => {
+  return {
+    state,
+  };
+};
+
+const mapDispatch = (dispatch) => {
+  return {
+    handleSubmit(e) {
+      e.preventDefault();
+      const name = e.target.name.value;
+      const description = e.target.description.value;
+      const category = e.target.category.value;
+      const venueName = e.target.venueName.value;
+
+      console.log(name, description, category, venueName);
+      dispatch(createEvent(name, description, category, venueName));
+    },
+  };
+};
+
+export default connect(mapState, mapDispatch)(PostEvent);
