@@ -44,7 +44,7 @@ const PostEvent = () => {
         .split(", ")
         .slice(-3);
       const [venueStateCode, venuePostCode] = stateCodeZipCode.split(" ");
-      const venueState = locations.find((stateObj) => stateObj.stateCode === stateCode).state;
+      const venueState = locations.find((stateObj) => stateObj.stateCode === venueStateCode).state;
       setEventInput({
         ...eventInput,
         venueName: googleData.name,
