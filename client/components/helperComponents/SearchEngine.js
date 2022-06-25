@@ -15,7 +15,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 
-const SearchEngine = ({ explore, match, setSearchLocation }) => {
+const SearchEngine = ({ explore, match }) => {
   const dispatch = useDispatch();
   const resultError = useSelector(({ error }) => error);
   const searchHistory = useSelector(({ searchObj }) => searchObj);

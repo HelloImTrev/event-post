@@ -61,8 +61,6 @@ const SingleEvent = (props) => {
     const startMonth = getMonth(start);
     const startDate = start.getDate();
 
-    //console.log("DATE:::", start);
-
     return (
       <div id="single-event-page">
         <Paper

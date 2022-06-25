@@ -159,7 +159,7 @@ const AuthForm = (props) => {
             lineHeight: "13px",
           }}
         >
-          <img src="/images/google_logo.png" style={{ height: "25px", marginRight: ".5rem"}} />
+          <img src="/images/google_logo.png" style={{ height: "25px", marginRight: ".5rem" }} />
           CONTINUE WITH GOOGLE
         </Button>
       </form>
@@ -358,7 +358,6 @@ const mapDispatch = (dispatch) => {
         const password = evt.target.password.value;
         dispatch(authenticate(username, password, formName));
       } else {
-        console.log("log", evt.target);
         const formName = evt.target.name;
         const username = evt.target.username;
         const email = evt.target.email;

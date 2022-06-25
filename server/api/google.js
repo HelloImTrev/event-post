@@ -16,7 +16,7 @@ router.get("/data/:place_id", async (req, res, next) => {
     var data;
     await axios(config)
       .then(function (response) {
-        console.log(response.data);
+        // console.log(response.data);
         data = response.data;
       })
       .catch(function (error) {

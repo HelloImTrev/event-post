@@ -1,9 +1,14 @@
+import React, { useEffect, useRef, useState } from "react";
+
+//mui
 import { Paper, Typography, TextField } from "@mui/material";
 import { Box } from "@mui/system";
-import React, { useEffect, useRef, useState } from "react";
+
+//npm
 import axios from "axios";
 // import Autocomplete from "react-google-autocomplete";
 import GooglePlacesAutocomplete from "react-google-places-autocomplete";
+
 // redux
 import { useDispatch, useSelector } from "react-redux";
 import { getData } from "../../store/google_Data";
@@ -15,9 +20,6 @@ const Places_autocomplete = (props) => {
   const [placeId, setPlaceId] = useState(null);
   const [returnedData, setReturnedData] = useState(null);
 
-  console.log("returned value", value);
-  console.log("%%%%%%%%%%%%%%%%", placeId);
-
   useEffect(() => {
     if (value) setPlaceId(value.value.place_id);
     if (placeId) {
@@ -26,10 +28,9 @@ const Places_autocomplete = (props) => {
   }, [value, placeId]);
 
   useEffect(() => {
-    console.log("changing data?", googleData);
     setReturnedData(googleData);
   }, [googleData]);
-  console.log("?????", returnedData ? true : false);
+
   return (
     <Box
       sx={{
