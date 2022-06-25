@@ -38,19 +38,19 @@ const SearchEngine = ({ explore, match }) => {
   useEffect(() => {
     getLocation();
     window.scrollTo(0, 0);
-    return () => {
-      setLocation({});
-      setError(null);
-    };
+    // return () => {
+    //   setLocation({});
+    //   setError(null);
+    // };
   }, []);
 
   useEffect(() => {
     if (location.state && !searchHistory.location)
       setSearchObj({ ...searchObj, location: location.state });
     dispatch(loadUserLocation(location));
-    return () => {
-      setSearchObj({});
-    };
+    // return () => {
+    //   setSearchObj({});
+    // };
   }, [location]);
 
   const getLocation = () => {
