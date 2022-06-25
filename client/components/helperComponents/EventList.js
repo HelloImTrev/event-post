@@ -5,7 +5,10 @@ import { Link, useHistory } from "react-router-dom";
 
 // redux
 import { useDispatch, useSelector } from "react-redux";
-import { subscribeToEvent, unsubscribeFromEvent } from "../../store/eventSubscription";
+import {
+  subscribeToEvent,
+  unsubscribeFromEvent,
+} from "../../store/eventSubscription";
 
 //MUI
 import {
@@ -48,9 +51,9 @@ const EventList = ({ events }) => {
 
   const shareEvent = (event) => {
     window.open(
-      `mailto:?subject=Check out this event!&body=${event.name}%0A${new Date(event.start)}%0A${
-        event.venueName
-      }%0A${event.venueCity}%0A${
+      `mailto:?subject=Check out this event!&body=${event.name}%0A${new Date(
+        event.start
+      )}%0A${event.venueName}%0A${event.venueCity}%0A${
         event.venueState
       }%0A${`https://event-post.herokuapp.com/events/${event.id}`}`
     );
@@ -59,7 +62,9 @@ const EventList = ({ events }) => {
   const getDate = (event) => {
     const date = new Date(event.start);
     const formatedDate =
-      (date.getMonth() > 8 ? date.getMonth() + 1 : "0" + (date.getMonth() + 1)) +
+      (date.getMonth() > 8
+        ? date.getMonth() + 1
+        : "0" + (date.getMonth() + 1)) +
       "/" +
       (date.getDate() > 9 ? date.getDate() : "0" + date.getDate()) +
       "/" +
@@ -68,29 +73,53 @@ const EventList = ({ events }) => {
   };
 
   return (
-    <List sx={{ width: "100%" }} component="nav" aria-labelledby="exlore event list">
+    <List
+      sx={{ width: "100%" }}
+      component="nav"
+      aria-labelledby="exlore event list"
+    >
       {events.map((event, i) => {
         return (
           <ListItem disablePadding key={event.id}>
             <ListItemButton>
               <Card>
-                <Grid container direction="row" justifyContent="flex-start" alignItems="center">
+                <Grid
+                  container
+                  direction="row"
+                  justifyContent="flex-start"
+                  alignItems="center"
+                >
                   <Grid item xxs={12} sm={4} md={4}>
                     <CardActionArea component={Link} to={`/events/${event.id}`}>
                       <CardMedia
                         component="img"
                         sx={{ width: "100%" }}
-                        image={event.images[0].url}
+                        image={
+                          event.images
+                            ? event.images[0].url
+                            : "https://upload.wikimedia.org/wikipedia/commons/b/b1/Missing-image-232x150.png"
+                        }
                       />
                     </CardActionArea>
                   </Grid>
                   <Grid item xxs={12} sm={8} md={8}>
                     <CardContent>
-                      <CardActionArea component={Link} to={`/events/${event.id}`}>
-                        <Typography variant="cardTitle" marginBottom="1rem" component="div">
+                      <CardActionArea
+                        component={Link}
+                        to={`/events/${event.id}`}
+                      >
+                        <Typography
+                          variant="cardTitle"
+                          marginBottom="1rem"
+                          component="div"
+                        >
                           {i + 1}. {event.name}
                         </Typography>
-                        <Typography variant="cardDate" component="div" marginBottom=".3rem">
+                        <Typography
+                          variant="cardDate"
+                          component="div"
+                          marginBottom=".3rem"
+                        >
                           {`Event starts ${getDate(event)}`}
                         </Typography>
                         <Typography variant="cardLocation">{`${event.venueName} - ${event.venueCity}, ${event.venueStateCode}`}</Typography>

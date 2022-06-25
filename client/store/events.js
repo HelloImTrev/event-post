@@ -68,18 +68,24 @@ export const getMyEvents = () => {
 
 export const createEvent = (event) => {
   return async (dispatch) => {
-    const newEvent = (
-      await axios.post(
-        "/api/events/user/me",
-        { event },
-        {
-          headers: {
-            authorization: window.localStorage.getItem("token"),
-          },
-        }
-      )
-    ).data;
-    dispatch(_createEvent(newEvent));
+    try {
+      const newEvent = (
+        await axios.post(
+          "/api/events/user/me",
+          { ...event },
+          {
+            headers: {
+              authorization: window.localStorage.getItem("token"),
+            },
+          }
+        )
+      ).data;
+      dispatch(_createEvent(newEvent));
+      console.log(newEvent); // ***don't remove me or redirect will break***
+      history.push(`/events/${newEvent.id}`);
+    } catch (err) {
+      console.log(err);
+    }
   };
 };
 
@@ -116,7 +122,9 @@ export const searchKeyword =
   async (dispatch) => {
     try {
       const events = (
-        await axios.get(`/api/events/search?keyword=${name}&location=${location}&date=${date}`)
+        await axios.get(
+          `/api/events/search?keyword=${name}&location=${location}&date=${date}`
+        )
       ).data;
       if (events.length === 0) {
         dispatch(getError("Result not found."));
@@ -139,7 +147,9 @@ export default function (state = [], action) {
     case CREATE_EVENT:
       return [...state, action.event];
     case UPDATE_EVENT:
-      return state.map((event) => (event.id !== action.event.id ? event : action.event));
+      return state.map((event) =>
+        event.id !== action.event.id ? event : action.event
+      );
     case DELETE_EVENT:
       return state.filter((event) => event.id !== action.event.id);
     default:

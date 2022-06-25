@@ -11,6 +11,8 @@ const _getData = (data) => ({ type: GET_DATA, data });
 export const getData = (placeId) => async (dispatch) => {
   try {
     const data = (await axios.get(`/api/google/data/${placeId}`)).data;
+    console.log("in data");
+    console.log(data);
     dispatch(_getData(data.result));
   } catch (err) {
     console.log(err);

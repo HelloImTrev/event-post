@@ -90,7 +90,9 @@ const SingleEvent = (props) => {
                 <Grid item xxs={12} md={7}>
                   <div>
                     <img
-                      src={event.images[0].url}
+                      src={event.images
+                        ? event.images[0].url
+                        : "https://upload.wikimedia.org/wikipedia/commons/b/b1/Missing-image-232x150.png"}
                       style={{
                         width: "100%",
                         minHeight: "220px",
