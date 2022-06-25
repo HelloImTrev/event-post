@@ -5,8 +5,6 @@ import { Paper, Typography, TextField } from "@mui/material";
 import { Box } from "@mui/system";
 
 //npm
-import axios from "axios";
-// import Autocomplete from "react-google-autocomplete";
 import GooglePlacesAutocomplete from "react-google-places-autocomplete";
 
 // redux
@@ -42,9 +40,6 @@ const Places_autocomplete = (props) => {
         margin: "0 auto",
       }}
     >
-      <Typography variant="promptTitle" sx={{ fontSize: "20px" }}>
-        Event Place
-      </Typography>
       <GooglePlacesAutocomplete
         apiKey={process.env.GOOGLE_API_KEY}
         selectProps={{
@@ -81,10 +76,14 @@ const Places_autocomplete = (props) => {
       />
       <Box sx={{ marginTop: "20px" }}>
         <Typography variant="roboto" sx={{ fontWeight: "bold" }}>
-          {returnedData && returnedData.name ? returnedData.name : "Select a Place"}
+          {returnedData && returnedData.name
+            ? returnedData.name
+            : "Select a Place"}
         </Typography>
         <br />
-        <Typography variant="roboto">{returnedData && returnedData.formatted_address}</Typography>
+        <Typography variant="roboto">
+          {returnedData && returnedData.formatted_address}
+        </Typography>
       </Box>
     </Box>
   );

@@ -78,8 +78,8 @@ const Event = db.define("event", {
     type: Sequelize.DECIMAL(10, 2),
     //allowNull: false,
     //validate: {
-      //notEmpty: true,
-      //min: 0.0,
+    //notEmpty: true,
+    //min: 0.0,
     //},
   },
 });
@@ -102,7 +102,9 @@ Event.generateStartDate = () => {
 
 Event.generateEndDate = (startDate) => {
   let endDate = new Date(startDate);
-  endDate.setMinutes(endDate.getMinutes() + 60 + Math.floor(Math.random() * 5) * 30);
+  endDate.setMinutes(
+    endDate.getMinutes() + 60 + Math.floor(Math.random() * 5) * 30
+  );
   return endDate.toISOString();
 };
 
@@ -116,7 +118,6 @@ Event.getNearbyPlaces = async (lat, lng, keyword) => {
   var data;
   await axios(config)
     .then(function (response) {
-      // console.log(response.data);
       data = response.data;
     })
     .catch(function (error) {
@@ -126,63 +127,38 @@ Event.getNearbyPlaces = async (lat, lng, keyword) => {
   return data;
 };
 
-Event.createMyEvent = async function (
-  // name,
-  // start,
-  // category,
-  // images,
-  // description,
-  // venueName,
-  // venueLocale,
-  // venuePostCode,
-  // venueCity,
-  // venueState,
-  // venueStateCode,
-  // venueCountry,
-  // venueCountryCode,
-  // venueAddress,
-  // venueLongitude,
-  // venueLatitude,
-  // ownerId,
-  // price,
-  ownerId,
-  body
-) {
+Event.createMyEvent = async function (ownerId, body) {
   try {
-    console.log(body, 'this is the event body');
-    console.log(body.name, 'this is the event name');
-    console.log('before duplicate checking')
     const duplicate = await Event.findOne({
       where: {
         name: body.name,
-        //start: body.start,
-        //vanueName: body.venueName,
         ownerId: ownerId,
       },
     });
-    //console.log(duplicate);
     if (!duplicate) {
       console.log("Creating");
-      await Event.create({
+      const newEvent = await Event.create({
         name: body.name,
-        // start: body.start,
+        start: body.start,
+        end: body.end,
         category: body.category,
-        // images: body.images,
+        images: body.imageUrl !== "" ? [{ url: body.imageUrl }] : "",
         venueName: body.venueName,
         description: body.description,
-        // venueLocal: body.venueLocale,
-        // venuePostCode: body.venuePostCode,
-        // venueCity: body.venueCity,
-        // venueState: body.venueState,
-        // venueStateCode: body.venueStateCode,
-        // venueCountry: body.venueCountry,
-        // venueCountryCode: body.venueCountryCode,
-        // venueAddress: body.venueAddress,
-        // venueLongitude: body.venueLongitude,
-        // venueLatitude: body.venueLatitude,
+        venueLocale: body.venueLocale,
+        venuePostCode: body.venuePostCode,
+        venueCity: body.venueCity,
+        venueState: body.venueState,
+        venueStateCode: body.venueStateCode,
+        venueCountry: body.venueCountry,
+        venueCountryCode: body.venueCountryCode,
+        venueAddress: body.venueAddress,
+        venueLongitude: body.venueLongitude,
+        venueLatitude: body.venueLatitude,
         ownerId: ownerId,
-        // price: body.price,
+        price: body.price,
       });
+      return newEvent;
     }
   } catch (err) {
     console.log(err);

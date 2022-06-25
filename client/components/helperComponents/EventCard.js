@@ -59,7 +59,11 @@ const EventCard = ({ event, isLoggedIn, subscribed }) => {
           id="event-card-img"
           component="img"
           sx={{ width: "100%", height: "205px" }}
-          image={event.images[0].url}
+          image={
+            event.images
+              ? event.images[0].url
+              : "https://upload.wikimedia.org/wikipedia/commons/b/b1/Missing-image-232x150.png"
+          }
         />
         <CardContent sx={{ display: "flex", flexDirection: "column" }}>
           <Typography variant="cardTitle" marginBottom="1rem" component="div">

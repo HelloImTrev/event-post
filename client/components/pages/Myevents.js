@@ -58,7 +58,7 @@ export const Myevents = (props) => {
 
   const handleSelectEvent = (calendarEvent) => {
     // setSelectedEvent(events.find((event) => event.id === calendarEvent.id));
-    setSelectedEvent(subscribedEvents.find((event) => event.id === calendarEvent.id));
+    setSelectedEvent(events.find((event) => event.id === calendarEvent.id));
   };
 
   return (
@@ -96,7 +96,9 @@ export const Myevents = (props) => {
       {selectedEvent ? (
         <EventCard
           event={selectedEvent}
-          subscribed={subscribedEventIds.includes(selectedEvent.id) ? true : false}
+          subscribed={
+            subscribedEventIds.includes(selectedEvent.id) ? true : false
+          }
         />
       ) : (
         ""

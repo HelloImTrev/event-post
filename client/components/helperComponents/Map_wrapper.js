@@ -8,7 +8,12 @@ import { MarkerClusterer } from "@googlemaps/markerclusterer";
 import { useDispatch, useSelector } from "react-redux";
 
 // helper func
-import { formatDate, formatAddress, dayOfWeek, getMonth } from "../helperFunctions/dateFormat";
+import {
+  formatDate,
+  formatAddress,
+  dayOfWeek,
+  getMonth,
+} from "../helperFunctions/dateFormat";
 
 const render = (status) => {
   if (status === Status.LOADING) return <h3>{status} ..</h3>;
@@ -22,8 +27,12 @@ function Map({ center, zoom, events }) {
   useEffect(() => {
     const map = new google.maps.Map(ref.current, {
       center: {
-        lat: events[0] ? parseFloat(events && events[0].venueLatitude) : center.lat,
-        lng: events[0] ? parseFloat(events && events[0].venueLongitude) : center.lng,
+        lat: events[0]
+          ? parseFloat(events && events[0].venueLatitude)
+          : center.lat,
+        lng: events[0]
+          ? parseFloat(events && events[0].venueLongitude)
+          : center.lng,
       },
       zoom,
     });
@@ -35,7 +44,10 @@ function Map({ center, zoom, events }) {
 
     const markers = events.map((event, i) => {
       const marker = new google.maps.Marker({
-        position: { lat: parseFloat(event.venueLatitude), lng: parseFloat(event.venueLongitude) },
+        position: {
+          lat: parseFloat(event.venueLatitude),
+          lng: parseFloat(event.venueLongitude),
+        },
         label: `${i + 1}`,
       });
 
@@ -43,11 +55,13 @@ function Map({ center, zoom, events }) {
       const startWeekDay = dayOfWeek(start);
       const startMonth = getMonth(start);
       const startDate = start.getDate();
-
+      const imageUrl = event.images
+        ? event.images[0].url
+        : "https://upload.wikimedia.org/wikipedia/commons/b/b1/Missing-image-232x150.png";
       const content = `
       <div>
       <div>
-        <a href="/events/${event.id}"><img src=${event.images[0].url} width="200" height="100"/></a>
+        <a href="/events/${event.id}"><img src=${imageUrl} width="200" height="100"/></a>
       </div>
       <h3> <a href="/events/${event.id}">${event.name}</a></h3>
       <p>${startWeekDay}, ${startMonth.month} ${startDate}</p>
@@ -82,7 +96,10 @@ export default function Map_wrapper({ events }) {
 
   useEffect(() => {
     if (typeof userLocationObj.latitude === "number") {
-      setCenter({ lat: userLocationObj.latitude, lng: userLocationObj.longitude });
+      setCenter({
+        lat: userLocationObj.latitude,
+        lng: userLocationObj.longitude,
+      });
     }
   }, [userLocationObj]);
 

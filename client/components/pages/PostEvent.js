@@ -10,27 +10,35 @@ import {
 } from "@mui/material";
 import { Box } from "@mui/system";
 import { DesktopDatePicker, LocalizationProvider } from "@mui/x-date-pickers";
+import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 
 //redux
 import { useDispatch, useSelector } from "react-redux";
 
 //child component
-import React, { useState } from "react";
 import { connect } from "react-redux";
 import { createEvent } from "../../store/events";
 import Places_autocomplete from "../helperComponents/Places_autocomplete";
 import locations from "../../../script/locations";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
+import InputLabel from "@mui/material/InputLabel";
+
+let eventInput;
+let setEventInput;
 
 const PostEvent = ({ handleSubmit }) => {
   const googleData = useSelector(({ googleData }) => googleData);
   const [returnedData, setReturnedData] = useState(null);
-  const [eventInput, setEventInput] = useState({
+  const [selectedCategory, setCategory] = useState("Arts & Theatre");
+  [eventInput, setEventInput] = useState({
     name: "",
     start: new Date(),
     end: new Date(),
-    category: "",
+    category: "Arts & Theatre",
     images: "",
+    imageUrl: "",
     description: "",
     venueName: "",
     venueLocale: "en-us",
@@ -71,8 +79,8 @@ const PostEvent = ({ handleSubmit }) => {
   }, [googleData]);
 
   const handleInputFields = (e) => {
-    //console.log(e);
     setEventInput({ ...eventInput, [e.target.name]: e.target.value });
+    console.log(eventInput);
   };
 
   const handleStartDate = (newValue) => {
@@ -81,6 +89,11 @@ const PostEvent = ({ handleSubmit }) => {
 
   const handleEndDate = (newValue) => {
     setEventInput({ ...eventInput, end: newValue });
+  };
+
+  const handleChange = (e) => {
+    setCategory(e.target.value);
+    setEventInput({ ...eventInput, category: e.target.value });
   };
 
   return (
@@ -130,10 +143,6 @@ const PostEvent = ({ handleSubmit }) => {
             <Box>
               <form onSubmit={handleSubmit} name="event">
                 <br />
-                <Typography variant="promptTitle" sx={{ fontSize: "20px" }}>
-                  Event Name
-                </Typography>
-                <br />
                 <TextField
                   id="outlined-basic"
                   label="Event Name"
@@ -152,9 +161,6 @@ const PostEvent = ({ handleSubmit }) => {
                 />
                 <Places_autocomplete />
                 <br />
-                <Typography variant="promptTitle" sx={{ fontSize: "20px" }}>
-                  Event Date
-                </Typography>
                 <br />
                 <LocalizationProvider dateAdapter={AdapterDateFns}>
                   <Box
@@ -163,9 +169,8 @@ const PostEvent = ({ handleSubmit }) => {
                       margin: "0 auto",
                     }}
                   >
-                    <DesktopDatePicker
-                      label="Start Date"
-                      inputFormat="MM/dd/yyyy"
+                    <DateTimePicker
+                      label="Start Date and Time"
                       name="start"
                       value={eventInput.start}
                       onChange={handleStartDate}
@@ -190,9 +195,8 @@ const PostEvent = ({ handleSubmit }) => {
                       margin: "0 auto",
                     }}
                   >
-                    <DesktopDatePicker
-                      label="End Date"
-                      inputFormat="MM/dd/yyyy"
+                    <DateTimePicker
+                      label="End Date and Time"
                       name="end"
                       value={eventInput.end}
                       onChange={handleEndDate}
@@ -211,10 +215,6 @@ const PostEvent = ({ handleSubmit }) => {
                     />
                   </Box>
                 </LocalizationProvider>
-                <br />
-                <Typography variant="promptTitle" sx={{ fontSize: "20px" }}>
-                  Event Description
-                </Typography>
                 <br />
                 <Box
                   sx={{
@@ -237,6 +237,65 @@ const PostEvent = ({ handleSubmit }) => {
                   />
                 </Box>
                 <br />
+                <Select
+                  labelId="demo-select-small"
+                  id="outlined-password-input"
+                  variant="outlined"
+                  type="text"
+                  value={selectedCategory}
+                  color="pink"
+                  onChange={handleChange}
+                  name="category"
+                  sx={{
+                    width: {
+                      xxs: "95%",
+                      md: "60%",
+                      lg: "50%",
+                    },
+                  }}
+                >
+                  <MenuItem value=""></MenuItem>
+                  <MenuItem value={"Arts & Theatre"}>Arts & Theatre</MenuItem>
+                  <MenuItem value={"Film"}>Film</MenuItem>
+                  <MenuItem value={"Music"}>Music</MenuItem>
+                  <MenuItem value={"Sports"}>Sports</MenuItem>
+                </Select>
+                <br />
+                <TextField
+                  id="outlined-basic"
+                  label="Event Image Url"
+                  variant="outlined"
+                  name="imageUrl"
+                  type="text"
+                  color="pink"
+                  sx={{
+                    width: {
+                      xxs: "95%",
+                      md: "60%",
+                      lg: "50%",
+                    },
+                  }}
+                  onChange={handleInputFields}
+                />
+                <br />
+                <TextField
+                  id="outlined-basic"
+                  label="Ticket Price"
+                  variant="outlined"
+                  name="price"
+                  type="text"
+                  color="pink"
+                  sx={{
+                    width: {
+                      xxs: "95%",
+                      md: "60%",
+                      lg: "50%",
+                    },
+                  }}
+                  onChange={handleInputFields}
+                />
+                <br />
+                <br />
                 <Button
                   type="submit"
                   color="pink"
@@ -255,7 +314,7 @@ const PostEvent = ({ handleSubmit }) => {
                     },
                   }}
                 >
-                  Post Event
+                  Create Event
                 </Button>
               </form>
             </Box>
@@ -266,7 +325,9 @@ const PostEvent = ({ handleSubmit }) => {
   );
 };
 
-const mapState = (state) => {
+const mapState = (state, otherProps) => {
+  console.log(otherProps);
+  console.log(state);
   return {
     state,
   };
@@ -276,13 +337,7 @@ const mapDispatch = (dispatch) => {
   return {
     handleSubmit(e) {
       e.preventDefault();
-      const name = e.target.name.value;
-      const description = e.target.description.value;
-      const category = e.target.category.value;
-      const venueName = e.target.venueName.value;
-
-      console.log(name, description, category, venueName);
-      dispatch(createEvent(name, description, category, venueName));
+      dispatch(createEvent(eventInput));
     },
   };
 };
