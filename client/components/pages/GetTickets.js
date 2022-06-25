@@ -12,7 +12,8 @@ import {
 
 import Button from "@material-ui/core/Button";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
-import { Box, Typography } from "@mui/material";
+import { Box, Paper, Typography } from "@mui/material";
+import { width } from "@mui/system";
 
 export const GetTickets = (props) => {
   const history = useHistory();
@@ -41,6 +42,7 @@ export const GetTickets = (props) => {
         <Typography
           variant="promptTitle"
           sx={{
+            borderBottom: "3px solid #D83F87",
             fontWeight: 700,
             fontSize: {
               xs: "25px",
@@ -51,120 +53,174 @@ export const GetTickets = (props) => {
         >
           {formatName(user.username)}, the fun starts now!
         </Typography>
-
-        <Box sx={{ marginBottom: "1.5rem" }}>
-          <EventCard
-            event={event}
-            subscribed={subscribedEventIds.includes(event.id) ? true : false}
-          />
-        </Box>
-
-        <ButtonGroup size="small" aria-label="small outlined button group">
-          <Button
-            disabled={counter >= 20}
-            onClick={() => {
-              setCounter(counter + 1);
+        <Paper
+          elevation={2}
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            maxWidth: "1000px",
+            height: "500px",
+            marginTop: {
+              xxs: "70px",
+              md: "30px",
+            },
+            marginBottom: "2rem",
+            marginLeft: "auto",
+            marginRight: "auto",
+          }}
+        >
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
             }}
           >
-            +
-          </Button>
-
-          {<Button disabled>{counter}</Button>}
-
-          {
-            <Button
-              disabled={counter <= 0}
-              onClick={() => {
-                setCounter(counter - 1);
+            <Box sx={{ marginRight: "2rem" }}>
+              <EventCard
+                event={event}
+                subscribed={
+                  subscribedEventIds.includes(event.id) ? true : false
+                }
+              />
+            </Box>
+            <Paper
+              elevation={0}
+              sx={{
+                height: "300px",
+                width: "325px",
+                backgroundColor: "#f8f7fa",
               }}
             >
-              -
-            </Button>
-          }
+              <Box marginTop="2rem">
+                <Box sx={{ marginTop: ".5rem" }}>
+                  <Typography variant="promptTitle">Payment Details</Typography>
 
-          <Button
-            onClick={() => history.push("/orderconfirmation")}
-          >{`Buy for $${(event.price * 1 * counter).toFixed(2)}`}</Button>
-        </ButtonGroup>
-        <Box sx={{marginTop: ".5rem"}}>
-          <Typography variant="promptTitle"
-          >
-          Payment Details
-          </Typography>
+                  <Box>
+                    {/* //<span>Credit Card</span> */}
+                    <img
+                      src="/images/visa.png"
+                      style={{
+                        height: "25px",
+                        width: "35px",
+                        margin: "5px",
+                      }}
+                    />
+                    <img
+                      src="/images/thirdMastercard.png"
+                      style={{
+                        height: "25px",
+                        width: "35px",
+                        margin: "5px",
+                      }}
+                    />
+                    <img
+                      src="/images/amex.png"
+                      style={{
+                        height: "25px",
+                        width: "35px",
+                        margin: "5px",
+                      }}
+                    />
+                  </Box>
+                  <Box sx={{ marginTop: ".5rem" }}>
+                    <span>
+                      <label
+                        style={{ fontFamily: "roboto", marginRight: "5px" }}
+                      >
+                        Card Number
+                      </label>
+                      <input pattern="[0-9]*" inputMode="numeric"></input>
+                    </span>
+                  </Box>
+                </Box>
+                <Box sx={{ marginTop: ".5rem" }}>
+                  <span>
+                    <Box>
+                      <label
+                        style={{ fontFamily: "roboto", marginRight: "5px" }}
+                      >
+                        Expiration Date
+                      </label>
+                      <select>
+                        <option value="01">January</option>
+                        <option value="02">February </option>
+                        <option value="03">March</option>
+                        <option value="04">April</option>
+                        <option value="05">May</option>
+                        <option value="06">June</option>
+                        <option value="07">July</option>
+                        <option value="08">August</option>
+                        <option value="09">September</option>
+                        <option value="10">October</option>
+                        <option value="11">November</option>
+                        <option value="12">December</option>
+                      </select>
+                      <select>
+                        <option value="22"> 2022</option>
+                        <option value="23"> 2023</option>
+                        <option value="24"> 2024</option>
+                        <option value="25"> 2025</option>
+                        <option value="26"> 2026</option>
+                        <option value="27"> 2027</option>
+                      </select>
+                    </Box>
+                    <Box sx={{ marginTop: ".5rem" }}>
+                      <label
+                        style={{ fontFamily: "roboto", marginRight: "5px" }}
+                      >
+                        CVV
+                      </label>
+                      <input type="text" style={{ width: "150px" }} />
+                    </Box>
+                  </span>
+                </Box>
+                <Box sx={{ marginTop: ".5rem" }}>
+                  <span>
+                    <label style={{ fontFamily: "roboto", marginRight: "5px" }}>
+                      Name On Card
+                    </label>
+                    <input type="text" />
+                  </span>
+                </Box>
+                <Box marginTop="1rem">
+                  <ButtonGroup
+                    size="small"
+                    aria-label="small outlined button group"
+                  >
+                    <Button
+                      disabled={counter >= 20}
+                      onClick={() => {
+                        setCounter(counter + 1);
+                      }}
+                    >
+                      +
+                    </Button>
 
-          <Box>
-            {/* //<span>Credit Card</span> */}
-            <img
-              src="/images/visa.png"
-              style={{
-                height: "25px",
-                width: "35px",
-                margin: "5px",
-              }}
-            />
-            <img
-              src="/images/thirdMastercard.png"
-              style={{
-                height: "25px",
-                width: "35px",
-                margin: "5px",
-              }}
-            />
-            <img
-              src="/images/amex.png"
-              style={{
-                height: "25px",
-                width: "35px",
-                margin: "5px",
-              }}
-            />
+                    {<Button disabled>{counter}</Button>}
+
+                    {
+                      <Button
+                        disabled={counter <= 0}
+                        onClick={() => {
+                          setCounter(counter - 1);
+                        }}
+                      >
+                        -
+                      </Button>
+                    }
+
+                    <Button
+                      onClick={() => history.push("/orderconfirmation")}
+                    >{`Buy for $${(event.price * 1 * counter).toFixed(
+                      2
+                    )}`}</Button>
+                  </ButtonGroup>
+                </Box>
+              </Box>
+            </Paper>
           </Box>
-          <Box sx={{marginTop: ".5rem"}}>
-            <span>
-              <label style={{"fontFamily": "roboto", "marginRight": "5px"}}>Card Number</label>
-              <input pattern="[0-9]*" inputMode="numeric"></input>
-            </span>
-          </Box>
-        </Box>
-        <Box sx={{marginTop: ".5rem"}}>
-          <span>
-            <Box>
-              <label style={{"fontFamily": "roboto", "marginRight": "5px"}} >Expiration Date</label>
-              <select>
-                <option value="01">January</option>
-                <option value="02">February </option>
-                <option value="03">March</option>
-                <option value="04">April</option>
-                <option value="05">May</option>
-                <option value="06">June</option>
-                <option value="07">July</option>
-                <option value="08">August</option>
-                <option value="09">September</option>
-                <option value="10">October</option>
-                <option value="11">November</option>
-                <option value="12">December</option>
-              </select>
-              <select>
-                <option value="22"> 2022</option>
-                <option value="23"> 2023</option>
-                <option value="24"> 2024</option>
-                <option value="25"> 2025</option>
-                <option value="26"> 2026</option>
-                <option value="27"> 2027</option>
-              </select>
-            </Box>
-            <Box sx={{marginTop: ".5rem"}}>
-              <label style={{"fontFamily": "roboto", "marginRight": "5px"}}>CVV</label>
-              <input type="text" style={{ width: "150px" }} />
-            </Box>
-          </span>
-        </Box>
-        <Box sx={{marginTop: ".5rem"}}>
-          <span>
-            <label style={{"fontFamily": "roboto", "marginRight": "5px"}}>Name On Card</label>
-            <input type="text" />
-          </span>
-        </Box>
+        </Paper>
       </Box>
     );
   } else {
