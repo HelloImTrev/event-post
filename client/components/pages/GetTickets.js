@@ -7,10 +7,12 @@ import {
   formatAddress,
   dayOfWeek,
   getMonth,
+  formatName,
 } from "../helperFunctions/dateFormat";
 
 import Button from "@material-ui/core/Button";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
+import { Box, Typography } from "@mui/material";
 
 export const GetTickets = (props) => {
   const history = useHistory();
@@ -35,12 +37,28 @@ export const GetTickets = (props) => {
     // Payment details go on the right side of the page
     // + - and BUY For Buttons can go underneath the event card
     return (
-      <div>
-        <h1>{`Here is your order ${user.username}!`}</h1>
-        <EventCard
-          event={event}
-          subscribed={subscribedEventIds.includes(event.id) ? true : false}
-        />
+      <Box textAlign="center" marginTop="5rem" marginBottom="5rem">
+        <Typography
+          variant="promptTitle"
+          sx={{
+            fontWeight: 700,
+            fontSize: {
+              xs: "25px",
+              sm: "30px",
+              md: "30px",
+            },
+          }}
+        >
+          {formatName(user.username)}, the fun starts now!
+        </Typography>
+
+        <Box sx={{ marginBottom: "1.5rem" }}>
+          <EventCard
+            event={event}
+            subscribed={subscribedEventIds.includes(event.id) ? true : false}
+          />
+        </Box>
+
         <ButtonGroup size="small" aria-label="small outlined button group">
           <Button
             disabled={counter >= 20}
@@ -68,10 +86,14 @@ export const GetTickets = (props) => {
             onClick={() => history.push("/orderconfirmation")}
           >{`Buy for $${(event.price * 1 * counter).toFixed(2)}`}</Button>
         </ButtonGroup>
-        <div>
-          <h3>Payment Details</h3>
-          <div>
-            <span>Credit Card</span>
+        <Box sx={{marginTop: ".5rem"}}>
+          <Typography variant="promptTitle"
+          >
+          Payment Details
+          </Typography>
+
+          <Box>
+            {/* //<span>Credit Card</span> */}
             <img
               src="/images/visa.png"
               style={{
@@ -96,18 +118,18 @@ export const GetTickets = (props) => {
                 margin: "5px",
               }}
             />
-          </div>
-          <div>
+          </Box>
+          <Box sx={{marginTop: ".5rem"}}>
             <span>
-              <label>Card Numbers</label>
+              <label style={{"fontFamily": "roboto", "marginRight": "5px"}}>Card Number</label>
               <input pattern="[0-9]*" inputMode="numeric"></input>
             </span>
-          </div>
-        </div>
-        <div>
+          </Box>
+        </Box>
+        <Box sx={{marginTop: ".5rem"}}>
           <span>
-            <div>
-              <label>Expiration Date</label>
+            <Box>
+              <label style={{"fontFamily": "roboto", "marginRight": "5px"}} >Expiration Date</label>
               <select>
                 <option value="01">January</option>
                 <option value="02">February </option>
@@ -130,20 +152,20 @@ export const GetTickets = (props) => {
                 <option value="26"> 2026</option>
                 <option value="27"> 2027</option>
               </select>
-            </div>
-            <div>
-              <label>CVV</label>
+            </Box>
+            <Box sx={{marginTop: ".5rem"}}>
+              <label style={{"fontFamily": "roboto", "marginRight": "5px"}}>CVV</label>
               <input type="text" style={{ width: "150px" }} />
-            </div>
+            </Box>
           </span>
-        </div>
-        <div>
+        </Box>
+        <Box sx={{marginTop: ".5rem"}}>
           <span>
-            <label>Name On Card</label>
+            <label style={{"fontFamily": "roboto", "marginRight": "5px"}}>Name On Card</label>
             <input type="text" />
           </span>
-        </div>
-      </div>
+        </Box>
+      </Box>
     );
   } else {
     return null;
