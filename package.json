@@ -20,6 +20,7 @@
   "author": "Fullstack Academy of Code",
   "license": "MIT",
   "dependencies": {
+    "@faker-js/faker": "^7.6.0",
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.8.1",
     "@googlemaps/markerclusterer": "^2.0.8",
