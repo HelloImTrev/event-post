@@ -12,7 +12,7 @@ const LoremIpsum = require("lorem-ipsum").LoremIpsum;
 const axios = require("axios");
 require("dotenv").config();
 const locations = require("./locations");
-const { faker } = require("@faker-js/faker");
+var faker = require("faker");
 
 const lorem = new LoremIpsum({
   sentencesPerParagraph: {
