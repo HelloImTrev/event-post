@@ -1,13 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 // mui
-import {
-  Paper,
-  Typography,
-  TextField,
-  Button,
-  TextareaAutosize,
-} from "@mui/material";
+import { Paper, Typography, TextField, Button, TextareaAutosize } from "@mui/material";
 import { Box } from "@mui/system";
 import { DesktopDatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
@@ -30,7 +24,7 @@ let setEventInput;
 
 const PostEvent = ({ handleSubmit }) => {
   const googleData = useSelector(({ googleData }) => googleData);
-  const [returnedData, setReturnedData] = useState(null);
+  // const [returnedData, setReturnedData] = useState(null);
   const [selectedCategory, setCategory] = useState("Arts & Theatre");
   [eventInput, setEventInput] = useState({
     name: "",
@@ -55,14 +49,13 @@ const PostEvent = ({ handleSubmit }) => {
   });
 
   useEffect(() => {
-    setReturnedData(googleData);
+    // setReturnedData(googleData);
     if (googleData.formatted_address) {
-      const [venueCity, stateCodeZipCode, venueCountry] =
-        googleData.formatted_address.split(", ").slice(-3);
+      const [venueCity, stateCodeZipCode, venueCountry] = googleData.formatted_address
+        .split(", ")
+        .slice(-3);
       const [venueStateCode, venuePostCode] = stateCodeZipCode.split(" ");
-      const venueState = locations.find(
-        (stateObj) => stateObj.stateCode === venueStateCode
-      ).state;
+      const venueState = locations.find((stateObj) => stateObj.stateCode === venueStateCode).state;
       setEventInput({
         ...eventInput,
         venueName: googleData.name,
